@@ -3,40 +3,119 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Marcação enviada — Barbearia do Miguel</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✂</text></svg>">
+  <title>Pedido enviado — Barbearia do Miguel</title>
+
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✂</text></svg>">
-  <script>tailwind.config={theme:{extend:{colors:{dark:'#0a0a0a',surface:'#111111',red:'#c41e3a'},fontFamily:{serif:['"Cormorant Garamond"','serif'],sans:['Inter','sans-serif']}}}}</script>
-</head>
-<body class="bg-dark text-cream font-sans antialiased min-h-screen flex flex-col items-center justify-center px-6">
-
-  <div class="text-center max-w-md fade-up">
-    <p class="text-red text-4xl mb-6" aria-hidden="true">✂</p>
-    <h1 class="font-serif text-4xl md:text-5xl font-light mb-4">
-      Marcação <em class="text-red">enviada!</em>
-    </h1>
-    <div class="w-10 h-0.5 bg-red mx-auto my-6"></div>
-    <p class="text-[#ede8e3]/55 font-light leading-relaxed text-sm mb-3">
-      Recebemos o seu pedido. Entraremos em contacto brevemente para confirmar a disponibilidade.
-    </p>
-    <p class="text-[#ede8e3]/35 text-xs mb-10">
-      Para confirmação imediata ligue para
-      <a href="tel:910473484" class="text-red">910 473 484</a>
-    </p>
-    <div class="flex flex-col sm:flex-row gap-3 justify-center">
-      <a href="index.html" class="btn-primary">← Voltar ao site</a>
-      <a href="marcacoes.html" class="btn-outline">Nova marcação</a>
-    </div>
-  </div>
-
-  <p class="absolute bottom-8 text-[#ede8e3]/20 text-xs">Barbearia do Miguel · Paredes</p>
 
   <script>
-    document.querySelectorAll('.fade-up').forEach((el,i) => {
-      el.style.animation = `fadeUp 700ms cubic-bezier(0.23,1,0.32,1) ${i*120}ms both`;
-    });
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { dark:'#0d0b07', surface:'#141109', gold:'#c09334', 'gold-light':'#d4ad52', cream:'#f0e6d3' },
+          fontFamily: { serif:['"Cormorant Garamond"','Georgia','serif'], sans:['Inter','system-ui','sans-serif'] }
+        }
+      }
+    }
   </script>
+
+  <style>
+    @keyframes scaleIn {
+      from { transform: scale(0.8); opacity: 0; }
+      to   { transform: scale(1);   opacity: 1; }
+    }
+    @keyframes fadeUp {
+      from { transform: translateY(20px); opacity: 0; }
+      to   { transform: translateY(0);    opacity: 1; }
+    }
+    .anim-scale { animation: scaleIn 600ms cubic-bezier(0.23,1,0.32,1) both; }
+    .anim-up-1  { animation: fadeUp 700ms cubic-bezier(0.23,1,0.32,1) 120ms both; }
+    .anim-up-2  { animation: fadeUp 700ms cubic-bezier(0.23,1,0.32,1) 240ms both; }
+    .anim-up-3  { animation: fadeUp 700ms cubic-bezier(0.23,1,0.32,1) 380ms both; }
+    .anim-up-4  { animation: fadeUp 700ms cubic-bezier(0.23,1,0.32,1) 520ms both; }
+    @keyframes ringExpand {
+      0%   { transform: scale(1); opacity: .5; }
+      100% { transform: scale(2.5); opacity: 0; }
+    }
+    .ring-expand { animation: ringExpand 1.8s ease-out infinite; }
+  </style>
+</head>
+
+<body class="bg-dark text-cream font-sans antialiased min-h-screen flex flex-col">
+
+  <nav class="border-b border-[rgba(192,147,52,.08)]" style="background:rgba(13,11,7,.97)">
+    <div class="max-w-4xl mx-auto px-6 py-4">
+      <a href="index.html" class="group inline-flex items-center gap-3" aria-label="Voltar ao site da Barbearia do Miguel">
+        <span class="w-[1.5px] h-6 bg-gold opacity-50 group-hover:opacity-90 transition-all group-hover:h-7" aria-hidden="true"></span>
+        <span class="font-serif text-base font-light leading-none">
+          Barbearia <em class="text-gold not-italic">do Miguel</em>
+        </span>
+      </a>
+    </div>
+  </nav>
+
+  <main class="flex-1 flex flex-col items-center justify-center px-6 py-24" role="main">
+    <div class="text-center max-w-md">
+
+      <!-- Ícone animado -->
+      <div class="relative inline-flex items-center justify-center mb-10 anim-scale">
+        <div class="absolute w-16 h-16 border border-[rgba(192,147,52,.3)] rounded-full ring-expand"></div>
+        <div class="w-16 h-16 border border-[rgba(192,147,52,.35)] rounded-full flex items-center justify-center bg-[rgba(192,147,52,.06)]">
+          <span class="text-gold text-2xl" aria-hidden="true">✂</span>
+        </div>
+      </div>
+
+      <p class="section-label mb-4 anim-up-1">Pedido enviado</p>
+
+      <h1 class="font-serif font-light leading-[1.04] mb-6 anim-up-1" style="font-size:clamp(2.4rem,7vw,3.6rem)">
+        Recebemos<br>o seu pedido<em class="text-gold">.</em>
+      </h1>
+
+      <div class="gold-divider mx-auto mb-8 anim-up-2"></div>
+
+      <p class="text-[#e8dbc5]/50 font-light leading-[1.92] text-sm anim-up-2">
+        Entraremos em contacto brevemente para confirmar a disponibilidade. Para marcação imediata:
+      </p>
+
+      <a href="tel:910473484" class="inline-block mt-4 mb-10 font-serif text-gold text-xl font-light anim-up-2">
+        910 473 484
+      </a>
+
+      <!-- Horário -->
+      <div class="border border-[rgba(192,147,52,.12)] bg-[rgba(192,147,52,.04)] px-6 py-5 mb-10 anim-up-3">
+        <p class="text-[9px] tracking-[.22em] uppercase text-gold/60 mb-3">Horário de atendimento</p>
+        <div class="space-y-1.5 text-xs font-light text-[#e8dbc5]/50">
+          <div class="flex justify-between gap-8">
+            <span>Segunda – Sexta</span>
+            <span class="text-[#e8dbc5]/75">9h – 21h</span>
+          </div>
+          <div class="flex justify-between gap-8">
+            <span>Sábado</span>
+            <span class="text-[#e8dbc5]/75">9h – 20h</span>
+          </div>
+          <div class="flex justify-between gap-8">
+            <span>Domingo</span>
+            <span class="text-[#e8dbc5]/28">Fechado</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-col sm:flex-row gap-3 justify-center anim-up-4">
+        <a href="index.html" class="btn-primary">← Voltar ao site</a>
+        <a href="marcacoes.html" class="btn-outline">Nova marcação</a>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="border-t border-[rgba(192,147,52,.07)] py-5 px-6 text-center" role="contentinfo">
+    <p class="text-[#e8dbc5]/18 text-xs">© 2026 Barbearia do Miguel · Paredes</p>
+  </footer>
+
 </body>
 </html>

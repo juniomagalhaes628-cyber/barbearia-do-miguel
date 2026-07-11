@@ -3,456 +3,686 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Marque o seu corte na Barbearia do Miguel — Paredes. Rápido, fácil e online.">
-  <title>Marcações — Barbearia do Miguel</title>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; form-action https://formsubmit.co; frame-src 'none'; object-src 'none';">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="Marcar um corte ou serviço na Barbearia do Miguel — Paredes. Simples, rápido, confirmação em minutos.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✂</text></svg>">
+  <title>Marcações — Barbearia do Miguel · Paredes</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✂</text></svg>">
 
   <script>
     tailwind.config = {
       theme: {
         extend: {
-          colors: {
-            dark: '#0a0a0a', surface: '#111111',
-            red: '#c41e3a', 'red-light': '#e0253e', cream: '#ede8e3',
-          },
-          fontFamily: {
-            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
-            sans:  ['Inter', 'system-ui', 'sans-serif'],
-          }
+          colors: { dark:'#0d0b07', surface:'#141109', surface2:'#1c1810', gold:'#c09334', 'gold-light':'#d4ad52', cream:'#f0e6d3' },
+          fontFamily: { serif:['"Cormorant Garamond"','Georgia','serif'], sans:['Inter','system-ui','sans-serif'] }
         }
       }
     }
   </script>
 
   <style>
+    /* ── Step form transitions ── */
+    .step-panel {
+      opacity: 0; pointer-events: none;
+      transform: translateX(32px);
+      transition: opacity 380ms cubic-bezier(0.23,1,0.32,1), transform 380ms cubic-bezier(0.23,1,0.32,1);
+      position: absolute; inset: 0; width: 100%;
+    }
+    .step-panel.active {
+      opacity: 1; pointer-events: auto;
+      transform: translateX(0);
+      position: relative;
+    }
+    .step-panel.exit {
+      opacity: 0; transform: translateX(-32px);
+      pointer-events: none; position: absolute; inset: 0;
+    }
+
+    /* ── Service cards ── */
+    .svc-card {
+      border: 1px solid rgba(192,147,52,.1); background: #141109;
+      padding: 1rem 1.25rem; cursor: pointer;
+      transition: border-color 220ms ease, background 220ms ease, transform 220ms cubic-bezier(0.23,1,0.32,1);
+      position: relative; user-select: none; display: block;
+    }
+    .svc-card:hover { border-color: rgba(192,147,52,.38); background: rgba(192,147,52,.04); }
+    .svc-card input[type="radio"] { position: absolute; opacity: 0; pointer-events: none; }
+    .svc-card.selected { border-color: rgba(192,147,52,.75); background: rgba(192,147,52,.07); }
+    .svc-card.selected::after {
+      content: '✓'; position: absolute; top: .75rem; right: .9rem;
+      color: #c09334; font-size: .75rem; font-weight: 600;
+    }
+    @media (hover: hover) { .svc-card:active { transform: scale(0.985); } }
+
+    /* ── Inputs ── */
     .form-field {
-      width: 100%;
-      background: rgba(255,255,255,.04);
-      border: 1px solid rgba(237,232,227,.1);
-      color: #ede8e3;
-      padding: .85rem 1.1rem;
-      font-family: 'Inter', sans-serif;
-      font-size: .875rem; font-weight: 300;
-      outline: none;
+      width: 100%; background: rgba(13,11,7,.7); border: 1px solid rgba(232,219,197,.1);
+      color: #e8dbc5; font-family: 'Inter', sans-serif; font-size: .875rem; font-weight: 300;
+      padding: .875rem 1rem; outline: none;
+      transition: border-color 200ms ease, box-shadow 200ms ease; -webkit-appearance: none;
+    }
+    .form-field::placeholder { color: rgba(232,219,197,.28); }
+    .form-field:focus { border-color: rgba(192,147,52,.5); box-shadow: 0 0 0 3px rgba(192,147,52,.08); }
+    .form-field.error { border-color: rgba(200,60,60,.55); }
+    .form-field.valid { border-color: rgba(80,180,80,.4); }
+    select.form-field {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23c09334' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 1rem center; padding-right: 2.5rem; cursor: pointer;
+    }
+    select.form-field option { background: #141109; color: #e8dbc5; }
+
+    /* ── Progress ── */
+    .step-dot {
+      width: 8px; height: 8px; border-radius: 50%; background: rgba(192,147,52,.2);
+      transition: background 300ms ease, transform 300ms ease;
+    }
+    .step-dot.active { background: #c09334; transform: scale(1.3); }
+    .step-dot.done   { background: rgba(192,147,52,.55); }
+    .progress-line { height: 1px; flex: 1; background: rgba(192,147,52,.15); position: relative; overflow: hidden; }
+    .progress-line-fill {
+      position: absolute; top: 0; left: 0; height: 100%; background: rgba(192,147,52,.5);
+      transition: width 400ms cubic-bezier(0.23,1,0.32,1); width: 0%;
+    }
+
+    /* ── Consent checkbox ── */
+    .consent-check {
+      appearance: none; -webkit-appearance: none;
+      width: 16px; height: 16px; min-width: 16px;
+      border: 1px solid rgba(192,147,52,.35); background: transparent;
+      cursor: pointer; position: relative;
       transition: border-color 200ms ease, background 200ms ease;
-      -webkit-appearance: none; appearance: none;
     }
-    .form-field::placeholder { color: rgba(237,232,227,.3); }
-    .form-field:focus { border-color: rgba(196,30,58,.5); background: rgba(255,255,255,.06); }
-    .form-field option { background: #111; color: #ede8e3; }
-    .select-wrap { position: relative; }
-    .select-wrap::after {
-      content: '▾'; position: absolute; right: 1rem; top: 50%;
-      transform: translateY(-50%); color: rgba(196,30,58,.6); pointer-events: none; font-size: .75rem;
+    .consent-check:checked { background: #c09334; border-color: #c09334; }
+    .consent-check:checked::after {
+      content: ''; position: absolute; width: 4px; height: 7px;
+      border-right: 1.5px solid #0d0b07; border-bottom: 1.5px solid #0d0b07;
+      transform: rotate(45deg) translate(-1px,-1px); left: 4px; top: 1px;
     }
-    .time-slot {
-      padding: .6rem; border: 1px solid rgba(237,232,227,.1);
-      text-align: center; font-size: .8rem; color: rgba(237,232,227,.55);
-      cursor: pointer; user-select: none;
-      transition: border-color 180ms ease, background 180ms ease, color 180ms ease, transform 160ms ease;
+    .consent-check:focus { outline: 2px solid rgba(192,147,52,.4); outline-offset: 2px; }
+
+    /* ── Validation errors ── */
+    .field-err {
+      font-size: .72rem; color: rgba(220,80,80,.8); margin-top: .35rem;
+      opacity: 0; transform: translateY(-4px); transition: opacity 200ms ease, transform 200ms ease;
     }
-    .time-slot:hover { border-color: rgba(196,30,58,.4); color: #ede8e3; }
-    .time-slot:active { transform: scale(0.96); }
-    .time-slot.selected { border-color: #c41e3a; background: rgba(196,30,58,.12); color: #c41e3a; }
-    .time-slot.unavailable { opacity: .25; cursor: not-allowed; pointer-events: none; }
-    .step-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(237,232,227,.15); transition: background 300ms ease; }
-    .step-dot.active { background: #c41e3a; }
-    .step-dot.done   { background: rgba(196,30,58,.4); }
+    .field-err.show { opacity: 1; transform: translateY(0); }
+
+    /* ── Custom cursor ── */
+    #cursor-ring { position:fixed; width:28px; height:28px; border:1.5px solid rgba(192,147,52,.4); border-radius:50%; pointer-events:none; z-index:9998; will-change:transform; top:0; left:0; margin:-14px 0 0 -14px; transition:width 220ms cubic-bezier(0.23,1,0.32,1),height 220ms cubic-bezier(0.23,1,0.32,1),border-color 220ms ease; }
+    #cursor-dot  { position:fixed; width:5px; height:5px; background:rgba(192,147,52,.85); border-radius:50%; pointer-events:none; z-index:9999; will-change:transform; top:0; left:0; margin:-2.5px 0 0 -2.5px; }
+    @media (pointer: coarse), (hover: none) { #cursor-ring, #cursor-dot { display:none; } }
+    body:has(#cursor-ring) { cursor: none; }
+    a, button, .svc-card { cursor: none; }
   </style>
 </head>
 
-<body class="bg-dark text-cream font-sans antialiased min-h-screen">
+<body class="bg-dark text-cream font-sans antialiased overflow-x-hidden min-h-screen">
 
-  <nav class="fixed top-0 left-0 right-0 z-50 bg-[rgba(10,10,10,.95)] border-b border-[rgba(196,30,58,.1)] backdrop-blur-md">
-    <div class="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
-      <a href="index.html" class="font-serif text-lg font-light">
-        Barbearia <em class="text-red not-italic">do Miguel</em>
+  <div id="cursor-ring" aria-hidden="true"></div>
+  <div id="cursor-dot"  aria-hidden="true"></div>
+
+  <!-- Navbar -->
+  <nav class="fixed top-0 left-0 right-0 z-50 border-b border-[rgba(192,147,52,.1)]"
+       style="background:rgba(13,11,7,.97);backdrop-filter:blur(20px)" role="navigation" aria-label="Navegação">
+    <div class="max-w-7xl mx-auto px-6 md:px-10 py-4 flex items-center justify-between">
+      <a href="index.html" class="group flex items-center gap-3" aria-label="Voltar ao site da Barbearia do Miguel">
+        <span class="w-[1.5px] h-6 bg-gold opacity-50 group-hover:opacity-90 transition-all group-hover:h-7" aria-hidden="true"></span>
+        <span class="font-serif text-base font-light leading-none">
+          Barbearia <em class="text-gold not-italic">do Miguel</em>
+        </span>
       </a>
       <a href="index.html" class="nav-link text-xs">← Voltar ao site</a>
     </div>
   </nav>
 
-  <div class="pt-32 pb-16 px-6 text-center relative overflow-hidden">
-    <div class="absolute inset-0 opacity-[.025]" aria-hidden="true" style="
-      background-image: repeating-linear-gradient(-45deg, rgba(196,30,58,1) 0px, rgba(196,30,58,1) 1px, transparent 1px, transparent 60px);
-    "></div>
-    <div class="relative z-10 max-w-xl mx-auto">
-      <p class="section-label mb-5 fade-up">Reserva online</p>
-      <h1 class="font-serif text-4xl md:text-5xl font-light fade-up delay-1">
-        Marque o seu<br><em class="text-red">corte</em>
-      </h1>
-      <p class="mt-5 text-[#ede8e3]/50 text-sm font-light max-w-sm mx-auto fade-up delay-2">
-        Preencha o formulário e entraremos em contacto para confirmar o seu agendamento.
-      </p>
-      <div class="mt-5 inline-flex items-center gap-2 border border-[rgba(196,30,58,.3)] bg-[rgba(196,30,58,.07)] px-4 py-2 fade-up delay-3">
-        <span class="text-red text-xs" aria-hidden="true">✂</span>
-        <span class="text-[#ede8e3]/60 text-xs">Horário alargado: Seg-Sex até às 21h</span>
+  <!-- Layout -->
+  <div class="min-h-screen pt-20 grid grid-cols-1 lg:grid-cols-[1fr_1fr] xl:grid-cols-[480px_1fr]">
+
+    <!-- Coluna esquerda — contexto (desktop) -->
+    <aside class="hidden lg:flex flex-col justify-between px-14 py-16 border-r border-[rgba(192,147,52,.08)]"
+           style="background:linear-gradient(160deg, #0a0900 0%, #0f0d08 100%)" aria-hidden="true">
+      <div>
+        <div class="flex items-center gap-4 mb-12">
+          <div class="w-10 h-px bg-gold opacity-40"></div>
+          <span class="text-gold text-[9px] tracking-[.28em] uppercase">Marcações</span>
+        </div>
+        <h1 class="font-serif font-light leading-[1.03]" style="font-size:clamp(2.4rem,3.5vw,3.4rem)">
+          A sua visita<br>começa<br><em class="text-gold">aqui.</em>
+        </h1>
+        <div class="w-10 h-px bg-gold mt-8 mb-8 opacity-35"></div>
+        <p class="text-[#e8dbc5]/45 font-light text-[.85rem] leading-[1.92] max-w-xs">
+          Preencha o formulário e receba confirmação de disponibilidade em minutos. Sem taxas de reserva.
+        </p>
+        <div class="mt-14 grid grid-cols-2 gap-4">
+          <div class="border border-[rgba(192,147,52,.09)] p-4">
+            <p class="font-serif text-gold text-2xl font-light">4,9★</p>
+            <p class="text-[#e8dbc5]/30 text-[8px] tracking-[.2em] uppercase mt-1">447 avaliações</p>
+          </div>
+          <div class="border border-[rgba(192,147,52,.09)] p-4">
+            <p class="font-serif text-gold text-2xl font-light">+12</p>
+            <p class="text-[#e8dbc5]/30 text-[8px] tracking-[.2em] uppercase mt-1">Anos de ofício</p>
+          </div>
+          <div class="border border-[rgba(192,147,52,.09)] p-4">
+            <p class="font-serif text-gold text-2xl font-light">2016</p>
+            <p class="text-[#e8dbc5]/30 text-[8px] tracking-[.2em] uppercase mt-1">Fundada</p>
+          </div>
+          <div class="border border-[rgba(192,147,52,.09)] p-4">
+            <p class="font-serif text-gold text-2xl font-light">Seg–Sáb</p>
+            <p class="text-[#e8dbc5]/30 text-[8px] tracking-[.2em] uppercase mt-1">6 dias / semana</p>
+          </div>
+        </div>
+        <div class="mt-10 space-y-2.5">
+          <p class="text-[9px] tracking-[.22em] uppercase text-gold mb-4">Horário</p>
+          <div class="flex items-center gap-3">
+            <div class="w-1.5 h-1.5 rounded-full bg-gold animate-pulse"></div>
+            <span class="text-[#e8dbc5]/38 text-xs">Seg – Sex:</span>
+            <span class="text-[#e8dbc5]/70 text-xs font-medium">9h – 21h</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <div class="w-1.5 h-1.5 rounded-full bg-gold/40"></div>
+            <span class="text-[#e8dbc5]/38 text-xs">Sábado:</span>
+            <span class="text-[#e8dbc5]/70 text-xs font-medium">9h – 20h</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <div class="w-1.5 h-1.5 rounded-full bg-[rgba(232,219,197,.1)]"></div>
+            <span class="text-[#e8dbc5]/38 text-xs">Domingo:</span>
+            <span class="text-[#e8dbc5]/28 text-xs">Fechado</span>
+          </div>
+        </div>
       </div>
-    </div>
+      <div class="mt-12">
+        <p class="text-[9px] tracking-[.22em] uppercase text-[#e8dbc5]/25 mb-4">Prefere pelo WhatsApp?</p>
+        <a href="https://wa.me/351910473484?text=Ol%C3%A1%21%20Gostaria%20de%20marcar%20um%20servi%C3%A7o%20na%20Barbearia%20do%20Miguel."
+           target="_blank" rel="noopener noreferrer"
+           class="flex items-center gap-3 border border-[rgba(37,211,102,.2)] bg-[rgba(37,211,102,.05)] px-4 py-3.5 hover:border-[rgba(37,211,102,.45)] hover:bg-[rgba(37,211,102,.1)] transition-all duration-200">
+          <svg width="18" height="18" fill="rgba(37,211,102,.8)" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          <div>
+            <p class="text-[rgba(37,211,102,.8)] text-xs font-medium">Marcar via WhatsApp</p>
+            <p class="text-[#e8dbc5]/22 text-[9px] mt-0.5">910 473 484</p>
+          </div>
+        </a>
+      </div>
+    </aside>
+
+    <!-- Coluna direita — formulário -->
+    <main class="flex flex-col justify-start px-6 md:px-10 lg:px-16 py-10 lg:py-16" aria-labelledby="form-main-heading">
+      <div class="max-w-xl w-full mx-auto lg:mx-0">
+
+        <!-- Heading mobile -->
+        <div class="lg:hidden mb-10">
+          <p class="section-label mb-3">Marcações</p>
+          <h1 id="form-main-heading" class="font-serif text-3xl font-light">Agendar serviço</h1>
+          <div class="gold-divider mt-4"></div>
+        </div>
+        <div class="hidden lg:block">
+          <h1 id="form-main-heading" class="sr-only">Formulário de marcação — Barbearia do Miguel</h1>
+        </div>
+
+        <!-- Progress -->
+        <div class="mb-10" role="progressbar" aria-valuemin="1" aria-valuemax="3" aria-valuenow="1" id="progress-aria" aria-label="Progresso do formulário">
+          <div class="flex items-center gap-2 mb-3">
+            <div class="step-dot active" id="dot1" aria-hidden="true"></div>
+            <div class="progress-line" aria-hidden="true"><div class="progress-line-fill" id="fill1"></div></div>
+            <div class="step-dot" id="dot2" aria-hidden="true"></div>
+            <div class="progress-line" aria-hidden="true"><div class="progress-line-fill" id="fill2"></div></div>
+            <div class="step-dot" id="dot3" aria-hidden="true"></div>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-[9px] tracking-[.18em] uppercase text-gold/60" id="step-label">Passo 1 de 3</span>
+            <span class="text-[9px] tracking-[.18em] uppercase text-[#e8dbc5]/25" id="step-name">Serviço</span>
+          </div>
+        </div>
+
+        <!-- Form -->
+        <form id="booking-form" action="https://formsubmit.co/juniomagalhaes628@gmail.com" method="POST" novalidate>
+          <!-- FormSubmit config -->
+          <input type="hidden" name="_subject"      value="Nova marcação — Barbearia do Miguel">
+          <input type="hidden" name="_next"          value="https://juniomagalhaes628-cyber.github.io/barbearia-do-miguel/obrigado.html">
+          <input type="hidden" name="_template"      value="table">
+          <input type="hidden" name="_autoresponse"  value="Obrigado pelo seu pedido de marcação na Barbearia do Miguel! Entraremos em contacto brevemente para confirmar a disponibilidade. Para confirmação imediata ligue: 910 473 484.">
+          <input type="hidden" name="_captcha"       value="false">
+          <!-- Honeypot anti-bot (FormSubmit rejeita se preenchido) -->
+          <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <!-- Timestamp anti-bot -->
+          <input type="hidden" name="_form_loaded" id="form-timestamp" value="">
+          <!-- Campos compilados -->
+          <input type="hidden" name="Servico"  id="hidden-service"  value="">
+          <input type="hidden" name="Data"     id="hidden-date"     value="">
+          <input type="hidden" name="Hora"     id="hidden-time"     value="">
+
+          <div id="steps-wrapper" style="min-height:430px; position:relative">
+
+            <!-- PASSO 1 — Serviço -->
+            <div class="step-panel active" id="step1" role="group" aria-labelledby="step1-h">
+              <h2 id="step1-h" class="font-serif text-xl font-light mb-1">Que serviço pretende?</h2>
+              <p class="text-[#e8dbc5]/35 text-xs mb-6 font-light">Selecione um serviço para continuar</p>
+
+              <div class="space-y-2.5" role="radiogroup" aria-required="true" aria-label="Escolha de serviço">
+                <label class="svc-card" data-service="Corte de Cabelo" tabindex="0">
+                  <input type="radio" name="servico_radio" value="Corte de Cabelo">
+                  <div class="flex items-center gap-3">
+                    <span class="text-gold text-xs shrink-0" aria-hidden="true">✂</span>
+                    <div>
+                      <p class="text-[#e8dbc5]/85 text-sm font-medium">Corte de Cabelo</p>
+                      <p class="text-[#e8dbc5]/32 text-xs font-light mt-0.5">Tesoura, máquina ou combinação</p>
+                    </div>
+                    <span class="ml-auto text-gold/30 text-[9px] tracking-[.15em] uppercase shrink-0">Popular</span>
+                  </div>
+                </label>
+                <label class="svc-card" data-service="Barba" tabindex="0">
+                  <input type="radio" name="servico_radio" value="Barba">
+                  <div class="flex items-center gap-3">
+                    <span class="text-gold text-xs shrink-0" aria-hidden="true">◈</span>
+                    <div>
+                      <p class="text-[#e8dbc5]/85 text-sm font-medium">Barba</p>
+                      <p class="text-[#e8dbc5]/32 text-xs font-light mt-0.5">Aparar, delinear ou navalha clássica</p>
+                    </div>
+                  </div>
+                </label>
+                <label class="svc-card" data-service="Corte + Barba" tabindex="0">
+                  <input type="radio" name="servico_radio" value="Corte + Barba">
+                  <div class="flex items-center gap-3">
+                    <span class="text-gold text-xs shrink-0" aria-hidden="true">✦</span>
+                    <div>
+                      <p class="text-[#e8dbc5]/85 text-sm font-medium">Corte + Barba</p>
+                      <p class="text-[#e8dbc5]/32 text-xs font-light mt-0.5">Pacote completo</p>
+                    </div>
+                  </div>
+                </label>
+                <label class="svc-card" data-service="Platinados" tabindex="0">
+                  <input type="radio" name="servico_radio" value="Platinados">
+                  <div class="flex items-center gap-3">
+                    <span class="text-gold text-xs shrink-0" aria-hidden="true">◇</span>
+                    <div>
+                      <p class="text-[#e8dbc5]/85 text-sm font-medium">Platinados</p>
+                      <p class="text-[#e8dbc5]/32 text-xs font-light mt-0.5">Descoloração e platinados profissionais</p>
+                    </div>
+                  </div>
+                </label>
+                <label class="svc-card" data-service="Madeixas" tabindex="0">
+                  <input type="radio" name="servico_radio" value="Madeixas">
+                  <div class="flex items-center gap-3">
+                    <span class="text-gold text-xs shrink-0" aria-hidden="true">◉</span>
+                    <div>
+                      <p class="text-[#e8dbc5]/85 text-sm font-medium">Madeixas</p>
+                      <p class="text-[#e8dbc5]/32 text-xs font-light mt-0.5">Mechas e coloração masculina</p>
+                    </div>
+                  </div>
+                </label>
+                <label class="svc-card" data-service="Sobrancelhas" tabindex="0">
+                  <input type="radio" name="servico_radio" value="Sobrancelhas">
+                  <div class="flex items-center gap-3">
+                    <span class="text-gold text-xs shrink-0" aria-hidden="true">◇</span>
+                    <div>
+                      <p class="text-[#e8dbc5]/85 text-sm font-medium">Sobrancelhas</p>
+                      <p class="text-[#e8dbc5]/32 text-xs font-light mt-0.5">Design masculino</p>
+                    </div>
+                  </div>
+                </label>
+                <label class="svc-card" data-service="Outro / Dúvida" tabindex="0">
+                  <input type="radio" name="servico_radio" value="Outro / Dúvida">
+                  <div class="flex items-center gap-3">
+                    <span class="text-gold text-xs shrink-0" aria-hidden="true">❧</span>
+                    <div>
+                      <p class="text-[#e8dbc5]/85 text-sm font-medium">Outro / Dúvida</p>
+                      <p class="text-[#e8dbc5]/32 text-xs font-light mt-0.5">Especificar nas notas</p>
+                    </div>
+                  </div>
+                </label>
+              </div>
+
+              <p class="field-err mt-3" id="err-service">Por favor selecione um serviço</p>
+
+              <div class="mt-8">
+                <button type="button" class="btn-primary w-full justify-center" onclick="nextStep(2)">
+                  Continuar →
+                </button>
+              </div>
+            </div>
+
+
+            <!-- PASSO 2 — Data e hora -->
+            <div class="step-panel" id="step2" role="group" aria-labelledby="step2-h">
+
+              <div class="flex items-center gap-2 mb-6 bg-[rgba(192,147,52,.06)] border border-[rgba(192,147,52,.15)] px-4 py-2.5">
+                <span class="text-gold text-xs" aria-hidden="true">✦</span>
+                <span class="text-gold text-xs font-medium" id="selected-svc-label">—</span>
+                <button type="button" class="ml-auto text-[#e8dbc5]/25 text-xs hover:text-gold transition-colors" onclick="goStep(1)">Alterar</button>
+              </div>
+
+              <h2 id="step2-h" class="font-serif text-xl font-light mb-1">Data e hora preferida</h2>
+              <p class="text-[#e8dbc5]/35 text-xs mb-6 font-light">Seg–Sex 9h–21h · Sáb 9h–20h · Dom fechado</p>
+
+              <div class="space-y-5">
+                <div>
+                  <label for="field-date" class="block text-[9px] tracking-[.2em] uppercase text-[#e8dbc5]/40 mb-2">Data pretendida *</label>
+                  <input type="date" id="field-date" name="data_raw" class="form-field"
+                         required autocomplete="off" aria-required="true" aria-describedby="err-date">
+                  <p class="field-err" id="err-date">Por favor indique uma data válida</p>
+                </div>
+                <div>
+                  <label for="field-time" class="block text-[9px] tracking-[.2em] uppercase text-[#e8dbc5]/40 mb-2">Hora preferida *</label>
+                  <select id="field-time" name="hora_raw" class="form-field" required aria-required="true" aria-describedby="err-time">
+                    <option value="" disabled selected>Escolher hora</option>
+                    <option>9:00</option><option>9:30</option>
+                    <option>10:00</option><option>10:30</option>
+                    <option>11:00</option><option>11:30</option>
+                    <option>12:00</option><option>12:30</option>
+                    <option>13:00</option><option>13:30</option>
+                    <option>14:00</option><option>14:30</option>
+                    <option>15:00</option><option>15:30</option>
+                    <option>16:00</option><option>16:30</option>
+                    <option>17:00</option><option>17:30</option>
+                    <option>18:00</option><option>18:30</option>
+                    <option>19:00</option><option>19:30</option>
+                    <option>20:00</option><option>20:30</option>
+                  </select>
+                  <p class="field-err" id="err-time">Por favor escolha uma hora</p>
+                </div>
+                <div>
+                  <label for="field-notes" class="block text-[9px] tracking-[.2em] uppercase text-[#e8dbc5]/40 mb-2">Notas adicionais</label>
+                  <textarea id="field-notes" name="Notas" class="form-field resize-none" rows="3"
+                            placeholder="Preferências, estilo desejado, etc."
+                            maxlength="500" aria-label="Notas sobre o serviço"></textarea>
+                  <p class="text-[#e8dbc5]/18 text-[9px] mt-1 text-right" id="notes-count">0 / 500</p>
+                </div>
+              </div>
+
+              <div class="flex gap-3 mt-8">
+                <button type="button" class="btn-outline" onclick="goStep(1)">← Voltar</button>
+                <button type="button" class="btn-primary flex-1 justify-center" onclick="nextStep(3)">Continuar →</button>
+              </div>
+            </div>
+
+
+            <!-- PASSO 3 — Dados pessoais -->
+            <div class="step-panel" id="step3" role="group" aria-labelledby="step3-h">
+
+              <div class="bg-[rgba(192,147,52,.05)] border border-[rgba(192,147,52,.14)] p-4 mb-6 space-y-2">
+                <p class="text-[9px] tracking-[.2em] uppercase text-gold/50 mb-2">Resumo da marcação</p>
+                <div class="flex gap-3 text-xs text-[#e8dbc5]/55 font-light">
+                  <span class="text-gold" aria-hidden="true">✦</span>
+                  <span id="summary-service">—</span>
+                </div>
+                <div class="flex gap-3 text-xs text-[#e8dbc5]/55 font-light">
+                  <span class="text-gold" aria-hidden="true">◈</span>
+                  <span id="summary-datetime">—</span>
+                </div>
+                <button type="button" class="text-[9px] tracking-[.15em] uppercase text-[#e8dbc5]/22 hover:text-gold transition-colors mt-1" onclick="goStep(2)">Alterar</button>
+              </div>
+
+              <h2 id="step3-h" class="font-serif text-xl font-light mb-1">Os seus dados</h2>
+              <p class="text-[#e8dbc5]/35 text-xs mb-6 font-light">Para lhe confirmar a disponibilidade</p>
+
+              <div class="space-y-5">
+                <div>
+                  <label for="field-name" class="block text-[9px] tracking-[.2em] uppercase text-[#e8dbc5]/40 mb-2">Nome completo *</label>
+                  <input type="text" id="field-name" name="Nome" class="form-field"
+                         required autocomplete="name" maxlength="80" placeholder="O seu nome"
+                         aria-required="true" aria-describedby="err-name">
+                  <p class="field-err" id="err-name">Por favor insira o seu nome</p>
+                </div>
+                <div>
+                  <label for="field-phone" class="block text-[9px] tracking-[.2em] uppercase text-[#e8dbc5]/40 mb-2">Telemóvel *</label>
+                  <input type="tel" id="field-phone" name="Telemovel" class="form-field"
+                         required autocomplete="tel" maxlength="20" placeholder="9XX XXX XXX"
+                         pattern="[0-9\s\+\-\(\)]{7,20}"
+                         aria-required="true" aria-describedby="err-phone">
+                  <p class="field-err" id="err-phone">Por favor insira um número válido</p>
+                </div>
+                <div>
+                  <label for="field-email" class="block text-[9px] tracking-[.2em] uppercase text-[#e8dbc5]/40 mb-2">
+                    Email <span class="text-[#e8dbc5]/25 font-light normal-case tracking-normal">(opcional)</span>
+                  </label>
+                  <input type="email" id="field-email" name="Email" class="form-field"
+                         autocomplete="email" maxlength="120" placeholder="Para confirmação por email"
+                         aria-describedby="err-email">
+                  <p class="field-err" id="err-email">Por favor insira um email válido</p>
+                </div>
+                <div class="flex items-start gap-3 pt-1">
+                  <input type="checkbox" id="consent" name="Consentimento_RGPD" value="Sim"
+                         required class="consent-check mt-0.5"
+                         aria-required="true" aria-describedby="err-consent">
+                  <label for="consent" class="text-[#e8dbc5]/42 text-xs font-light leading-[1.65]" style="cursor:default">
+                    Dou consentimento para o tratamento dos meus dados exclusivamente para
+                    gestão desta marcação, nos termos do
+                    <a href="privacidade.html" class="text-gold/70 hover:text-gold transition-colors underline underline-offset-2" target="_blank" rel="noopener">Aviso de Privacidade</a>
+                    (RGPD).
+                  </label>
+                </div>
+                <p class="field-err" id="err-consent">É necessário aceitar para enviar o pedido</p>
+              </div>
+
+              <div id="rate-limit-warning" class="hidden mt-4 border border-[rgba(200,80,80,.25)] bg-[rgba(200,80,80,.07)] p-4 text-xs text-[#e8dbc5]/55 font-light">
+                Já enviou um pedido recentemente. Para marcação imediata ligue
+                <a href="tel:910473484" class="text-gold">910 473 484</a>.
+              </div>
+
+              <div class="flex gap-3 mt-8">
+                <button type="button" class="btn-outline" onclick="goStep(2)">← Voltar</button>
+                <button type="submit" class="btn-primary flex-1 justify-center" id="submit-btn">
+                  Enviar pedido ✂
+                </button>
+              </div>
+              <p class="text-[#e8dbc5]/18 text-[9px] text-center mt-4">
+                Confirmação em minutos · Sem taxa de reserva
+              </p>
+            </div>
+
+          </div><!-- /steps-wrapper -->
+
+          <!-- WhatsApp — mobile -->
+          <div class="mt-8 pt-6 border-t border-[rgba(192,147,52,.07)] lg:hidden">
+            <p class="text-[#e8dbc5]/22 text-[9px] tracking-[.2em] uppercase mb-3 text-center">Ou marque pelo WhatsApp</p>
+            <a href="https://wa.me/351910473484?text=Ol%C3%A1%21%20Gostaria%20de%20marcar%20um%20servi%C3%A7o%20na%20Barbearia%20do%20Miguel."
+               target="_blank" rel="noopener noreferrer"
+               class="flex items-center justify-center gap-2.5 border border-[rgba(37,211,102,.25)] py-3 text-[rgba(37,211,102,.7)] text-xs hover:border-[rgba(37,211,102,.5)] transition-colors">
+              <svg width="16" height="16" fill="rgba(37,211,102,.7)" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+              Abrir WhatsApp · 910 473 484
+            </a>
+          </div>
+
+        </form>
+      </div>
+    </main>
   </div>
 
-  <main class="max-w-2xl mx-auto px-6 pb-24">
-
-    <div class="bg-surface border border-[rgba(196,30,58,.15)] p-8 md:p-10 fade-up delay-2">
-
-      <div class="flex items-center gap-2 mb-10">
-        <div class="step-dot active" id="dot1"></div>
-        <div class="flex-1 h-px bg-[rgba(237,232,227,.08)]"></div>
-        <div class="step-dot" id="dot2"></div>
-        <div class="flex-1 h-px bg-[rgba(237,232,227,.08)]"></div>
-        <div class="step-dot" id="dot3"></div>
-      </div>
-
-      <form id="booking-form"
-            action="https://formsubmit.co/juniomagalhaes628@gmail.com"
-            method="POST">
-
-        <input type="hidden" name="_subject" value="✂️ Nova marcação — Barbearia do Miguel">
-        <input type="hidden" name="_captcha" value="true">
-        <input type="hidden" name="_next" value="https://juniomagalhaes628-cyber.github.io/barbearia-do-miguel/obrigado.html">
-        <input type="hidden" name="_template" value="table">
-        <input type="hidden" name="_autoresponse" value="Obrigado pela sua marcação na Barbearia do Miguel! Entraremos em contacto brevemente para confirmar. Questões urgentes: 910 473 484.">
-        <input type="hidden" name="Barbearia" value="Barbearia do Miguel — Paredes">
-        <input type="hidden" name="horario" id="hidden-horario" value="">
-
-        <!-- Passo 1 -->
-        <div id="step-1">
-          <p class="section-label mb-6">01 — Os seus dados</p>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-            <div>
-              <label class="text-[10px] tracking-[.18em] uppercase text-[#ede8e3]/40 block mb-2">Nome completo *</label>
-              <input type="text" name="Nome" placeholder="Ex: João Silva"
-                     class="form-field" required autocomplete="name">
-            </div>
-            <div>
-              <label class="text-[10px] tracking-[.18em] uppercase text-[#ede8e3]/40 block mb-2">Telemóvel *</label>
-              <input type="tel" name="Telemóvel" placeholder="9XX XXX XXX"
-                     class="form-field" required autocomplete="tel">
-            </div>
-          </div>
-          <div class="mb-6">
-            <label class="text-[10px] tracking-[.18em] uppercase text-[#ede8e3]/40 block mb-2">Email (opcional)</label>
-            <input type="email" name="Email" placeholder="para confirmação por email"
-                   class="form-field" autocomplete="email">
-          </div>
-          <button type="button" onclick="goToStep(2)" class="btn-primary w-full justify-center">
-            Continuar →
-          </button>
-        </div>
-
-        <!-- Passo 2 -->
-        <div id="step-2" class="hidden">
-          <p class="section-label mb-6">02 — Serviço & data</p>
-          <div class="mb-4">
-            <label class="text-[10px] tracking-[.18em] uppercase text-[#ede8e3]/40 block mb-2">Serviço pretendido *</label>
-            <div class="select-wrap">
-              <select name="Serviço" class="form-field" required>
-                <option value="" disabled selected>Escolha o serviço</option>
-                <optgroup label="── Cortes">
-                  <option>Corte Masculino (€12)</option>
-                  <option>Fade / Degradê (€15)</option>
-                  <option>Máquina Zero (€10)</option>
-                  <option>Corte Criança até 10 anos (€8)</option>
-                </optgroup>
-                <optgroup label="── Barba">
-                  <option>Aparar Barba (€8)</option>
-                  <option>Fazer Barba — navalha (€12)</option>
-                  <option>Sobrancelha (€5)</option>
-                </optgroup>
-                <optgroup label="── Combos">
-                  <option>Corte + Barba (€20)</option>
-                  <option>Fade + Barba (€23)</option>
-                  <option>Corte + Sobrancelha (€16)</option>
-                  <option>Corte + Barba + Sobrancelha (€25)</option>
-                </optgroup>
-                <optgroup label="── Outros">
-                  <option>Hidratação Capilar (€15)</option>
-                  <option value="Outro / Dúvida">Outro / Tenho uma dúvida</option>
-                </optgroup>
-              </select>
-            </div>
-          </div>
-          <div class="mb-6">
-            <label class="text-[10px] tracking-[.18em] uppercase text-[#ede8e3]/40 block mb-2">Data preferida *</label>
-            <input type="date" name="Data" id="date-input" class="form-field" required>
-          </div>
-          <div class="mb-8">
-            <label class="text-[10px] tracking-[.18em] uppercase text-[#ede8e3]/40 block mb-3">Horário preferido</label>
-            <div class="grid grid-cols-4 sm:grid-cols-6 gap-2" id="time-grid">
-              <div class="time-slot" data-time="09:00">09h00</div>
-              <div class="time-slot" data-time="09:30">09h30</div>
-              <div class="time-slot" data-time="10:00">10h00</div>
-              <div class="time-slot" data-time="10:30">10h30</div>
-              <div class="time-slot" data-time="11:00">11h00</div>
-              <div class="time-slot" data-time="11:30">11h30</div>
-              <div class="time-slot" data-time="12:00">12h00</div>
-              <div class="time-slot" data-time="14:00">14h00</div>
-              <div class="time-slot" data-time="14:30">14h30</div>
-              <div class="time-slot" data-time="15:00">15h00</div>
-              <div class="time-slot" data-time="15:30">15h30</div>
-              <div class="time-slot" data-time="16:00">16h00</div>
-              <div class="time-slot" data-time="16:30">16h30</div>
-              <div class="time-slot" data-time="17:00">17h00</div>
-              <div class="time-slot" data-time="17:30">17h30</div>
-              <div class="time-slot" data-time="18:00">18h00</div>
-              <div class="time-slot" data-time="18:30">18h30</div>
-              <div class="time-slot" data-time="19:00">19h00</div>
-              <div class="time-slot" data-time="19:30">19h30</div>
-              <div class="time-slot" data-time="20:00">20h00</div>
-              <div class="time-slot" data-time="20:30">20h30</div>
-            </div>
-            <p class="text-[#ede8e3]/28 text-[10px] mt-3">Seg-Sex: 9h–21h · Sáb: 9h–20h</p>
-          </div>
-          <div class="flex gap-3">
-            <button type="button" onclick="goToStep(1)" class="btn-outline flex-1 justify-center">← Voltar</button>
-            <button type="button" onclick="goToStep(3)" class="btn-primary flex-1 justify-center">Continuar →</button>
-          </div>
-        </div>
-
-        <!-- Passo 3 -->
-        <div id="step-3" class="hidden">
-          <p class="section-label mb-6">03 — Confirmação</p>
-          <div class="mb-6">
-            <label class="text-[10px] tracking-[.18em] uppercase text-[#ede8e3]/40 block mb-2">Observações (opcional)</label>
-            <textarea name="Observações" rows="3"
-                      placeholder="Ex: quero degradê alto, barba curta, cabelo muito crescido..."
-                      class="form-field resize-none"></textarea>
-          </div>
-
-          <!-- Resumo -->
-          <div id="summary" class="bg-[rgba(196,30,58,.05)] border border-[rgba(196,30,58,.15)] p-5 mb-7">
-            <p class="text-[10px] tracking-[.18em] uppercase text-red mb-4">Resumo da marcação</p>
-            <div class="space-y-2 text-sm">
-              <div class="flex justify-between"><span class="text-[#ede8e3]/45">Nome</span><span id="s-nome" class="font-light">—</span></div>
-              <div class="flex justify-between"><span class="text-[#ede8e3]/45">Telemóvel</span><span id="s-tel" class="font-light">—</span></div>
-              <div class="flex justify-between"><span class="text-[#ede8e3]/45">Serviço</span><span id="s-servico" class="font-light max-w-[55%] text-right">—</span></div>
-              <div class="flex justify-between"><span class="text-[#ede8e3]/45">Data</span><span id="s-data" class="font-light">—</span></div>
-              <div class="flex justify-between"><span class="text-[#ede8e3]/45">Horário</span><span id="s-hora" class="font-light">—</span></div>
-            </div>
-          </div>
-
-          <!-- GDPR -->
-          <div class="mb-6 flex items-start gap-3 p-4 bg-[rgba(196,30,58,.04)] border border-[rgba(196,30,58,.1)]">
-            <input type="checkbox" id="gdpr-consent" name="Consentimento_GDPR" value="Sim"
-                   class="mt-0.5 flex-shrink-0 accent-red cursor-pointer" required>
-            <label for="gdpr-consent" class="text-[#ede8e3]/50 text-xs leading-relaxed cursor-pointer">
-              Consinto que os meus dados pessoais (nome e contacto) sejam utilizados pela Barbearia do Miguel para confirmação do agendamento, em conformidade com o
-              <a href="privacidade.html" target="_blank" class="text-red underline">Aviso de Privacidade</a>.
-            </label>
-          </div>
-          <div id="gdpr-error" class="hidden text-red-400 text-xs mb-4">
-            ✖ Por favor aceite os termos para continuar.
-          </div>
-
-          <p class="text-[#ede8e3]/28 text-xs mb-7 leading-relaxed">
-            ✂ Após o envio, entraremos em contacto para confirmar o horário.<br>
-            Para marcação imediata ligue: <a href="tel:910473484" class="text-red">910 473 484</a>
-          </p>
-
-          <div class="flex gap-3">
-            <button type="button" onclick="goToStep(2)" class="btn-outline flex-1 justify-center">← Voltar</button>
-            <button type="submit" id="submit-btn" class="btn-primary flex-1 justify-center">
-              Enviar marcação ✂
-            </button>
-          </div>
-        </div>
-
-      </form>
-
-      <div id="success-msg" class="hidden text-center py-8">
-        <p class="text-red text-3xl mb-4" aria-hidden="true">✂</p>
-        <h3 class="font-serif text-2xl font-light mb-3">Marcação enviada!</h3>
-        <p class="text-[#ede8e3]/50 text-sm font-light leading-relaxed mb-6">Obrigado! Entraremos em contacto brevemente.</p>
-        <a href="index.html" class="btn-outline">← Voltar ao site</a>
-      </div>
-    </div>
-
-    <!-- WhatsApp alternativa -->
-    <div class="mt-6 bg-[rgba(37,211,102,.07)] border border-[rgba(37,211,102,.2)] p-5 flex items-center gap-4">
-      <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center" style="background:#25D366">
-        <svg width="20" height="20" fill="white" viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
-        </svg>
-      </div>
-      <div class="flex-1">
-        <p class="text-[#ede8e3]/80 text-sm font-medium">Prefere marcar pelo WhatsApp?</p>
-        <p class="text-[#ede8e3]/40 text-xs mt-0.5">Confirmação imediata · Resposta rápida</p>
-      </div>
-      <a href="https://wa.me/351910473484?text=Ol%C3%A1%21%20Gostaria%20de%20marcar%20um%20corte%20na%20Barbearia%20do%20Miguel."
-         target="_blank" rel="noopener noreferrer"
-         class="flex-shrink-0 text-[10px] tracking-[.15em] uppercase font-medium px-4 py-2 border border-[rgba(37,211,102,.4)] text-[#25D366] hover:bg-[rgba(37,211,102,.1)] transition-colors duration-200">
-        Falar →
-      </a>
-    </div>
-
-    <!-- Info cards -->
-    <div class="mt-4 grid grid-cols-3 gap-4">
-      <div class="bg-surface border border-[rgba(237,232,227,.06)] p-4 text-center">
-        <p class="text-red text-sm mb-2" aria-hidden="true">✂</p>
-        <p class="text-[10px] tracking-[.18em] uppercase text-[#ede8e3]/40 mb-1">Seg–Sex</p>
-        <p class="text-xs text-[#ede8e3]/60 font-light">9h às 21h</p>
-      </div>
-      <div class="bg-surface border border-[rgba(237,232,227,.06)] p-4 text-center">
-        <p class="text-red text-sm mb-2" aria-hidden="true">◈</p>
-        <p class="text-[10px] tracking-[.18em] uppercase text-[#ede8e3]/40 mb-1">Morada</p>
-        <p class="text-xs text-[#ede8e3]/60 font-light">Av. Amália Rodrigues 54</p>
-      </div>
-      <div class="bg-surface border border-[rgba(237,232,227,.06)] p-4 text-center">
-        <p class="text-red text-sm mb-2" aria-hidden="true">◇</p>
-        <p class="text-[10px] tracking-[.18em] uppercase text-[#ede8e3]/40 mb-1">Telefone</p>
-        <a href="tel:910473484" class="text-xs text-[#ede8e3]/60 font-light hover:text-red transition-colors">910 473 484</a>
-      </div>
-    </div>
-  </main>
-
-  <footer class="border-t border-[rgba(196,30,58,.07)] py-6 px-6 text-center">
-    <p class="text-[#ede8e3]/20 text-xs">© 2026 Barbearia do Miguel · Paredes · <a href="privacidade.html" class="hover:text-red transition-colors">Privacidade</a></p>
+  <footer class="border-t border-[rgba(192,147,52,.07)] py-6 px-6 text-center" role="contentinfo">
+    <p class="text-[#e8dbc5]/18 text-xs">
+      © 2026 Barbearia do Miguel · Paredes ·
+      <a href="privacidade.html" class="hover:text-gold transition-colors">Privacidade</a>
+    </p>
   </footer>
 
+
   <script>
-    const BOOKING_API = 'COLE_AQUI_O_URL_DO_APPS_SCRIPT';
+  'use strict';
 
-    async function fetchBookedSlots(date) {
-      if (!BOOKING_API || BOOKING_API.includes('COLE_AQUI')) return [];
-      try { const res = await fetch(`${BOOKING_API}?date=${date}`); const data = await res.json(); return data.booked || []; }
-      catch { return []; }
-    }
-
-    async function updateSlotAvailability(date) {
-      const booked = await fetchBookedSlots(date);
-      document.querySelectorAll('.time-slot').forEach(slot => {
-        const isTaken = booked.includes(slot.dataset.time);
-        slot.classList.toggle('unavailable', isTaken);
-        if (isTaken && slot.classList.contains('selected')) {
-          slot.classList.remove('selected');
-          document.getElementById('hidden-horario').value = '';
-        }
-      });
-    }
-
-    function goToStep(n) {
-      if (n === 2) {
-        const nome = document.querySelector('[name="Nome"]').value.trim();
-        const tel  = document.querySelector('[name="Telemóvel"]').value.trim();
-        if (!nome || !tel) { shake(document.querySelector('[name="Nome"]').closest('div').parentElement); return; }
-      }
-      if (n === 3) {
-        const servico = document.querySelector('[name="Serviço"]').value;
-        const data    = document.querySelector('[name="Data"]').value;
-        if (!servico || !data) { shake(document.querySelector('[name="Serviço"]').closest('.select-wrap')); return; }
-        updateSummary();
-      }
-      [1,2,3].forEach(i => {
-        document.getElementById('step-'+i).classList.toggle('hidden', i !== n);
-        const dot = document.getElementById('dot'+i);
-        dot.classList.remove('active','done');
-        if (i < n) dot.classList.add('done');
-        if (i === n) dot.classList.add('active');
-      });
-    }
-
-    function shake(el) {
-      el.style.transition = 'transform 80ms ease';
-      el.style.transform = 'translateX(-6px)';
-      setTimeout(() => { el.style.transform = 'translateX(6px)'; }, 80);
-      setTimeout(() => { el.style.transform = 'translateX(0)'; }, 160);
-    }
-
-    function updateSummary() {
-      const v = sel => document.querySelector(sel)?.value || '—';
-      document.getElementById('s-nome').textContent    = v('[name="Nome"]');
-      document.getElementById('s-tel').textContent     = v('[name="Telemóvel"]');
-      document.getElementById('s-servico').textContent = v('[name="Serviço"]') || '—';
-      const rawDate = v('[name="Data"]');
-      if (rawDate !== '—') {
-        const d = new Date(rawDate + 'T12:00:00');
-        document.getElementById('s-data').textContent = d.toLocaleDateString('pt-PT', {weekday:'short', day:'numeric', month:'long'});
-      }
-      document.getElementById('s-hora').textContent = document.getElementById('hidden-horario').value || 'A definir';
-    }
-
-    document.querySelectorAll('.time-slot').forEach(slot => {
-      slot.addEventListener('click', () => {
-        document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
-        slot.classList.add('selected');
-        document.getElementById('hidden-horario').value = slot.dataset.time;
-      });
+  // ─── Custom cursor
+  const isTouch = !window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  if (!isTouch) {
+    const ring = document.getElementById('cursor-ring');
+    const dot  = document.getElementById('cursor-dot');
+    let rx = -200, ry = -200, mx = -200, my = -200;
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      dot.style.transform = `translate(${mx}px,${my}px)`;
     });
-
-    const dateInput = document.getElementById('date-input');
-    const today = new Date(); today.setDate(today.getDate() + 1);
-    dateInput.min = today.toISOString().split('T')[0];
-
-    const dateErr = document.createElement('p');
-    dateErr.className = 'text-red-400 text-xs mt-2 hidden';
-    dateErr.textContent = '✖ O salão está fechado ao domingo. Escolha outro dia.';
-    dateInput.parentElement.appendChild(dateErr);
-
-    dateInput.addEventListener('input', async () => {
-      const d = new Date(dateInput.value + 'T12:00:00');
-      if (d.getDay() === 0) {
-        dateInput.value = '';
-        dateInput.style.borderColor = 'rgba(220,68,68,.6)';
-        dateErr.classList.remove('hidden');
-        setTimeout(() => { dateInput.style.borderColor = ''; dateErr.classList.add('hidden'); }, 3000);
-        return;
-      }
-      if (dateInput.value) await updateSlotAvailability(dateInput.value);
+    (function loop() { rx += (mx-rx)*.11; ry += (my-ry)*.11; ring.style.transform = `translate(${rx}px,${ry}px)`; requestAnimationFrame(loop); })();
+    document.querySelectorAll('a,button,.svc-card,input,select,textarea').forEach(el => {
+      el.addEventListener('mouseenter', () => { ring.style.width='40px'; ring.style.height='40px'; ring.style.borderColor='rgba(192,147,52,.7)'; });
+      el.addEventListener('mouseleave', () => { ring.style.width='28px'; ring.style.height='28px'; ring.style.borderColor='rgba(192,147,52,.4)'; });
     });
+  }
 
-    const SUBMIT_KEY = 'barbeariamiguel_booking_sent';
-    const lastSent = localStorage.getItem(SUBMIT_KEY);
-    if (lastSent && (Date.now() - parseInt(lastSent)) < 2 * 60 * 60 * 1000) {
-      document.getElementById('booking-form').innerHTML = `
-        <div class="text-center py-12">
-          <p class="text-red text-3xl mb-4">✂</p>
-          <h3 class="font-serif text-2xl font-light mb-3">Pedido já enviado</h3>
-          <p class="text-[#ede8e3]/50 text-sm font-light leading-relaxed mb-2">
-            Já recebemos o seu pedido.<br>Entraremos em contacto brevemente para confirmar.
-          </p>
-          <p class="text-[#ede8e3]/35 text-xs mb-8">Para confirmação imediata ligue: <a href="tel:910473484" class="text-red">910 473 484</a></p>
-          <a href="index.html" class="btn-outline">← Voltar ao site</a>
-        </div>`;
+  // ─── Anti-bot: timestamp
+  document.getElementById('form-timestamp').value = Date.now().toString();
+
+  // ─── Date min
+  document.getElementById('field-date').min = new Date().toISOString().split('T')[0];
+
+  // ─── Notes counter
+  const notesField = document.getElementById('field-notes');
+  notesField.addEventListener('input', () => {
+    document.getElementById('notes-count').textContent = `${notesField.value.length} / 500`;
+  });
+
+  // ─── Service selection
+  let selectedService = '';
+  document.querySelectorAll('.svc-card').forEach(card => {
+    function select() {
+      document.querySelectorAll('.svc-card').forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
+      card.querySelector('input[type="radio"]').checked = true;
+      selectedService = card.dataset.service;
+      document.getElementById('hidden-service').value = selectedService;
+      document.getElementById('selected-svc-label').textContent = selectedService;
+      hideErr('err-service');
+    }
+    card.addEventListener('click', select);
+    card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); select(); } });
+  });
+
+  // ─── Error helpers
+  function showErr(id, msg) {
+    const el = document.getElementById(id);
+    if (msg) el.textContent = msg;
+    el.classList.add('show');
+  }
+  function hideErr(id) { document.getElementById(id).classList.remove('show'); }
+
+  // ─── Validators
+  function validateStep1() {
+    if (!selectedService) { showErr('err-service'); return false; }
+    hideErr('err-service'); return true;
+  }
+
+  function validateStep2() {
+    const date = document.getElementById('field-date').value;
+    const time = document.getElementById('field-time').value;
+    let ok = true;
+
+    if (!date) { showErr('err-date', 'Por favor indique uma data'); ok = false; }
+    else {
+      const d = new Date(date + 'T12:00:00');
+      if (d.getDay() === 0) { showErr('err-date', 'Domingo fechado — escolha outro dia'); ok = false; }
+      else { hideErr('err-date'); }
     }
 
-    document.getElementById('booking-form')?.addEventListener('submit', async (e) => {
+    if (!time) { showErr('err-time'); ok = false; } else { hideErr('err-time'); }
+
+    if (ok) {
+      document.getElementById('hidden-date').value = date;
+      document.getElementById('hidden-time').value = time;
+      const dateObj = new Date(date + 'T12:00:00');
+      const wd = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+      const mo = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+      const fmt = `${wd[dateObj.getDay()]}, ${dateObj.getDate()} ${mo[dateObj.getMonth()]} ${dateObj.getFullYear()}`;
+      document.getElementById('summary-service').textContent  = selectedService;
+      document.getElementById('summary-datetime').textContent = `${fmt} às ${time}`;
+    }
+    return ok;
+  }
+
+  function validateStep3() {
+    const name  = document.getElementById('field-name').value.trim();
+    const phone = document.getElementById('field-phone').value.trim();
+    const email = document.getElementById('field-email').value.trim();
+    const ok3   = document.getElementById('consent').checked;
+    let ok = true;
+
+    if (name.length < 2)                               { showErr('err-name');    ok = false; } else { hideErr('err-name'); }
+    if (!/^[0-9\s\+\-\(\)]{7,20}$/.test(phone))       { showErr('err-phone');   ok = false; } else { hideErr('err-phone'); }
+    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showErr('err-email'); ok = false; } else { hideErr('err-email'); }
+    if (!ok3)                                          { showErr('err-consent'); ok = false; } else { hideErr('err-consent'); }
+    return ok;
+  }
+
+  // ─── Step navigation
+  let currentStep = 1;
+
+  function updateProgress(n) {
+    for (let i = 1; i <= 3; i++) {
+      const d = document.getElementById(`dot${i}`);
+      d.classList.remove('active','done');
+      if (i === n) d.classList.add('active');
+      if (i < n)  d.classList.add('done');
+    }
+    document.getElementById('fill1').style.width = n >= 2 ? '100%' : '0%';
+    document.getElementById('fill2').style.width = n >= 3 ? '100%' : '0%';
+    document.getElementById('step-label').textContent = `Passo ${n} de 3`;
+    document.getElementById('step-name').textContent  = ['','Serviço','Data & Hora','Dados'][n];
+    document.getElementById('progress-aria').setAttribute('aria-valuenow', n);
+  }
+
+  function goStep(n) {
+    const from = document.getElementById(`step${currentStep}`);
+    const to   = document.getElementById(`step${n}`);
+    from.classList.remove('active');
+    from.classList.add('exit');
+    setTimeout(() => from.classList.remove('exit'), 420);
+    to.classList.add('active');
+    currentStep = n;
+    updateProgress(n);
+    if (window.innerWidth < 1024) window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function nextStep(n) {
+    const validators = { 2: validateStep1, 3: validateStep2 };
+    if (validators[n] && !validators[n]()) return;
+    goStep(n);
+  }
+
+  // ─── Rate limit
+  const RATE_KEY = 'bdm_submit';
+  const RATE_MS  = 7200000; // 2h
+  (function() {
+    const last = localStorage.getItem(RATE_KEY);
+    if (last && Date.now() - parseInt(last, 10) < RATE_MS) {
+      document.getElementById('rate-limit-warning').classList.remove('hidden');
+    }
+  })();
+
+  // ─── Submit
+  document.getElementById('booking-form').addEventListener('submit', function(e) {
+    if (!validateStep3()) { e.preventDefault(); return; }
+
+    const loaded = parseInt(document.getElementById('form-timestamp').value, 10);
+    if (Date.now() - loaded < 5000) { e.preventDefault(); return; }
+
+    const last = localStorage.getItem(RATE_KEY);
+    if (last && Date.now() - parseInt(last, 10) < RATE_MS) {
       e.preventDefault();
-      const consent = document.getElementById('gdpr-consent');
-      const gdprErr = document.getElementById('gdpr-error');
-      if (!consent.checked) { gdprErr.classList.remove('hidden'); consent.closest('div').scrollIntoView({ behavior: 'smooth', block: 'center' }); return; }
-      gdprErr.classList.add('hidden');
-      const btn  = document.getElementById('submit-btn');
-      const date = document.querySelector('[name="Data"]').value;
-      const time = document.getElementById('hidden-horario').value;
-      if (BOOKING_API && !BOOKING_API.includes('COLE_AQUI') && date && time) {
-        btn.textContent = 'A verificar...'; btn.disabled = true; btn.style.opacity = '.6';
-        try {
-          const res = await fetch(BOOKING_API, { method:'POST', body: JSON.stringify({ date, time, name: document.querySelector('[name="Nome"]').value, phone: document.querySelector('[name="Telemóvel"]').value }) });
-          const result = await res.json();
-          if (!result.success) {
-            btn.textContent = 'Enviar marcação ✂'; btn.disabled = false; btn.style.opacity = '1';
-            await updateSlotAvailability(date);
-            const errEl = document.createElement('p');
-            errEl.className = 'text-red-400 text-xs mt-4 text-center';
-            errEl.textContent = '✖ Este horário foi entretanto reservado. Escolha outro.';
-            btn.closest('div').before(errEl);
-            setTimeout(() => errEl.remove(), 5000);
-            return;
-          }
-        } catch { /* API indisponível — continuar */ }
-      }
-      btn.textContent = 'A enviar...'; btn.disabled = true; btn.style.opacity = '.6';
-      localStorage.setItem(SUBMIT_KEY, Date.now().toString());
-      e.target.submit();
-    });
+      document.getElementById('rate-limit-warning').classList.remove('hidden');
+      return;
+    }
 
-    document.querySelectorAll('.fade-up').forEach((el, i) => { el.style.animationDelay = (i * 120) + 'ms'; });
+    localStorage.setItem(RATE_KEY, Date.now().toString());
+    const btn = document.getElementById('submit-btn');
+    btn.disabled = true;
+    btn.textContent = 'A enviar…';
+    btn.style.opacity = '.6';
+  });
+
+  // ─── Real-time validation on blur
+  document.getElementById('field-name').addEventListener('blur', function() {
+    if (this.value.trim().length < 2) this.classList.add('error');
+    else { this.classList.remove('error'); this.classList.add('valid'); hideErr('err-name'); }
+  });
+  document.getElementById('field-phone').addEventListener('blur', function() {
+    if (!/^[0-9\s\+\-\(\)]{7,20}$/.test(this.value.trim())) this.classList.add('error');
+    else { this.classList.remove('error'); this.classList.add('valid'); hideErr('err-phone'); }
+  });
+  document.getElementById('field-email').addEventListener('blur', function() {
+    if (this.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.value.trim())) this.classList.add('error');
+    else { this.classList.remove('error'); if (this.value) { this.classList.add('valid'); hideErr('err-email'); } }
+  });
   </script>
 
 </body>

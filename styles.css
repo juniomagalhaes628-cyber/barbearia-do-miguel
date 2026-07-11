@@ -1,25 +1,27 @@
 /* ===========================
    Barbearia do Miguel — Styles
-   Red & Dark identity
+   Paleta vintage-quente: madeira · latão · creme
    =========================== */
 
 :root {
   --ease-out:    cubic-bezier(0.23, 1, 0.32, 1);
   --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
 
-  --bg:        #0a0a0a;
-  --surface:   #111111;
-  --surface2:  #191919;
-  --border:    rgba(255,255,255,.07);
-  --border-red: rgba(196,30,58,.25);
+  /* Paleta vintage */
+  --bg:       #0d0b07;
+  --surface:  #141109;
+  --surface2: #1c1810;
+  --border:   rgba(255,240,200,.06);
+  --border-gold: rgba(192,147,52,.22);
 
-  --red:       #c41e3a;
-  --red-light: #e0253e;
-  --red-dim:   rgba(196,30,58,.08);
+  --gold:       #c09334;
+  --gold-light: #d4ad52;
+  --gold-dim:   rgba(192,147,52,.08);
 
-  --text:       #ede8e3;
-  --text-muted: rgba(237,232,227,.55);
-  --text-faint: rgba(237,232,227,.25);
+  --cream:      #f0e6d3;
+  --text:       #e8dbc5;
+  --text-muted: rgba(232,219,197,.6);
+  --text-faint: rgba(232,219,197,.28);
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -34,31 +36,35 @@ body {
 /* ── Scrollbar ── */
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: var(--bg); }
-::-webkit-scrollbar-thumb { background: rgba(196,30,58,.4); border-radius: 2px; }
-::-webkit-scrollbar-thumb:hover { background: var(--red); }
+::-webkit-scrollbar-thumb { background: rgba(192,147,52,.4); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: var(--gold); }
 
 /* ── Typography ── */
 .font-serif { font-family: 'Cormorant Garamond', Georgia, serif; }
+
 .section-label {
   display: block;
   font-size: .6875rem;
   letter-spacing: .22em;
   text-transform: uppercase;
-  color: var(--red);
+  color: var(--gold);
   font-weight: 500;
 }
-.red-divider {
-  width: 48px; height: 2px;
-  background: var(--red);
+
+.gold-divider {
+  display: block;
+  width: 56px; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
 }
 
 /* ── Navbar ── */
 #navbar {
-  transition: background 300ms ease, border-color 300ms ease, backdrop-filter 300ms ease;
+  transition: background 350ms ease, border-color 350ms ease, backdrop-filter 350ms ease;
 }
+
 .nav-link {
   color: var(--text-muted);
-  font-size: .8rem;
+  font-size: .78rem;
   letter-spacing: .1em;
   text-transform: uppercase;
   text-decoration: none;
@@ -69,67 +75,82 @@ body {
   content: '';
   position: absolute;
   bottom: -3px; left: 0;
-  width: 0; height: 1.5px;
-  background: var(--red);
+  width: 0; height: 1px;
+  background: var(--gold);
   transition: width 250ms var(--ease-out);
 }
 @media (hover: hover) and (pointer: fine) {
-  .nav-link:hover { color: var(--red-light); }
+  .nav-link:hover { color: var(--gold-light); }
   .nav-link:hover::after { width: 100%; }
 }
 
 /* ── Buttons ── */
 .btn-primary {
   display: inline-flex; align-items: center; gap: .5rem;
-  padding: .85rem 2rem;
-  background: var(--red);
-  color: #fff;
+  padding: .9rem 2.1rem;
+  background: var(--gold);
+  color: #0d0b07;
   font-family: 'Inter', sans-serif;
-  font-weight: 600; font-size: .78rem;
-  letter-spacing: .1em; text-transform: uppercase;
+  font-weight: 700; font-size: .75rem;
+  letter-spacing: .12em; text-transform: uppercase;
   border: none; cursor: pointer; text-decoration: none;
   transition: transform 160ms var(--ease-out), background 200ms ease, box-shadow 200ms ease;
 }
 .btn-primary:active { transform: scale(0.97); }
 @media (hover: hover) and (pointer: fine) {
   .btn-primary:hover {
-    background: var(--red-light);
-    box-shadow: 0 0 28px rgba(196,30,58,.3);
+    background: var(--gold-light);
+    box-shadow: 0 0 30px rgba(192,147,52,.28);
   }
 }
 
 .btn-outline {
   display: inline-flex; align-items: center; gap: .5rem;
-  padding: .85rem 2rem;
+  padding: .9rem 2.1rem;
   background: transparent;
-  color: var(--text);
+  color: var(--cream);
   font-family: 'Inter', sans-serif;
-  font-weight: 500; font-size: .78rem;
-  letter-spacing: .1em; text-transform: uppercase;
-  border: 1px solid rgba(237,232,227,.2);
+  font-weight: 500; font-size: .75rem;
+  letter-spacing: .12em; text-transform: uppercase;
+  border: 1px solid rgba(232,219,197,.22);
   cursor: pointer; text-decoration: none;
-  transition: transform 160ms var(--ease-out), border-color 200ms ease, background 200ms ease, color 200ms ease;
+  transition: transform 160ms var(--ease-out), border-color 200ms ease, color 200ms ease, background 200ms ease;
 }
 .btn-outline:active { transform: scale(0.97); }
 @media (hover: hover) and (pointer: fine) {
   .btn-outline:hover {
-    border-color: var(--red);
-    color: var(--red-light);
-    background: rgba(196,30,58,.05);
+    border-color: var(--gold);
+    color: var(--gold-light);
+    background: var(--gold-dim);
   }
 }
+
+/* ── Hamburger ── */
+.hamburger-line {
+  display: block; width: 22px; height: 1.5px;
+  background: var(--cream);
+  transition: transform 250ms var(--ease-out), opacity 200ms ease;
+}
+
+/* ── Mobile menu ── */
+.mobile-menu {
+  transform: translateY(-8px); opacity: 0; pointer-events: none;
+  transition: transform 280ms var(--ease-out), opacity 250ms ease;
+}
+.mobile-menu.open { transform: translateY(0); opacity: 1; pointer-events: auto; }
 
 /* ── Cards ── */
 .service-card {
   background: var(--surface);
   border: 1px solid var(--border);
   padding: 2rem;
-  transition: border-color 250ms var(--ease-out), box-shadow 250ms var(--ease-out);
+  transition: border-color 280ms var(--ease-out), box-shadow 280ms var(--ease-out), transform 280ms var(--ease-out);
 }
 @media (hover: hover) and (pointer: fine) {
   .service-card:hover {
-    border-color: rgba(196,30,58,.3);
-    box-shadow: 0 10px 32px rgba(0,0,0,.35), 0 0 0 1px rgba(196,30,58,.07);
+    border-color: var(--border-gold);
+    box-shadow: 0 12px 36px rgba(0,0,0,.4), 0 0 0 1px rgba(192,147,52,.07);
+    transform: translateY(-2px);
   }
 }
 
@@ -141,69 +162,75 @@ body {
   position: relative;
 }
 @media (hover: hover) and (pointer: fine) {
-  .pricing-card:hover { border-color: rgba(196,30,58,.28); transform: translateY(-2px); }
+  .pricing-card:hover { border-color: var(--border-gold); transform: translateY(-2px); }
 }
 .pricing-card.featured {
-  border-color: rgba(196,30,58,.4);
-  background: linear-gradient(150deg, var(--surface) 0%, #160609 100%);
+  border-color: rgba(192,147,52,.4);
+  background: linear-gradient(160deg, var(--surface) 0%, #18130a 100%);
 }
 
 .testimonial-card {
   background: var(--surface);
   border: 1px solid var(--border);
+  border-left: 2px solid var(--gold);
   padding: 2rem;
   transition: border-color 250ms ease;
 }
 @media (hover: hover) and (pointer: fine) {
-  .testimonial-card:hover { border-color: rgba(196,30,58,.2); }
+  .testimonial-card:hover { border-color: rgba(192,147,52,.35); }
 }
 
 /* ── Stars ── */
-.stars { color: var(--red); letter-spacing: 2px; }
+.stars { color: var(--gold); letter-spacing: 2px; }
 
-/* ── Hamburger ── */
-.hamburger-line {
-  display: block; width: 22px; height: 1.5px;
-  background: var(--text);
-  transition: transform 250ms var(--ease-out), opacity 200ms ease;
+/* ── Gallery ── */
+.gallery-item { overflow: hidden; }
+@media (hover: hover) and (pointer: fine) {
+  .gallery-item img {
+    transition: transform 600ms var(--ease-out);
+  }
+  .gallery-item:hover img { transform: scale(1.06); }
 }
-
-/* ── Mobile menu ── */
-.mobile-menu {
-  transform: translateY(-8px);
-  opacity: 0;
-  pointer-events: none;
-  transition: transform 280ms var(--ease-out), opacity 250ms ease;
-}
-.mobile-menu.open { transform: translateY(0); opacity: 1; pointer-events: auto; }
 
 /* ── Scroll reveal ── */
 .reveal {
   opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 650ms var(--ease-out), transform 650ms var(--ease-out);
+  transform: translateY(28px);
+  transition: opacity 700ms var(--ease-out), transform 700ms var(--ease-out);
 }
 .reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: opacity 700ms var(--ease-out), transform 700ms var(--ease-out);
+}
+.reveal-left.visible { opacity: 1; transform: translateX(0); }
+.reveal-right {
+  opacity: 0;
+  transform: translateX(30px);
+  transition: opacity 700ms var(--ease-out), transform 700ms var(--ease-out);
+}
+.reveal-right.visible { opacity: 1; transform: translateX(0); }
 
-/* ── Fade-up ── */
+/* ── Hero entry ── */
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(20px); }
+  from { opacity: 0; transform: translateY(24px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-.fade-up { animation: fadeUp 700ms var(--ease-out) both; opacity: 0; }
-.delay-1 { animation-delay:  80ms; }
-.delay-2 { animation-delay: 190ms; }
-.delay-3 { animation-delay: 300ms; }
-.delay-4 { animation-delay: 420ms; }
-.delay-5 { animation-delay: 530ms; }
+.fade-up { animation: fadeUp 900ms var(--ease-out) both; opacity: 0; }
+.delay-1 { animation-delay:  100ms; }
+.delay-2 { animation-delay:  220ms; }
+.delay-3 { animation-delay:  360ms; }
+.delay-4 { animation-delay:  500ms; }
+.delay-5 { animation-delay:  640ms; }
+.delay-6 { animation-delay:  780ms; }
 
-/* ── Barber accent line ── */
-.accent-bar {
-  display: block;
-  width: 3px; height: 48px;
-  background: var(--red);
-  flex-shrink: 0;
+/* ── Hero badge pulse ── */
+@keyframes badgePulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(192,147,52,.25); }
+  50%       { box-shadow: 0 0 0 8px rgba(192,147,52,0); }
 }
+.hero-badge { animation: badgePulse 3s ease-in-out infinite; }
 
 /* ── WhatsApp floating button ── */
 .whatsapp-btn {
@@ -219,12 +246,18 @@ body {
   text-decoration: none;
 }
 @media (hover: hover) and (pointer: fine) {
-  .whatsapp-btn:hover {
-    transform: scale(1.1);
-    box-shadow: 0 6px 28px rgba(37,211,102,.5);
-  }
+  .whatsapp-btn:hover { transform: scale(1.1); box-shadow: 0 6px 28px rgba(37,211,102,.5); }
 }
 .whatsapp-btn:active { transform: scale(0.95); }
+
+/* ── Stat counter ── */
+.stat-value {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(2.2rem, 4vw, 3rem);
+  font-weight: 300;
+  color: var(--gold);
+  line-height: 1;
+}
 
 /* ── Reduced motion ── */
 @media (prefers-reduced-motion: reduce) {
@@ -232,4 +265,5 @@ body {
     animation-duration: .01ms !important;
     transition-duration: .2s  !important;
   }
+  html { scroll-behavior: auto; }
 }
