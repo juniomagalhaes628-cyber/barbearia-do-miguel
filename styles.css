@@ -1,0 +1,235 @@
+/* ===========================
+   Barbearia do Miguel — Styles
+   Red & Dark identity
+   =========================== */
+
+:root {
+  --ease-out:    cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+
+  --bg:        #0a0a0a;
+  --surface:   #111111;
+  --surface2:  #191919;
+  --border:    rgba(255,255,255,.07);
+  --border-red: rgba(196,30,58,.25);
+
+  --red:       #c41e3a;
+  --red-light: #e0253e;
+  --red-dim:   rgba(196,30,58,.08);
+
+  --text:       #ede8e3;
+  --text-muted: rgba(237,232,227,.55);
+  --text-faint: rgba(237,232,227,.25);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: rgba(196,30,58,.4); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: var(--red); }
+
+/* ── Typography ── */
+.font-serif { font-family: 'Cormorant Garamond', Georgia, serif; }
+.section-label {
+  display: block;
+  font-size: .6875rem;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--red);
+  font-weight: 500;
+}
+.red-divider {
+  width: 48px; height: 2px;
+  background: var(--red);
+}
+
+/* ── Navbar ── */
+#navbar {
+  transition: background 300ms ease, border-color 300ms ease, backdrop-filter 300ms ease;
+}
+.nav-link {
+  color: var(--text-muted);
+  font-size: .8rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  position: relative;
+  transition: color 200ms ease;
+}
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -3px; left: 0;
+  width: 0; height: 1.5px;
+  background: var(--red);
+  transition: width 250ms var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .nav-link:hover { color: var(--red-light); }
+  .nav-link:hover::after { width: 100%; }
+}
+
+/* ── Buttons ── */
+.btn-primary {
+  display: inline-flex; align-items: center; gap: .5rem;
+  padding: .85rem 2rem;
+  background: var(--red);
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600; font-size: .78rem;
+  letter-spacing: .1em; text-transform: uppercase;
+  border: none; cursor: pointer; text-decoration: none;
+  transition: transform 160ms var(--ease-out), background 200ms ease, box-shadow 200ms ease;
+}
+.btn-primary:active { transform: scale(0.97); }
+@media (hover: hover) and (pointer: fine) {
+  .btn-primary:hover {
+    background: var(--red-light);
+    box-shadow: 0 0 28px rgba(196,30,58,.3);
+  }
+}
+
+.btn-outline {
+  display: inline-flex; align-items: center; gap: .5rem;
+  padding: .85rem 2rem;
+  background: transparent;
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  font-weight: 500; font-size: .78rem;
+  letter-spacing: .1em; text-transform: uppercase;
+  border: 1px solid rgba(237,232,227,.2);
+  cursor: pointer; text-decoration: none;
+  transition: transform 160ms var(--ease-out), border-color 200ms ease, background 200ms ease, color 200ms ease;
+}
+.btn-outline:active { transform: scale(0.97); }
+@media (hover: hover) and (pointer: fine) {
+  .btn-outline:hover {
+    border-color: var(--red);
+    color: var(--red-light);
+    background: rgba(196,30,58,.05);
+  }
+}
+
+/* ── Cards ── */
+.service-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 2rem;
+  transition: border-color 250ms var(--ease-out), box-shadow 250ms var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .service-card:hover {
+    border-color: rgba(196,30,58,.3);
+    box-shadow: 0 10px 32px rgba(0,0,0,.35), 0 0 0 1px rgba(196,30,58,.07);
+  }
+}
+
+.pricing-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 2rem;
+  transition: border-color 250ms var(--ease-out), transform 250ms var(--ease-out);
+  position: relative;
+}
+@media (hover: hover) and (pointer: fine) {
+  .pricing-card:hover { border-color: rgba(196,30,58,.28); transform: translateY(-2px); }
+}
+.pricing-card.featured {
+  border-color: rgba(196,30,58,.4);
+  background: linear-gradient(150deg, var(--surface) 0%, #160609 100%);
+}
+
+.testimonial-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 2rem;
+  transition: border-color 250ms ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  .testimonial-card:hover { border-color: rgba(196,30,58,.2); }
+}
+
+/* ── Stars ── */
+.stars { color: var(--red); letter-spacing: 2px; }
+
+/* ── Hamburger ── */
+.hamburger-line {
+  display: block; width: 22px; height: 1.5px;
+  background: var(--text);
+  transition: transform 250ms var(--ease-out), opacity 200ms ease;
+}
+
+/* ── Mobile menu ── */
+.mobile-menu {
+  transform: translateY(-8px);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 280ms var(--ease-out), opacity 250ms ease;
+}
+.mobile-menu.open { transform: translateY(0); opacity: 1; pointer-events: auto; }
+
+/* ── Scroll reveal ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 650ms var(--ease-out), transform 650ms var(--ease-out);
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ── Fade-up ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.fade-up { animation: fadeUp 700ms var(--ease-out) both; opacity: 0; }
+.delay-1 { animation-delay:  80ms; }
+.delay-2 { animation-delay: 190ms; }
+.delay-3 { animation-delay: 300ms; }
+.delay-4 { animation-delay: 420ms; }
+.delay-5 { animation-delay: 530ms; }
+
+/* ── Barber accent line ── */
+.accent-bar {
+  display: block;
+  width: 3px; height: 48px;
+  background: var(--red);
+  flex-shrink: 0;
+}
+
+/* ── WhatsApp floating button ── */
+.whatsapp-btn {
+  position: fixed;
+  bottom: 1.5rem; right: 1.5rem;
+  z-index: 100;
+  width: 3.5rem; height: 3.5rem;
+  border-radius: 50%;
+  background: #25D366;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 20px rgba(37,211,102,.35);
+  transition: transform 200ms var(--ease-out), box-shadow 200ms ease;
+  text-decoration: none;
+}
+@media (hover: hover) and (pointer: fine) {
+  .whatsapp-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 28px rgba(37,211,102,.5);
+  }
+}
+.whatsapp-btn:active { transform: scale(0.95); }
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    transition-duration: .2s  !important;
+  }
+}

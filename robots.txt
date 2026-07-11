@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://juniomagalhaes628-cyber.github.io/barbearia-do-miguel/sitemap.xml

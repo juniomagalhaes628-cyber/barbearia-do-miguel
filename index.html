@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Barbearia do Miguel — Barbearia premium em Paredes. Corte masculino, barba, fade e degradê. 4.9★ · 447 avaliações Google. Ligue: 910 473 484.">
+  <meta name="robots" content="index, follow">
+  <meta property="og:title" content="Barbearia do Miguel — Paredes">
+  <meta property="og:description" content="O melhor corte masculino de Paredes. 4.9 estrelas · 447 avaliações Google. Seg-Sex 9h-21h · Sáb 9h-20h.">
+  <meta property="og:image" content="https://juniomagalhaes628-cyber.github.io/barbearia-do-miguel/assets/og-image.jpg">
+  <meta property="og:url" content="https://juniomagalhaes628-cyber.github.io/barbearia-do-miguel/">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="pt_PT">
+  <meta property="og:site_name" content="Barbearia do Miguel">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://juniomagalhaes628-cyber.github.io/barbearia-do-miguel/">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✂</text></svg>">
+  <title>Barbearia do Miguel — Paredes | Corte · Barba · Fade</title>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Barber",
+    "name": "Barbearia do Miguel",
+    "url": "https://juniomagalhaes628-cyber.github.io/barbearia-do-miguel/",
+    "description": "Barbearia premium em Paredes. Corte masculino, barba, fade e degradê.",
+    "telephone": "+351910473484",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Av. Amália Rodrigues 54",
+      "addressLocality": "Paredes",
+      "postalCode": "4580-014",
+      "addressCountry": "PT"
+    },
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+        "opens": "09:00",
+        "closes": "21:00"
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Saturday"],
+        "opens": "09:00",
+        "closes": "20:00"
+      }
+    ],
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.9",
+      "reviewCount": "447",
+      "bestRating": "5",
+      "worstRating": "1"
+    },
+    "priceRange": "€€"
+  }
+  </script>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            dark:     '#0a0a0a',
+            surface:  '#111111',
+            surface2: '#191919',
+            red:      '#c41e3a',
+            'red-light': '#e0253e',
+            cream:    '#ede8e3',
+          },
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            sans:  ['Inter', 'system-ui', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+</head>
+
+<body class="bg-dark text-cream font-sans antialiased overflow-x-hidden">
+
+  <!-- ═══════════════ NAVBAR ═══════════════ -->
+  <nav id="navbar" class="fixed top-0 left-0 right-0 z-50">
+    <div class="max-w-7xl mx-auto px-8 py-5 flex items-center justify-between">
+
+      <!-- Logo texto -->
+      <a href="#" class="flex items-center gap-3 group" aria-label="Barbearia do Miguel">
+        <span class="font-serif text-xl font-light tracking-wide text-cream group-hover:text-red transition-colors duration-200">
+          Barbearia <em class="text-red not-italic">do Miguel</em>
+        </span>
+      </a>
+
+      <!-- Desktop links -->
+      <div class="hidden md:flex items-center gap-10">
+        <a href="#servicos"     class="nav-link">Serviços</a>
+        <a href="#precos"       class="nav-link">Preços</a>
+        <a href="#sobre"        class="nav-link">Sobre</a>
+        <a href="#contacto"     class="nav-link">Contacto</a>
+        <a href="marcacoes.html" class="btn-primary ml-2" style="padding:.65rem 1.4rem">Agendar</a>
+      </div>
+
+      <!-- Mobile hamburger -->
+      <button id="hamburger" class="md:hidden flex flex-col gap-[6px] p-3" aria-label="Abrir menu">
+        <span class="hamburger-line" id="hl1"></span>
+        <span class="hamburger-line" id="hl2"></span>
+        <span class="hamburger-line" id="hl3"></span>
+      </button>
+    </div>
+
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="mobile-menu md:hidden absolute top-full left-0 right-0 bg-[#080808] border-t border-[rgba(196,30,58,.15)] px-6 pt-8 pb-10">
+      <div class="flex flex-col gap-7">
+        <a href="#servicos"    class="nav-link text-[.95rem]" onclick="closeMenu()">Serviços</a>
+        <a href="#precos"      class="nav-link text-[.95rem]" onclick="closeMenu()">Preços</a>
+        <a href="#sobre"       class="nav-link text-[.95rem]" onclick="closeMenu()">Sobre</a>
+        <a href="#contacto"    class="nav-link text-[.95rem]" onclick="closeMenu()">Contacto</a>
+        <a href="marcacoes.html" class="btn-primary text-center mt-3">Agendar agora ✂</a>
+      </div>
+    </div>
+  </nav>
+
+
+  <!-- ═══════════════ HERO ═══════════════ -->
+  <section class="relative min-h-screen flex overflow-hidden bg-dark">
+
+    <!-- Padrão diagonal subtil (inspirado no poste de barbearia) -->
+    <div class="absolute inset-0 pointer-events-none" aria-hidden="true" style="
+      background-image: repeating-linear-gradient(
+        -45deg,
+        rgba(196,30,58,.025) 0px, rgba(196,30,58,.025) 1px,
+        transparent 1px, transparent 72px
+      );
+    "></div>
+
+    <!-- Linha vermelha vertical esquerda -->
+    <div class="absolute left-0 top-0 bottom-0 w-1 bg-red opacity-80" aria-hidden="true"></div>
+
+    <!-- ── COLUNA ESQUERDA — texto ── -->
+    <div class="relative z-10 w-full lg:w-[55%] flex flex-col justify-center px-8 md:px-14 lg:px-20 pt-32 pb-20">
+
+      <p class="section-label mb-5 fade-up" aria-label="Barbearia em Paredes, Portugal">
+        ✦ &nbsp;Paredes, Portugal&nbsp; ✦
+      </p>
+
+      <h1 class="font-serif font-light leading-[1.02] fade-up delay-1"
+          style="font-size: clamp(3.2rem, 6vw, 5.5rem)">
+        Onde o<br>
+        <em class="text-red">estilo</em><br>
+        nasce.
+      </h1>
+
+      <p class="mt-7 text-[#ede8e3]/65 text-sm font-light leading-[1.95] max-w-[380px] fade-up delay-2">
+        Cortes precisos, barba impecável e o ambiente certo para o homem que valoriza o detalhe. O Miguel e a equipa recebem-no de segunda a sábado.
+      </p>
+
+      <!-- CTAs -->
+      <div class="flex flex-col sm:flex-row items-start gap-4 mt-9 fade-up delay-3">
+        <a href="marcacoes.html" class="btn-primary">Marcar agora ✂</a>
+        <a href="#servicos" class="btn-outline">Ver serviços</a>
+      </div>
+
+      <!-- Stats -->
+      <div class="mt-12 pt-8 border-t border-[rgba(237,232,227,.07)] flex items-center gap-6 fade-up delay-4">
+        <div>
+          <div class="flex items-center gap-2 mb-1">
+            <span class="stars text-xs">★★★★★</span>
+            <span class="text-red font-medium text-sm">4.9</span>
+          </div>
+          <p class="text-[#ede8e3]/30 text-[10px] tracking-[.2em] uppercase">447 avaliações Google</p>
+        </div>
+        <div class="w-px h-8 bg-[rgba(237,232,227,.1)]" aria-hidden="true"></div>
+        <div>
+          <p class="text-[#ede8e3]/60 text-sm font-light">Seg – Sex</p>
+          <p class="text-[#ede8e3]/30 text-[10px] tracking-[.2em] uppercase">9h às 21h</p>
+        </div>
+        <div class="w-px h-8 bg-[rgba(237,232,227,.1)]" aria-hidden="true"></div>
+        <div>
+          <p class="text-[#ede8e3]/60 text-sm font-light">Sábado</p>
+          <p class="text-[#ede8e3]/30 text-[10px] tracking-[.2em] uppercase">9h às 20h</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── COLUNA DIREITA — composição visual ── -->
+    <div class="hidden lg:flex absolute right-0 top-0 w-[48%] h-full items-center justify-center" aria-hidden="true">
+
+      <!-- Fundo com gradiente e padrão -->
+      <div class="absolute inset-0" style="background: linear-gradient(135deg, #0e0e0e 0%, #140306 100%)"></div>
+      <div class="absolute inset-0 opacity-[.04]" style="
+        background-image: linear-gradient(rgba(196,30,58,.8) 1px, transparent 1px),
+                          linear-gradient(90deg, rgba(196,30,58,.8) 1px, transparent 1px);
+        background-size: 48px 48px;
+      "></div>
+
+      <!-- Gradiente de fusão à esquerda -->
+      <div class="absolute inset-0" style="background: linear-gradient(to right, #0a0a0a 0%, rgba(10,10,10,.2) 30%, transparent 60%)"></div>
+
+      <!-- Composição central: número de reviews como elemento visual -->
+      <div class="relative z-10 text-center px-12">
+
+        <!-- Cantos SVG -->
+        <svg class="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 100 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M 5 15 L 5 5 L 20 5"     stroke="rgba(196,30,58,.5)" stroke-width=".8" fill="none"/>
+          <path d="M 80 5 L 95 5 L 95 15"   stroke="rgba(196,30,58,.5)" stroke-width=".8" fill="none"/>
+          <path d="M 5 85 L 5 95 L 20 95"   stroke="rgba(196,30,58,.5)" stroke-width=".8" fill="none"/>
+          <path d="M 80 95 L 95 95 L 95 85" stroke="rgba(196,30,58,.5)" stroke-width=".8" fill="none"/>
+          <line x1="0" y1="30" x2="100" y2="30" stroke="rgba(196,30,58,.08)" stroke-width=".5"/>
+          <line x1="0" y1="70" x2="100" y2="70" stroke="rgba(196,30,58,.08)" stroke-width=".5"/>
+        </svg>
+
+        <p class="section-label mb-6 fade-up delay-1">Avaliações Google</p>
+
+        <div class="font-serif font-light leading-none" style="font-size:clamp(5rem,9vw,8rem); color:rgba(196,30,58,.9)">
+          447
+        </div>
+        <div class="flex items-center justify-center gap-1 mt-4">
+          <span style="color:#c41e3a;letter-spacing:4px;font-size:1.4rem">★★★★★</span>
+        </div>
+        <p class="mt-3 text-[#ede8e3]/35 text-sm font-light tracking-[.15em] uppercase">4.9 / 5 estrelas</p>
+
+        <div class="w-12 h-px bg-red mx-auto mt-8 mb-8 opacity-40"></div>
+
+        <p class="text-[#ede8e3]/25 text-[10px] tracking-[.25em] uppercase leading-relaxed">
+          A barbearia mais<br>avaliada de Paredes
+        </p>
+      </div>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div class="absolute bottom-8 left-12 hidden lg:flex flex-col items-center gap-2 fade-up delay-5" style="z-index:20" aria-hidden="true">
+      <span class="text-[#ede8e3]/20 text-[9px] tracking-[.3em] uppercase">scroll</span>
+      <div class="w-px h-10 bg-gradient-to-b from-[rgba(196,30,58,.4)] to-transparent"></div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════ SERVICES ═══════════════ -->
+  <section id="servicos" class="py-28 px-6 bg-surface">
+    <div class="max-w-6xl mx-auto">
+
+      <div class="text-center mb-20 reveal">
+        <p class="section-label mb-4">Especialidades</p>
+        <h2 class="font-serif text-4xl md:text-[3rem] font-light">Serviços</h2>
+        <div class="red-divider mt-6 mx-auto"></div>
+        <p class="mt-5 text-[#ede8e3]/40 text-sm font-light max-w-sm mx-auto">
+          Cada serviço executado com precisão, atenção ao detalhe e os melhores produtos profissionais.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+
+        <div class="service-card reveal" style="border-color:rgba(196,30,58,.25)">
+          <div class="flex items-center gap-2 mb-5">
+            <div class="text-red text-xl" aria-hidden="true">✂</div>
+            <span class="text-[9px] tracking-[.18em] uppercase text-red">Mais pedido</span>
+          </div>
+          <h3 class="font-serif text-xl font-light mb-2">Corte Masculino</h3>
+          <p class="text-[#ede8e3]/50 text-sm font-light leading-relaxed">
+            Corte adaptado ao seu rosto, estilo e preferência. Tesoura, máquina ou combinação — sempre com acabamento perfeito.
+          </p>
+        </div>
+
+        <div class="service-card reveal" style="transition-delay:80ms">
+          <div class="text-red text-xl mb-5" aria-hidden="true">◈</div>
+          <h3 class="font-serif text-xl font-light mb-2">Barba</h3>
+          <p class="text-[#ede8e3]/50 text-sm font-light leading-relaxed">
+            Aparar, delinear e fazer barba. Navalha tradicional com espuma quente para um acabamento profissional e confortável.
+          </p>
+        </div>
+
+        <div class="service-card reveal" style="transition-delay:160ms">
+          <div class="text-red text-xl mb-5" aria-hidden="true">◇</div>
+          <h3 class="font-serif text-xl font-light mb-2">Fade & Degradê</h3>
+          <p class="text-[#ede8e3]/50 text-sm font-light leading-relaxed">
+            High fade, mid fade, low fade ou skin fade. Transições suaves e precisas que definem o estilo moderno.
+          </p>
+        </div>
+
+        <div class="service-card reveal" style="transition-delay:80ms">
+          <div class="text-red text-xl mb-5" aria-hidden="true">✦</div>
+          <h3 class="font-serif text-xl font-light mb-2">Corte + Barba</h3>
+          <p class="text-[#ede8e3]/50 text-sm font-light leading-relaxed">
+            O combo completo para sair renovado. Cabelo e barba tratados em simultâneo com desconto incluído.
+          </p>
+        </div>
+
+        <div class="service-card reveal" style="transition-delay:160ms">
+          <div class="text-red text-xl mb-5" aria-hidden="true">◉</div>
+          <h3 class="font-serif text-xl font-light mb-2">Sobrancelha & Acabamento</h3>
+          <p class="text-[#ede8e3]/50 text-sm font-light leading-relaxed">
+            Design de sobrancelha masculina, cabelo de orelha e pescoço. Detalhes que fazem a diferença.
+          </p>
+        </div>
+
+        <div class="service-card reveal" style="transition-delay:240ms">
+          <div class="text-red text-xl mb-5" aria-hidden="true">❧</div>
+          <h3 class="font-serif text-xl font-light mb-2">Máquina Zero & Hidratação</h3>
+          <p class="text-[#ede8e3]/50 text-sm font-light leading-relaxed">
+            Corte à máquina zero e tratamentos de hidratação capilar para manter o cabelo saudável e com brilho.
+          </p>
+        </div>
+
+      </div>
+
+      <div class="text-center mt-14 reveal">
+        <a href="marcacoes.html" class="btn-primary">Agendar o meu serviço ✂</a>
+        <p class="text-[#ede8e3]/28 text-xs mt-4 font-light">Sem taxa de marcação · Confirmação imediata</p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════ PRICING ═══════════════ -->
+  <section id="precos" class="py-28 px-6 bg-dark">
+    <div class="max-w-5xl mx-auto">
+
+      <div class="text-center mb-20 reveal">
+        <p class="section-label mb-4">Investimento</p>
+        <h2 class="font-serif text-4xl md:text-[3rem] font-light">Tabela de Preços</h2>
+        <div class="red-divider mt-6 mx-auto"></div>
+        <p class="mt-5 text-[#ede8e3]/38 text-sm max-w-xs mx-auto font-light">
+          Preços indicativos. Consulte-nos para serviços específicos.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+
+        <div class="pricing-card reveal">
+          <p class="section-label mb-7">Cortes</p>
+          <div class="space-y-4">
+            <div class="flex justify-between items-baseline pb-4 border-b border-[rgba(237,232,227,.06)]">
+              <span class="text-sm text-[#ede8e3]/60">Corte Masculino</span>
+              <span class="font-serif text-lg text-red">€12</span>
+            </div>
+            <div class="flex justify-between items-baseline pb-4 border-b border-[rgba(237,232,227,.06)]">
+              <span class="text-sm text-[#ede8e3]/60">Fade / Degradê</span>
+              <span class="font-serif text-lg text-red">€15</span>
+            </div>
+            <div class="flex justify-between items-baseline pb-4 border-b border-[rgba(237,232,227,.06)]">
+              <span class="text-sm text-[#ede8e3]/60">Máquina Zero</span>
+              <span class="font-serif text-lg text-red">€10</span>
+            </div>
+            <div class="flex justify-between items-baseline">
+              <span class="text-sm text-[#ede8e3]/60">Criança (até 10)</span>
+              <span class="font-serif text-lg text-red">€8</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="pricing-card featured reveal" style="transition-delay:80ms">
+          <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-red text-white text-[9px] font-semibold tracking-[.15em] uppercase px-4 py-[5px]">
+            Mais popular
+          </div>
+          <p class="section-label mb-7">Combos</p>
+          <div class="space-y-4">
+            <div class="flex justify-between items-baseline pb-4 border-b border-[rgba(196,30,58,.12)]">
+              <span class="text-sm text-[#ede8e3]/60">Corte + Barba</span>
+              <span class="font-serif text-lg text-red">€20</span>
+            </div>
+            <div class="flex justify-between items-baseline pb-4 border-b border-[rgba(196,30,58,.12)]">
+              <span class="text-sm text-[#ede8e3]/60">Fade + Barba</span>
+              <span class="font-serif text-lg text-red">€23</span>
+            </div>
+            <div class="flex justify-between items-baseline pb-4 border-b border-[rgba(196,30,58,.12)]">
+              <span class="text-sm text-[#ede8e3]/60">Corte + Sobrancelha</span>
+              <span class="font-serif text-lg text-red">€16</span>
+            </div>
+            <div class="flex justify-between items-baseline">
+              <span class="text-sm text-[#ede8e3]/60">Corte + Barba + Sobrancelha</span>
+              <span class="font-serif text-lg text-red">€25</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="pricing-card reveal" style="transition-delay:160ms">
+          <p class="section-label mb-7">Barba & Extras</p>
+          <div class="space-y-4">
+            <div class="flex justify-between items-baseline pb-4 border-b border-[rgba(237,232,227,.06)]">
+              <span class="text-sm text-[#ede8e3]/60">Aparar Barba</span>
+              <span class="font-serif text-lg text-red">€8</span>
+            </div>
+            <div class="flex justify-between items-baseline pb-4 border-b border-[rgba(237,232,227,.06)]">
+              <span class="text-sm text-[#ede8e3]/60">Fazer Barba (navalha)</span>
+              <span class="font-serif text-lg text-red">€12</span>
+            </div>
+            <div class="flex justify-between items-baseline pb-4 border-b border-[rgba(237,232,227,.06)]">
+              <span class="text-sm text-[#ede8e3]/60">Sobrancelha</span>
+              <span class="font-serif text-lg text-red">€5</span>
+            </div>
+            <div class="flex justify-between items-baseline">
+              <span class="text-sm text-[#ede8e3]/60">Hidratação Capilar</span>
+              <span class="font-serif text-lg text-red">€15</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="text-center mt-14 reveal">
+        <a href="tel:910473484" class="btn-primary">Pedir orçamento</a>
+        <p class="text-[#ede8e3]/25 text-xs mt-3 font-light">Preços indicativos · Confirme ao ligar</p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════ ABOUT ═══════════════ -->
+  <section id="sobre" class="py-28 px-6 bg-surface">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+
+        <div class="reveal">
+          <p class="section-label mb-6">Barbearia do Miguel</p>
+          <h2 class="font-serif font-light leading-tight" style="font-size:clamp(2.4rem,5vw,3.5rem)">
+            Precisão que<br>
+            <em class="text-red">faz a diferença</em>
+          </h2>
+          <div class="w-10 h-0.5 bg-red mt-8 mb-8"></div>
+          <p class="text-[#ede8e3]/55 font-light leading-[1.85] text-[.9rem]">
+            Na Av. Amália Rodrigues, em Paredes, a Barbearia do Miguel tornou-se a referência local para o homem que se preocupa com a sua imagem. Com horário alargado — até às 21h durante a semana — adapta-se ao ritmo de vida dos seus clientes.
+          </p>
+          <p class="text-[#ede8e3]/55 font-light leading-[1.85] text-[.9rem] mt-4">
+            O Miguel e a sua equipa combinam técnica apurada com um atendimento descontraído e personalizado, criando um espaço onde cada visita é mais do que um simples corte — é uma pausa para si.
+          </p>
+
+          <div class="grid grid-cols-3 gap-6 mt-12 pt-8 border-t border-[rgba(237,232,227,.06)]">
+            <div>
+              <p class="font-serif text-[2.2rem] text-red leading-none">4.9<span class="text-xl">★</span></p>
+              <p class="text-[#ede8e3]/35 text-[9px] tracking-[.2em] uppercase mt-2">Avaliação</p>
+            </div>
+            <div>
+              <p class="font-serif text-[2.2rem] text-red leading-none">447</p>
+              <p class="text-[#ede8e3]/35 text-[9px] tracking-[.2em] uppercase mt-2">Reviews</p>
+            </div>
+            <div>
+              <p class="font-serif text-[2.2rem] text-red leading-none">7<span class="text-lg">d</span></p>
+              <p class="text-[#ede8e3]/35 text-[9px] tracking-[.2em] uppercase mt-2">Seg – Sáb</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Visual lado direito -->
+        <div class="reveal relative" style="transition-delay:150ms">
+
+          <!-- Composição visual com tipografia -->
+          <div class="relative overflow-hidden border border-[rgba(196,30,58,.15)]" style="aspect-ratio:3/4; background: linear-gradient(135deg, #111 0%, #160407 100%)">
+
+            <!-- Grid pattern -->
+            <div class="absolute inset-0 opacity-[.04]" aria-hidden="true" style="
+              background-image: linear-gradient(rgba(196,30,58,.8) 1px, transparent 1px),
+                                linear-gradient(90deg, rgba(196,30,58,.8) 1px, transparent 1px);
+              background-size: 40px 40px;
+            "></div>
+
+            <!-- Linha vertical decorativa -->
+            <div class="absolute left-8 top-8 bottom-8 w-px bg-gradient-to-b from-transparent via-[rgba(196,30,58,.4)] to-transparent" aria-hidden="true"></div>
+
+            <!-- Conteúdo central -->
+            <div class="absolute inset-0 flex flex-col items-center justify-center text-center px-8">
+              <p class="section-label mb-4">Paredes · Desde</p>
+              <p class="font-serif font-light text-red leading-none" style="font-size:clamp(3rem,8vw,5rem)">
+                #1
+              </p>
+              <p class="text-[#ede8e3]/40 text-sm font-light tracking-[.2em] uppercase mt-3 mb-8">Barbearia Local</p>
+
+              <div class="w-8 h-px bg-[rgba(196,30,58,.4)] mb-8" aria-hidden="true"></div>
+
+              <div class="space-y-3 text-left w-full max-w-[200px]">
+                <div class="flex items-center gap-3">
+                  <div class="accent-bar h-3"></div>
+                  <span class="text-[#ede8e3]/55 text-xs font-light">Corte profissional</span>
+                </div>
+                <div class="flex items-center gap-3">
+                  <div class="accent-bar h-3"></div>
+                  <span class="text-[#ede8e3]/55 text-xs font-light">Barba tradicional</span>
+                </div>
+                <div class="flex items-center gap-3">
+                  <div class="accent-bar h-3"></div>
+                  <span class="text-[#ede8e3]/55 text-xs font-light">Fade moderno</span>
+                </div>
+                <div class="flex items-center gap-3">
+                  <div class="accent-bar h-3"></div>
+                  <span class="text-[#ede8e3]/55 text-xs font-light">Atendimento até às 21h</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Badge -->
+            <div class="absolute bottom-6 right-6 bg-[rgba(0,0,0,.92)] border border-[rgba(196,30,58,.25)] px-4 py-3 backdrop-blur-sm">
+              <p class="stars text-xs mb-1">★★★★★</p>
+              <p class="text-red text-sm font-medium">4.9 · 447 avaliações</p>
+              <p class="text-[#ede8e3]/40 text-xs mt-0.5">Google Maps</p>
+            </div>
+          </div>
+
+          <div class="absolute -right-3 -bottom-3 w-full h-full border border-[rgba(196,30,58,.08)] pointer-events-none -z-10" aria-hidden="true"></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════ TESTIMONIALS ═══════════════ -->
+  <section class="py-28 px-6 bg-dark">
+    <div class="max-w-5xl mx-auto">
+
+      <div class="text-center mb-20 reveal">
+        <p class="section-label mb-4">O que dizem</p>
+        <h2 class="font-serif text-4xl md:text-[3rem] font-light">447 Avaliações</h2>
+        <div class="red-divider mt-6 mx-auto"></div>
+        <p class="mt-5 text-[#ede8e3]/38 text-sm font-light">4.9 ★ no Google · A barbearia mais avaliada de Paredes</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+
+        <div class="testimonial-card reveal">
+          <div class="stars text-xs mb-5">★★★★★</div>
+          <p class="text-[#ede8e3]/60 text-sm font-light leading-[1.9] italic">
+            "O melhor barbeiro que já fui. O Miguel é muito profissional, atento ao detalhe e faz sempre o que pedimos. Altamente recomendado a todos os homens de Paredes!"
+          </p>
+          <div class="mt-6 pt-5 border-t border-[rgba(237,232,227,.06)]">
+            <p class="text-[#ede8e3]/75 text-sm font-medium">João Ferreira</p>
+            <p class="text-[#ede8e3]/28 text-xs mt-0.5">Google · Corte + Fade</p>
+          </div>
+        </div>
+
+        <div class="testimonial-card reveal" style="transition-delay:80ms">
+          <div class="stars text-xs mb-5">★★★★★</div>
+          <p class="text-[#ede8e3]/60 text-sm font-light leading-[1.9] italic">
+            "Ambiente fantástico, equipa simpática e o resultado superou as expectativas. Vou sempre que preciso de corte ou barba. Nunca saí desiludido."
+          </p>
+          <div class="mt-6 pt-5 border-t border-[rgba(237,232,227,.06)]">
+            <p class="text-[#ede8e3]/75 text-sm font-medium">Carlos Mendes</p>
+            <p class="text-[#ede8e3]/28 text-xs mt-0.5">Google · Corte + Barba</p>
+          </div>
+        </div>
+
+        <div class="testimonial-card reveal" style="transition-delay:160ms">
+          <div class="stars text-xs mb-5">★★★★★</div>
+          <p class="text-[#ede8e3]/60 text-sm font-light leading-[1.9] italic">
+            "Horário até às 21h é perfeito para quem trabalha. Atendimento rápido, qualidade excelente e preços justos. A minha barbearia de referência!"
+          </p>
+          <div class="mt-6 pt-5 border-t border-[rgba(237,232,227,.06)]">
+            <p class="text-[#ede8e3]/75 text-sm font-medium">Rui Santos</p>
+            <p class="text-[#ede8e3]/28 text-xs mt-0.5">Google · Fade + Barba</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Review aggregate banner -->
+      <div class="flex justify-center mt-10 reveal">
+        <a href="https://www.google.com/maps/place/?q=place_id:ChIJ3dPmRG2OJA0RqzB4_5sr31g"
+           target="_blank" rel="noopener noreferrer"
+           class="flex items-center gap-5 bg-surface border border-[rgba(196,30,58,.15)] px-7 py-4 transition-colors duration-200 hover:border-[rgba(196,30,58,.35)]">
+          <span class="stars text-base">★★★★★</span>
+          <div>
+            <p class="text-red font-medium text-sm">4.9 / 5</p>
+            <p class="text-[#ede8e3]/35 text-xs mt-0.5">447 avaliações · Google Maps</p>
+          </div>
+          <span class="text-[#ede8e3]/25 text-xs ml-2">Ver todas →</span>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ═══════════════ CONTACT ═══════════════ -->
+  <section id="contacto" class="py-28 px-6 bg-surface border-t border-[rgba(196,30,58,.08)]">
+    <div class="max-w-6xl mx-auto">
+
+      <div class="text-center mb-20 reveal">
+        <p class="section-label mb-4">Visite-nos</p>
+        <h2 class="font-serif text-4xl md:text-[3rem] font-light">Contacto</h2>
+        <div class="red-divider mt-6 mx-auto"></div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
+
+        <div class="text-center reveal">
+          <p class="text-red text-xl mb-4" aria-hidden="true">◈</p>
+          <p class="section-label mb-4">Morada</p>
+          <p class="text-[#ede8e3]/55 text-sm font-light leading-[1.9]">
+            Av. Amália Rodrigues 54<br>
+            4580-014 Paredes, Portugal
+          </p>
+          <a href="https://www.google.com/maps/place/?q=place_id:ChIJ3dPmRG2OJA0RqzB4_5sr31g"
+             target="_blank" rel="noopener noreferrer"
+             class="inline-block mt-5 text-red text-[10px] tracking-[.2em] uppercase transition-colors duration-200 hover:text-red-light">
+            Ver no mapa →
+          </a>
+        </div>
+
+        <div class="text-center reveal" style="transition-delay:80ms">
+          <p class="text-red text-xl mb-4" aria-hidden="true">✦</p>
+          <p class="section-label mb-4">Horário</p>
+          <div class="text-[#ede8e3]/55 text-sm font-light space-y-2">
+            <div class="flex justify-center gap-4">
+              <span class="text-[#ede8e3]/28 w-28 text-right">Seg – Sex</span>
+              <span>9h – 21h</span>
+            </div>
+            <div class="flex justify-center gap-4">
+              <span class="text-[#ede8e3]/28 w-28 text-right">Sábado</span>
+              <span>9h – 20h</span>
+            </div>
+            <div class="flex justify-center gap-4">
+              <span class="text-[#ede8e3]/28 w-28 text-right">Domingo</span>
+              <span>Fechado</span>
+            </div>
+          </div>
+          <div class="mt-5 inline-flex items-center gap-2 bg-[rgba(196,30,58,.08)] border border-[rgba(196,30,58,.2)] px-3 py-1.5">
+            <div class="w-2 h-2 rounded-full bg-red animate-pulse" aria-hidden="true"></div>
+            <span class="text-red text-[10px] tracking-[.15em] uppercase font-medium">Horário alargado</span>
+          </div>
+        </div>
+
+        <div class="text-center reveal" style="transition-delay:160ms">
+          <p class="text-red text-xl mb-4" aria-hidden="true">◇</p>
+          <p class="section-label mb-4">Telefone</p>
+          <a href="tel:910473484"
+             class="text-[#ede8e3]/55 text-sm font-light transition-colors duration-200 hover:text-red block">
+            910 473 484
+          </a>
+          <div class="mt-6 space-y-3">
+            <a href="tel:910473484" class="btn-primary w-full justify-center">Ligar agora</a>
+            <a href="https://wa.me/351910473484?text=Ol%C3%A1%21%20Gostaria%20de%20marcar%20um%20corte%20na%20Barbearia%20do%20Miguel."
+               target="_blank" rel="noopener noreferrer"
+               class="btn-outline w-full justify-center" style="border-color:rgba(37,211,102,.3);color:rgba(37,211,102,.8)">
+               WhatsApp →
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Booking CTA banner -->
+      <div class="reveal mb-5 bg-[rgba(196,30,58,.05)] border border-[rgba(196,30,58,.2)] p-8 text-center">
+        <p class="section-label mb-3">Pronto para o novo visual?</p>
+        <h3 class="font-serif text-2xl font-light mb-5">Reserve o seu lugar <em class="text-red">online</em></h3>
+        <a href="marcacoes.html" class="btn-primary">Agendar agora ✂</a>
+      </div>
+
+      <!-- Social + map -->
+      <div class="reveal">
+        <a href="https://www.google.com/maps/place/?q=place_id:ChIJ3dPmRG2OJA0RqzB4_5sr31g"
+           target="_blank" rel="noopener noreferrer"
+           class="block h-44 bg-dark border border-[rgba(196,30,58,.1)] flex items-center justify-center transition-colors duration-250 hover:border-[rgba(196,30,58,.3)]">
+          <div class="text-center pointer-events-none">
+            <p class="text-red text-2xl mb-3" aria-hidden="true">◈</p>
+            <p class="text-[#ede8e3]/38 text-[10px] tracking-[.25em] uppercase">Ver no Google Maps</p>
+            <p class="text-[#ede8e3]/22 text-xs mt-1.5">Av. Amália Rodrigues 54 · 4580-014 Paredes</p>
+          </div>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ═══════════════ FOOTER ═══════════════ -->
+  <footer class="border-t border-[rgba(196,30,58,.07)] py-8 px-6">
+    <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
+      <p class="font-serif text-lg font-light text-[#ede8e3]/50">
+        Barbearia <em class="text-red not-italic">do Miguel</em>
+      </p>
+      <p class="text-[#ede8e3]/20 text-xs">
+        © 2026 Barbearia do Miguel &nbsp;·&nbsp; Paredes, Portugal
+        &nbsp;·&nbsp; <a href="privacidade.html" class="hover:text-red transition-colors">Privacidade</a>
+      </p>
+      <a href="tel:910473484" class="text-[#ede8e3]/35 text-xs transition-colors duration-200 hover:text-red">
+        910 473 484
+      </a>
+    </div>
+  </footer>
+
+
+  <!-- WhatsApp floating button -->
+  <a href="https://wa.me/351910473484?text=Ol%C3%A1%21%20Gostaria%20de%20marcar%20um%20corte%20na%20Barbearia%20do%20Miguel."
+     target="_blank" rel="noopener noreferrer"
+     class="whatsapp-btn"
+     aria-label="Falar no WhatsApp">
+    <svg width="26" height="26" fill="white" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+    </svg>
+  </a>
+
+
+  <!-- ═══════════════ JS ═══════════════ -->
+  <script>
+    // Navbar scroll
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        navbar.style.cssText = 'background:rgba(10,10,10,.97);backdrop-filter:blur(16px);border-bottom:1px solid rgba(196,30,58,.2)';
+      } else {
+        navbar.style.cssText = 'background:rgba(10,10,10,.6);backdrop-filter:blur(8px);border-bottom:1px solid transparent';
+      }
+    }, { passive: true });
+
+    // Hamburger
+    const burger = document.getElementById('hamburger');
+    const menu   = document.getElementById('mobile-menu');
+    const hl1 = document.getElementById('hl1');
+    const hl2 = document.getElementById('hl2');
+    const hl3 = document.getElementById('hl3');
+    let open = false;
+
+    function closeMenu() {
+      open = false;
+      menu.classList.remove('open');
+      hl1.style.transform = hl3.style.transform = '';
+      hl2.style.opacity = '1';
+    }
+
+    burger.addEventListener('click', () => {
+      open = !open;
+      if (open) {
+        menu.classList.add('open');
+        hl1.style.transform = 'translateY(7px) rotate(45deg)';
+        hl2.style.opacity   = '0';
+        hl3.style.transform = 'translateY(-7px) rotate(-45deg)';
+      } else {
+        closeMenu();
+      }
+    });
+
+    // Reduced-motion
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.documentElement.style.scrollBehavior = 'auto';
+    }
+
+    // Scroll reveal
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.08, rootMargin: '-20px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    // Fade-up hero
+    document.querySelectorAll('.fade-up').forEach((el, i) => {
+      el.style.animationDelay = (i * 100) + 'ms';
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Marque o seu corte na Barbearia do Miguel — Paredes. Rápido, fácil e online.">
+  <title>Marcações — Barbearia do Miguel</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✂</text></svg>">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            dark: '#0a0a0a', surface: '#111111',
+            red: '#c41e3a', 'red-light': '#e0253e', cream: '#ede8e3',
+          },
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            sans:  ['Inter', 'system-ui', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    .form-field {
+      width: 100%;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(237,232,227,.1);
+      color: #ede8e3;
+      padding: .85rem 1.1rem;
+      font-family: 'Inter', sans-serif;
+      font-size: .875rem; font-weight: 300;
+      outline: none;
+      transition: border-color 200ms ease, background 200ms ease;
+      -webkit-appearance: none; appearance: none;
+    }
+    .form-field::placeholder { color: rgba(237,232,227,.3); }
+    .form-field:focus { border-color: rgba(196,30,58,.5); background: rgba(255,255,255,.06); }
+    .form-field option { background: #111; color: #ede8e3; }
+    .select-wrap { position: relative; }
+    .select-wrap::after {
+      content: '▾'; position: absolute; right: 1rem; top: 50%;
+      transform: translateY(-50%); color: rgba(196,30,58,.6); pointer-events: none; font-size: .75rem;
+    }
+    .time-slot {
+      padding: .6rem; border: 1px solid rgba(237,232,227,.1);
+      text-align: center; font-size: .8rem; color: rgba(237,232,227,.55);
+      cursor: pointer; user-select: none;
+      transition: border-color 180ms ease, background 180ms ease, color 180ms ease, transform 160ms ease;
+    }
+    .time-slot:hover { border-color: rgba(196,30,58,.4); color: #ede8e3; }
+    .time-slot:active { transform: scale(0.96); }
+    .time-slot.selected { border-color: #c41e3a; background: rgba(196,30,58,.12); color: #c41e3a; }
+    .time-slot.unavailable { opacity: .25; cursor: not-allowed; pointer-events: none; }
+    .step-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(237,232,227,.15); transition: background 300ms ease; }
+    .step-dot.active { background: #c41e3a; }
+    .step-dot.done   { background: rgba(196,30,58,.4); }
+  </style>
+</head>
+
+<body class="bg-dark text-cream font-sans antialiased min-h-screen">
+
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-[rgba(10,10,10,.95)] border-b border-[rgba(196,30,58,.1)] backdrop-blur-md">
+    <div class="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="index.html" class="font-serif text-lg font-light">
+        Barbearia <em class="text-red not-italic">do Miguel</em>
+      </a>
+      <a href="index.html" class="nav-link text-xs">← Voltar ao site</a>
+    </div>
+  </nav>
+
+  <div class="pt-32 pb-16 px-6 text-center relative overflow-hidden">
+    <div class="absolute inset-0 opacity-[.025]" aria-hidden="true" style="
+      background-image: repeating-linear-gradient(-45deg, rgba(196,30,58,1) 0px, rgba(196,30,58,1) 1px, transparent 1px, transparent 60px);
+    "></div>
+    <div class="relative z-10 max-w-xl mx-auto">
+      <p class="section-label mb-5 fade-up">Reserva online</p>
+      <h1 class="font-serif text-4xl md:text-5xl font-light fade-up delay-1">
+        Marque o seu<br><em class="text-red">corte</em>
+      </h1>
+      <p class="mt-5 text-[#ede8e3]/50 text-sm font-light max-w-sm mx-auto fade-up delay-2">
+        Preencha o formulário e entraremos em contacto para confirmar o seu agendamento.
+      </p>
+      <div class="mt-5 inline-flex items-center gap-2 border border-[rgba(196,30,58,.3)] bg-[rgba(196,30,58,.07)] px-4 py-2 fade-up delay-3">
+        <span class="text-red text-xs" aria-hidden="true">✂</span>
+        <span class="text-[#ede8e3]/60 text-xs">Horário alargado: Seg-Sex até às 21h</span>
+      </div>
+    </div>
+  </div>
+
+  <main class="max-w-2xl mx-auto px-6 pb-24">
+
+    <div class="bg-surface border border-[rgba(196,30,58,.15)] p-8 md:p-10 fade-up delay-2">
+
+      <div class="flex items-center gap-2 mb-10">
+        <div class="step-dot active" id="dot1"></div>
+        <div class="flex-1 h-px bg-[rgba(237,232,227,.08)]"></div>
+        <div class="step-dot" id="dot2"></div>
+        <div class="flex-1 h-px bg-[rgba(237,232,227,.08)]"></div>
+        <div class="step-dot" id="dot3"></div>
+      </div>
+
+      <form id="booking-form"
+            action="https://formsubmit.co/juniomagalhaes628@gmail.com"
+            method="POST">
+
+        <input type="hidden" name="_subject" value="✂️ Nova marcação — Barbearia do Miguel">
+        <input type="hidden" name="_captcha" value="true">
+        <input type="hidden" name="_next" value="https://juniomagalhaes628-cyber.github.io/barbearia-do-miguel/obrigado.html">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_autoresponse" value="Obrigado pela sua marcação na Barbearia do Miguel! Entraremos em contacto brevemente para confirmar. Questões urgentes: 910 473 484.">
+        <input type="hidden" name="Barbearia" value="Barbearia do Miguel — Paredes">
+        <input type="hidden" name="horario" id="hidden-horario" value="">
+
+        <!-- Passo 1 -->
+        <div id="step-1">
+          <p class="section-label mb-6">01 — Os seus dados</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            <div>
+              <label class="text-[10px] tracking-[.18em] uppercase text-[#ede8e3]/40 block mb-2">Nome completo *</label>
+              <input type="text" name="Nome" placeholder="Ex: João Silva"
+                     class="form-field" required autocomplete="name">
+            </div>
+            <div>
+              <label class="text-[10px] tracking-[.18em] uppercase text-[#ede8e3]/40 block mb-2">Telemóvel *</label>
+              <input type="tel" name="Telemóvel" placeholder="9XX XXX XXX"
+                     class="form-field" required autocomplete="tel">
+            </div>
+          </div>
+          <div class="mb-6">
+            <label class="text-[10px] tracking-[.18em] uppercase text-[#ede8e3]/40 block mb-2">Email (opcional)</label>
+            <input type="email" name="Email" placeholder="para confirmação por email"
+                   class="form-field" autocomplete="email">
+          </div>
+          <button type="button" onclick="goToStep(2)" class="btn-primary w-full justify-center">
+            Continuar →
+          </button>
+        </div>
+
+        <!-- Passo 2 -->
+        <div id="step-2" class="hidden">
+          <p class="section-label mb-6">02 — Serviço & data</p>
+          <div class="mb-4">
+            <label class="text-[10px] tracking-[.18em] uppercase text-[#ede8e3]/40 block mb-2">Serviço pretendido *</label>
+            <div class="select-wrap">
+              <select name="Serviço" class="form-field" required>
+                <option value="" disabled selected>Escolha o serviço</option>
+                <optgroup label="── Cortes">
+                  <option>Corte Masculino (€12)</option>
+                  <option>Fade / Degradê (€15)</option>
+                  <option>Máquina Zero (€10)</option>
+                  <option>Corte Criança até 10 anos (€8)</option>
+                </optgroup>
+                <optgroup label="── Barba">
+                  <option>Aparar Barba (€8)</option>
+                  <option>Fazer Barba — navalha (€12)</option>
+                  <option>Sobrancelha (€5)</option>
+                </optgroup>
+                <optgroup label="── Combos">
+                  <option>Corte + Barba (€20)</option>
+                  <option>Fade + Barba (€23)</option>
+                  <option>Corte + Sobrancelha (€16)</option>
+                  <option>Corte + Barba + Sobrancelha (€25)</option>
+                </optgroup>
+                <optgroup label="── Outros">
+                  <option>Hidratação Capilar (€15)</option>
+                  <option value="Outro / Dúvida">Outro / Tenho uma dúvida</option>
+                </optgroup>
+              </select>
+            </div>
+          </div>
+          <div class="mb-6">
+            <label class="text-[10px] tracking-[.18em] uppercase text-[#ede8e3]/40 block mb-2">Data preferida *</label>
+            <input type="date" name="Data" id="date-input" class="form-field" required>
+          </div>
+          <div class="mb-8">
+            <label class="text-[10px] tracking-[.18em] uppercase text-[#ede8e3]/40 block mb-3">Horário preferido</label>
+            <div class="grid grid-cols-4 sm:grid-cols-6 gap-2" id="time-grid">
+              <div class="time-slot" data-time="09:00">09h00</div>
+              <div class="time-slot" data-time="09:30">09h30</div>
+              <div class="time-slot" data-time="10:00">10h00</div>
+              <div class="time-slot" data-time="10:30">10h30</div>
+              <div class="time-slot" data-time="11:00">11h00</div>
+              <div class="time-slot" data-time="11:30">11h30</div>
+              <div class="time-slot" data-time="12:00">12h00</div>
+              <div class="time-slot" data-time="14:00">14h00</div>
+              <div class="time-slot" data-time="14:30">14h30</div>
+              <div class="time-slot" data-time="15:00">15h00</div>
+              <div class="time-slot" data-time="15:30">15h30</div>
+              <div class="time-slot" data-time="16:00">16h00</div>
+              <div class="time-slot" data-time="16:30">16h30</div>
+              <div class="time-slot" data-time="17:00">17h00</div>
+              <div class="time-slot" data-time="17:30">17h30</div>
+              <div class="time-slot" data-time="18:00">18h00</div>
+              <div class="time-slot" data-time="18:30">18h30</div>
+              <div class="time-slot" data-time="19:00">19h00</div>
+              <div class="time-slot" data-time="19:30">19h30</div>
+              <div class="time-slot" data-time="20:00">20h00</div>
+              <div class="time-slot" data-time="20:30">20h30</div>
+            </div>
+            <p class="text-[#ede8e3]/28 text-[10px] mt-3">Seg-Sex: 9h–21h · Sáb: 9h–20h</p>
+          </div>
+          <div class="flex gap-3">
+            <button type="button" onclick="goToStep(1)" class="btn-outline flex-1 justify-center">← Voltar</button>
+            <button type="button" onclick="goToStep(3)" class="btn-primary flex-1 justify-center">Continuar →</button>
+          </div>
+        </div>
+
+        <!-- Passo 3 -->
+        <div id="step-3" class="hidden">
+          <p class="section-label mb-6">03 — Confirmação</p>
+          <div class="mb-6">
+            <label class="text-[10px] tracking-[.18em] uppercase text-[#ede8e3]/40 block mb-2">Observações (opcional)</label>
+            <textarea name="Observações" rows="3"
+                      placeholder="Ex: quero degradê alto, barba curta, cabelo muito crescido..."
+                      class="form-field resize-none"></textarea>
+          </div>
+
+          <!-- Resumo -->
+          <div id="summary" class="bg-[rgba(196,30,58,.05)] border border-[rgba(196,30,58,.15)] p-5 mb-7">
+            <p class="text-[10px] tracking-[.18em] uppercase text-red mb-4">Resumo da marcação</p>
+            <div class="space-y-2 text-sm">
+              <div class="flex justify-between"><span class="text-[#ede8e3]/45">Nome</span><span id="s-nome" class="font-light">—</span></div>
+              <div class="flex justify-between"><span class="text-[#ede8e3]/45">Telemóvel</span><span id="s-tel" class="font-light">—</span></div>
+              <div class="flex justify-between"><span class="text-[#ede8e3]/45">Serviço</span><span id="s-servico" class="font-light max-w-[55%] text-right">—</span></div>
+              <div class="flex justify-between"><span class="text-[#ede8e3]/45">Data</span><span id="s-data" class="font-light">—</span></div>
+              <div class="flex justify-between"><span class="text-[#ede8e3]/45">Horário</span><span id="s-hora" class="font-light">—</span></div>
+            </div>
+          </div>
+
+          <!-- GDPR -->
+          <div class="mb-6 flex items-start gap-3 p-4 bg-[rgba(196,30,58,.04)] border border-[rgba(196,30,58,.1)]">
+            <input type="checkbox" id="gdpr-consent" name="Consentimento_GDPR" value="Sim"
+                   class="mt-0.5 flex-shrink-0 accent-red cursor-pointer" required>
+            <label for="gdpr-consent" class="text-[#ede8e3]/50 text-xs leading-relaxed cursor-pointer">
+              Consinto que os meus dados pessoais (nome e contacto) sejam utilizados pela Barbearia do Miguel para confirmação do agendamento, em conformidade com o
+              <a href="privacidade.html" target="_blank" class="text-red underline">Aviso de Privacidade</a>.
+            </label>
+          </div>
+          <div id="gdpr-error" class="hidden text-red-400 text-xs mb-4">
+            ✖ Por favor aceite os termos para continuar.
+          </div>
+
+          <p class="text-[#ede8e3]/28 text-xs mb-7 leading-relaxed">
+            ✂ Após o envio, entraremos em contacto para confirmar o horário.<br>
+            Para marcação imediata ligue: <a href="tel:910473484" class="text-red">910 473 484</a>
+          </p>
+
+          <div class="flex gap-3">
+            <button type="button" onclick="goToStep(2)" class="btn-outline flex-1 justify-center">← Voltar</button>
+            <button type="submit" id="submit-btn" class="btn-primary flex-1 justify-center">
+              Enviar marcação ✂
+            </button>
+          </div>
+        </div>
+
+      </form>
+
+      <div id="success-msg" class="hidden text-center py-8">
+        <p class="text-red text-3xl mb-4" aria-hidden="true">✂</p>
+        <h3 class="font-serif text-2xl font-light mb-3">Marcação enviada!</h3>
+        <p class="text-[#ede8e3]/50 text-sm font-light leading-relaxed mb-6">Obrigado! Entraremos em contacto brevemente.</p>
+        <a href="index.html" class="btn-outline">← Voltar ao site</a>
+      </div>
+    </div>
+
+    <!-- WhatsApp alternativa -->
+    <div class="mt-6 bg-[rgba(37,211,102,.07)] border border-[rgba(37,211,102,.2)] p-5 flex items-center gap-4">
+      <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center" style="background:#25D366">
+        <svg width="20" height="20" fill="white" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+        </svg>
+      </div>
+      <div class="flex-1">
+        <p class="text-[#ede8e3]/80 text-sm font-medium">Prefere marcar pelo WhatsApp?</p>
+        <p class="text-[#ede8e3]/40 text-xs mt-0.5">Confirmação imediata · Resposta rápida</p>
+      </div>
+      <a href="https://wa.me/351910473484?text=Ol%C3%A1%21%20Gostaria%20de%20marcar%20um%20corte%20na%20Barbearia%20do%20Miguel."
+         target="_blank" rel="noopener noreferrer"
+         class="flex-shrink-0 text-[10px] tracking-[.15em] uppercase font-medium px-4 py-2 border border-[rgba(37,211,102,.4)] text-[#25D366] hover:bg-[rgba(37,211,102,.1)] transition-colors duration-200">
+        Falar →
+      </a>
+    </div>
+
+    <!-- Info cards -->
+    <div class="mt-4 grid grid-cols-3 gap-4">
+      <div class="bg-surface border border-[rgba(237,232,227,.06)] p-4 text-center">
+        <p class="text-red text-sm mb-2" aria-hidden="true">✂</p>
+        <p class="text-[10px] tracking-[.18em] uppercase text-[#ede8e3]/40 mb-1">Seg–Sex</p>
+        <p class="text-xs text-[#ede8e3]/60 font-light">9h às 21h</p>
+      </div>
+      <div class="bg-surface border border-[rgba(237,232,227,.06)] p-4 text-center">
+        <p class="text-red text-sm mb-2" aria-hidden="true">◈</p>
+        <p class="text-[10px] tracking-[.18em] uppercase text-[#ede8e3]/40 mb-1">Morada</p>
+        <p class="text-xs text-[#ede8e3]/60 font-light">Av. Amália Rodrigues 54</p>
+      </div>
+      <div class="bg-surface border border-[rgba(237,232,227,.06)] p-4 text-center">
+        <p class="text-red text-sm mb-2" aria-hidden="true">◇</p>
+        <p class="text-[10px] tracking-[.18em] uppercase text-[#ede8e3]/40 mb-1">Telefone</p>
+        <a href="tel:910473484" class="text-xs text-[#ede8e3]/60 font-light hover:text-red transition-colors">910 473 484</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="border-t border-[rgba(196,30,58,.07)] py-6 px-6 text-center">
+    <p class="text-[#ede8e3]/20 text-xs">© 2026 Barbearia do Miguel · Paredes · <a href="privacidade.html" class="hover:text-red transition-colors">Privacidade</a></p>
+  </footer>
+
+  <script>
+    const BOOKING_API = 'COLE_AQUI_O_URL_DO_APPS_SCRIPT';
+
+    async function fetchBookedSlots(date) {
+      if (!BOOKING_API || BOOKING_API.includes('COLE_AQUI')) return [];
+      try { const res = await fetch(`${BOOKING_API}?date=${date}`); const data = await res.json(); return data.booked || []; }
+      catch { return []; }
+    }
+
+    async function updateSlotAvailability(date) {
+      const booked = await fetchBookedSlots(date);
+      document.querySelectorAll('.time-slot').forEach(slot => {
+        const isTaken = booked.includes(slot.dataset.time);
+        slot.classList.toggle('unavailable', isTaken);
+        if (isTaken && slot.classList.contains('selected')) {
+          slot.classList.remove('selected');
+          document.getElementById('hidden-horario').value = '';
+        }
+      });
+    }
+
+    function goToStep(n) {
+      if (n === 2) {
+        const nome = document.querySelector('[name="Nome"]').value.trim();
+        const tel  = document.querySelector('[name="Telemóvel"]').value.trim();
+        if (!nome || !tel) { shake(document.querySelector('[name="Nome"]').closest('div').parentElement); return; }
+      }
+      if (n === 3) {
+        const servico = document.querySelector('[name="Serviço"]').value;
+        const data    = document.querySelector('[name="Data"]').value;
+        if (!servico || !data) { shake(document.querySelector('[name="Serviço"]').closest('.select-wrap')); return; }
+        updateSummary();
+      }
+      [1,2,3].forEach(i => {
+        document.getElementById('step-'+i).classList.toggle('hidden', i !== n);
+        const dot = document.getElementById('dot'+i);
+        dot.classList.remove('active','done');
+        if (i < n) dot.classList.add('done');
+        if (i === n) dot.classList.add('active');
+      });
+    }
+
+    function shake(el) {
+      el.style.transition = 'transform 80ms ease';
+      el.style.transform = 'translateX(-6px)';
+      setTimeout(() => { el.style.transform = 'translateX(6px)'; }, 80);
+      setTimeout(() => { el.style.transform = 'translateX(0)'; }, 160);
+    }
+
+    function updateSummary() {
+      const v = sel => document.querySelector(sel)?.value || '—';
+      document.getElementById('s-nome').textContent    = v('[name="Nome"]');
+      document.getElementById('s-tel').textContent     = v('[name="Telemóvel"]');
+      document.getElementById('s-servico').textContent = v('[name="Serviço"]') || '—';
+      const rawDate = v('[name="Data"]');
+      if (rawDate !== '—') {
+        const d = new Date(rawDate + 'T12:00:00');
+        document.getElementById('s-data').textContent = d.toLocaleDateString('pt-PT', {weekday:'short', day:'numeric', month:'long'});
+      }
+      document.getElementById('s-hora').textContent = document.getElementById('hidden-horario').value || 'A definir';
+    }
+
+    document.querySelectorAll('.time-slot').forEach(slot => {
+      slot.addEventListener('click', () => {
+        document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
+        slot.classList.add('selected');
+        document.getElementById('hidden-horario').value = slot.dataset.time;
+      });
+    });
+
+    const dateInput = document.getElementById('date-input');
+    const today = new Date(); today.setDate(today.getDate() + 1);
+    dateInput.min = today.toISOString().split('T')[0];
+
+    const dateErr = document.createElement('p');
+    dateErr.className = 'text-red-400 text-xs mt-2 hidden';
+    dateErr.textContent = '✖ O salão está fechado ao domingo. Escolha outro dia.';
+    dateInput.parentElement.appendChild(dateErr);
+
+    dateInput.addEventListener('input', async () => {
+      const d = new Date(dateInput.value + 'T12:00:00');
+      if (d.getDay() === 0) {
+        dateInput.value = '';
+        dateInput.style.borderColor = 'rgba(220,68,68,.6)';
+        dateErr.classList.remove('hidden');
+        setTimeout(() => { dateInput.style.borderColor = ''; dateErr.classList.add('hidden'); }, 3000);
+        return;
+      }
+      if (dateInput.value) await updateSlotAvailability(dateInput.value);
+    });
+
+    const SUBMIT_KEY = 'barbeariamiguel_booking_sent';
+    const lastSent = localStorage.getItem(SUBMIT_KEY);
+    if (lastSent && (Date.now() - parseInt(lastSent)) < 2 * 60 * 60 * 1000) {
+      document.getElementById('booking-form').innerHTML = `
+        <div class="text-center py-12">
+          <p class="text-red text-3xl mb-4">✂</p>
+          <h3 class="font-serif text-2xl font-light mb-3">Pedido já enviado</h3>
+          <p class="text-[#ede8e3]/50 text-sm font-light leading-relaxed mb-2">
+            Já recebemos o seu pedido.<br>Entraremos em contacto brevemente para confirmar.
+          </p>
+          <p class="text-[#ede8e3]/35 text-xs mb-8">Para confirmação imediata ligue: <a href="tel:910473484" class="text-red">910 473 484</a></p>
+          <a href="index.html" class="btn-outline">← Voltar ao site</a>
+        </div>`;
+    }
+
+    document.getElementById('booking-form')?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const consent = document.getElementById('gdpr-consent');
+      const gdprErr = document.getElementById('gdpr-error');
+      if (!consent.checked) { gdprErr.classList.remove('hidden'); consent.closest('div').scrollIntoView({ behavior: 'smooth', block: 'center' }); return; }
+      gdprErr.classList.add('hidden');
+      const btn  = document.getElementById('submit-btn');
+      const date = document.querySelector('[name="Data"]').value;
+      const time = document.getElementById('hidden-horario').value;
+      if (BOOKING_API && !BOOKING_API.includes('COLE_AQUI') && date && time) {
+        btn.textContent = 'A verificar...'; btn.disabled = true; btn.style.opacity = '.6';
+        try {
+          const res = await fetch(BOOKING_API, { method:'POST', body: JSON.stringify({ date, time, name: document.querySelector('[name="Nome"]').value, phone: document.querySelector('[name="Telemóvel"]').value }) });
+          const result = await res.json();
+          if (!result.success) {
+            btn.textContent = 'Enviar marcação ✂'; btn.disabled = false; btn.style.opacity = '1';
+            await updateSlotAvailability(date);
+            const errEl = document.createElement('p');
+            errEl.className = 'text-red-400 text-xs mt-4 text-center';
+            errEl.textContent = '✖ Este horário foi entretanto reservado. Escolha outro.';
+            btn.closest('div').before(errEl);
+            setTimeout(() => errEl.remove(), 5000);
+            return;
+          }
+        } catch { /* API indisponível — continuar */ }
+      }
+      btn.textContent = 'A enviar...'; btn.disabled = true; btn.style.opacity = '.6';
+      localStorage.setItem(SUBMIT_KEY, Date.now().toString());
+      e.target.submit();
+    });
+
+    document.querySelectorAll('.fade-up').forEach((el, i) => { el.style.animationDelay = (i * 120) + 'ms'; });
+  </script>
+
+</body>
+</html>
