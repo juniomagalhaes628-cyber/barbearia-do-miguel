@@ -12,33 +12,12 @@
   <meta property="og:url" content="https://juniomagalhaes628-cyber.github.io/barbearia-do-miguel/">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="pt_PT">
-  <meta property="og:site_name" content="Barbearia do Miguel">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="canonical" href="https://juniomagalhaes628-cyber.github.io/barbearia-do-miguel/">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✂</text></svg>">
   <title>Barbearia do Miguel — Arte & Tradição desde 2016 · Paredes</title>
 
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Barber",
-    "name": "Barbearia do Miguel",
-    "url": "https://juniomagalhaes628-cyber.github.io/barbearia-do-miguel/",
-    "image": ["https://juniomagalhaes628-cyber.github.io/barbearia-do-miguel/assets/gallery-1.jpg","https://juniomagalhaes628-cyber.github.io/barbearia-do-miguel/assets/gallery-2.jpg"],
-    "description": "Barbearia masculina premium em Paredes. Fundada em 2016 por Miguel Caetano.",
-    "telephone": "+351910473484",
-    "founder": {"@type":"Person","name":"Miguel Caetano"},
-    "foundingDate": "2016",
-    "address": {"@type":"PostalAddress","streetAddress":"Av. Amália Rodrigues 54","addressLocality":"Paredes","postalCode":"4580-014","addressCountry":"PT"},
-    "openingHoursSpecification": [
-      {"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday"],"opens":"09:00","closes":"21:00"},
-      {"@type":"OpeningHoursSpecification","dayOfWeek":["Saturday"],"opens":"09:00","closes":"20:00"}
-    ],
-    "aggregateRating": {"@type":"AggregateRating","ratingValue":"4.9","reviewCount":"447","bestRating":"5","worstRating":"1"},
-    "sameAs": ["https://www.facebook.com/barbeariadomiguel2016"],
-    "priceRange": "€€"
-  }
-  </script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Barber","name":"Barbearia do Miguel","url":"https://juniomagalhaes628-cyber.github.io/barbearia-do-miguel/","telephone":"+351910473484","founder":{"@type":"Person","name":"Miguel Caetano"},"foundingDate":"2016","address":{"@type":"PostalAddress","streetAddress":"Av. Amália Rodrigues 54","addressLocality":"Paredes","postalCode":"4580-014","addressCountry":"PT"},"openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday"],"opens":"09:00","closes":"21:00"},{"@type":"OpeningHoursSpecification","dayOfWeek":["Saturday"],"opens":"09:00","closes":"20:00"}],"aggregateRating":{"@type":"AggregateRating","ratingValue":"4.9","reviewCount":"447","bestRating":"5","worstRating":"1"},"sameAs":["https://www.facebook.com/barbeariadomiguel2016"],"priceRange":"€€"}</script>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -59,266 +38,315 @@
 
   <style>
     /* ── Custom cursor ── */
-    #cursor-ring {
-      position: fixed; width: 32px; height: 32px;
-      border: 1.5px solid rgba(192,147,52,.45); border-radius: 50%;
-      pointer-events: none; z-index: 9998; will-change: transform;
-      top: 0; left: 0; margin: -16px 0 0 -16px;
-      transition: width 250ms cubic-bezier(0.23,1,0.32,1), height 250ms cubic-bezier(0.23,1,0.32,1), border-color 250ms ease, opacity 300ms ease;
-    }
-    #cursor-dot {
-      position: fixed; width: 5px; height: 5px;
-      background: rgba(192,147,52,.9); border-radius: 50%;
-      pointer-events: none; z-index: 9999; will-change: transform;
-      top: 0; left: 0; margin: -2.5px 0 0 -2.5px;
-      transition: opacity 300ms ease;
-    }
-    @media (pointer: coarse), (hover: none) { #cursor-ring, #cursor-dot { display: none; } }
-    body:has(#cursor-ring) { cursor: none; }
-    a, button { cursor: none; }
+    #cursor-ring { position:fixed; width:32px; height:32px; border:1.5px solid rgba(192,147,52,.45); border-radius:50%; pointer-events:none; z-index:9998; will-change:transform; top:0; left:0; margin:-16px 0 0 -16px; transition:width 250ms cubic-bezier(0.23,1,0.32,1),height 250ms cubic-bezier(0.23,1,0.32,1),border-color 250ms ease,opacity 300ms ease; }
+    #cursor-dot  { position:fixed; width:5px; height:5px; background:rgba(192,147,52,.9); border-radius:50%; pointer-events:none; z-index:9999; will-change:transform; top:0; left:0; margin:-2.5px 0 0 -2.5px; }
+    @media (pointer:coarse),(hover:none) { #cursor-ring,#cursor-dot { display:none; } }
+    body:has(#cursor-ring) { cursor:none; }
+    a, button { cursor:none; }
 
-    /* ── Progress bar ── */
-    #scroll-progress {
-      position: fixed; top: 0; left: 0; height: 2px; z-index: 1001;
-      background: linear-gradient(to right, rgba(192,147,52,.5), #c09334, rgba(212,173,82,.8));
-      width: 0%; will-change: width;
+    /* ── Scroll progress ── */
+    #scroll-progress { position:fixed; top:0; left:0; height:2px; z-index:1001; background:linear-gradient(to right,rgba(192,147,52,.5),#c09334,rgba(212,173,82,.8)); width:0%; will-change:width; }
+
+    /* ── Hero animations — CSS keyframes, not IntersectionObserver ── */
+    @keyframes heroFadeUp {
+      from { opacity:0; transform:translateY(28px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+    @keyframes heroReveal {
+      from { transform:translateY(108%); }
+      to   { transform:translateY(0); }
+    }
+    @keyframes heroScale {
+      from { opacity:0; transform:scale(.95); }
+      to   { opacity:1; transform:scale(1); }
     }
 
-    /* ── Parallax wrapper ── */
-    .parallax-container { overflow: hidden; }
-    .parallax-img { transform-origin: center; will-change: transform; }
+    /* Hero elements animate on load */
+    .h-badge   { animation: heroFadeUp  700ms cubic-bezier(0.23,1,0.32,1)   50ms both; }
+    .h-title   { animation: heroReveal  1100ms cubic-bezier(0.16,1,0.3,1)  200ms both; }
+    .h-sub     { animation: heroFadeUp  700ms cubic-bezier(0.23,1,0.32,1)  420ms both; }
+    .h-ctas    { animation: heroFadeUp  700ms cubic-bezier(0.23,1,0.32,1)  560ms both; }
+    .h-hours   { animation: heroFadeUp  700ms cubic-bezier(0.23,1,0.32,1)  680ms both; }
 
-    /* ── Gallery overlay ── */
-    .gallery-item { position: relative; overflow: hidden; }
-    .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 700ms cubic-bezier(0.23,1,0.32,1); will-change: transform; }
-    .gallery-item:hover img { transform: scale(1.07); }
-    .gallery-overlay {
-      position: absolute; inset: 0;
-      background: linear-gradient(to top, rgba(13,11,7,.85) 0%, rgba(13,11,7,.1) 50%, transparent 100%);
-      opacity: 0; transition: opacity 350ms ease;
-      display: flex; flex-direction: column; justify-content: flex-end; padding: 1.25rem;
+    /* ── Marquee ── */
+    @keyframes marqueeScroll {
+      from { transform:translateX(0); }
+      to   { transform:translateX(-50%); }
     }
-    .gallery-item:hover .gallery-overlay { opacity: 1; }
-    .gallery-overlay p { color: rgba(240,230,211,.85); font-size: .75rem; letter-spacing: .15em; text-transform: uppercase; }
+    .marquee-track { display:flex; width:max-content; animation:marqueeScroll 36s linear infinite; }
+    .marquee-wrap  { overflow:hidden; }
+    @media (prefers-reduced-motion:reduce) { .marquee-track { animation:none; } }
 
-    /* ── Video reel section ── */
-    .video-reel-item { position: relative; overflow: hidden; }
-    .video-reel-item video { width: 100%; height: 100%; object-fit: cover; transition: transform 600ms cubic-bezier(0.23,1,0.32,1); }
-    .video-reel-item:hover video { transform: scale(1.04); }
-    .video-reel-overlay {
-      position: absolute; inset: 0;
-      background: linear-gradient(to top, rgba(13,11,7,.7) 0%, transparent 60%);
-      transition: background 300ms ease;
+    /* ── Reveal (below fold) — IntersectionObserver ── */
+    .reveal { opacity:0; transform:translateY(24px); transition:opacity 700ms cubic-bezier(0.23,1,0.32,1),transform 700ms cubic-bezier(0.23,1,0.32,1); }
+    .reveal.in { opacity:1; transform:translateY(0); }
+    .reveal-left { opacity:0; transform:translateX(-24px); transition:opacity 700ms cubic-bezier(0.23,1,0.32,1),transform 700ms cubic-bezier(0.23,1,0.32,1); }
+    .reveal-left.in { opacity:1; transform:translateX(0); }
+    .reveal-right { opacity:0; transform:translateX(24px); transition:opacity 700ms cubic-bezier(0.23,1,0.32,1),transform 700ms cubic-bezier(0.23,1,0.32,1); }
+    .reveal-right.in { opacity:1; transform:translateX(0); }
+
+    /* ── Section divider ── */
+    .section-rule { display:flex; align-items:center; gap:1.5rem; }
+    .section-rule::before,.section-rule::after { content:''; flex:1; height:1px; background:rgba(192,147,52,.14); }
+
+    /* ── Oversized decorative num ── */
+    .deco-num { font-family:'Cormorant Garamond',serif; font-weight:300; line-height:1; color:rgba(192,147,52,.05); user-select:none; pointer-events:none; }
+
+    /* ── Service list (editorial) ── */
+    .svc-row { border-bottom:1px solid rgba(192,147,52,.1); transition:border-color 280ms ease,background 280ms ease; }
+    @media (hover:hover) and (pointer:fine) {
+      .svc-row:hover { border-color:rgba(192,147,52,.35); background:rgba(192,147,52,.03); }
+      .svc-row:hover .svc-num { color:rgba(192,147,52,.45); }
+      .svc-row:hover .svc-arrow { transform:translateX(4px); opacity:.8; }
     }
+    .svc-num   { font-family:'Cormorant Garamond',serif; font-size:clamp(2.4rem,5vw,4rem); font-weight:300; color:rgba(192,147,52,.18); line-height:1; transition:color 280ms ease; }
+    .svc-arrow { transition:transform 280ms cubic-bezier(0.23,1,0.32,1),opacity 280ms ease; opacity:.18; }
 
-    /* ── Magnetic button (active state managed by JS) ── */
-    .btn-primary, .btn-outline { transition: transform 300ms cubic-bezier(0.23,1,0.32,1), background 200ms ease, box-shadow 200ms ease, border-color 200ms ease, color 200ms ease; }
+    /* ── Horizontal gallery scroll ── */
+    .h-gallery { display:flex; gap:1rem; overflow-x:auto; scroll-snap-type:x mandatory; scroll-behavior:smooth; cursor:grab; }
+    .h-gallery:active { cursor:grabbing; }
+    .h-gallery::-webkit-scrollbar { display:none; }
+    .h-gallery-item { flex:none; scroll-snap-align:start; position:relative; overflow:hidden; }
+    .h-gallery-item img { width:100%; height:100%; object-fit:cover; transition:transform 600ms cubic-bezier(0.23,1,0.32,1); display:block; }
+    @media (hover:hover) and (pointer:fine) { .h-gallery-item:hover img { transform:scale(1.06); } }
 
-    /* ── Section reveal variants ── */
-    .reveal-scale {
-      opacity: 0; transform: scale(0.96);
-      transition: opacity 800ms cubic-bezier(0.23,1,0.32,1), transform 800ms cubic-bezier(0.23,1,0.32,1);
+    /* ── Gallery overlay on hover ── */
+    .h-gallery-item .gal-overlay { position:absolute; inset:0; background:linear-gradient(to top,rgba(13,11,7,.75) 0%,transparent 60%); opacity:0; transition:opacity 300ms ease; display:flex; flex-direction:column; justify-content:flex-end; padding:1.25rem; }
+    @media (hover:hover) { .h-gallery-item:hover .gal-overlay { opacity:1; } }
+
+    /* ── Pull quote ── */
+    .pull-quote { font-family:'Cormorant Garamond',serif; font-size:clamp(1.5rem,2.8vw,2.2rem); font-weight:300; font-style:italic; line-height:1.45; color:rgba(240,230,211,.75); }
+
+    /* ── Parallax image ── */
+    .parallax-container { overflow:hidden; }
+    .parallax-img { will-change:transform; }
+
+    /* ── Testimonial card ── */
+    .testi-card { border-left:2px solid rgba(192,147,52,.45); padding:2rem 2rem 2rem 2.5rem; background:#141109; transition:border-color 250ms ease; }
+    @media (hover:hover) { .testi-card:hover { border-color:rgba(192,147,52,.75); } }
+
+    /* ── Magnetic button (desktop) ── */
+    .btn-primary,.btn-outline { transition:transform 300ms cubic-bezier(0.23,1,0.32,1),background 200ms ease,box-shadow 200ms ease,border-color 200ms ease,color 200ms ease; }
+
+    /* ── WhatsApp btn ── */
+    .whatsapp-btn { position:fixed; bottom:1.5rem; right:1.5rem; z-index:100; width:3.5rem; height:3.5rem; border-radius:50%; background:#25D366; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 20px rgba(37,211,102,.35); transition:transform 200ms cubic-bezier(0.23,1,0.32,1),box-shadow 200ms ease; text-decoration:none; }
+    @media (hover:hover) and (pointer:fine) { .whatsapp-btn:hover { transform:scale(1.1); box-shadow:0 6px 28px rgba(37,211,102,.5); } }
+    .whatsapp-btn:active { transform:scale(0.95); }
+
+    /* ── Reduced motion ── */
+    @media (prefers-reduced-motion:reduce) {
+      *, *::before, *::after { animation-duration:.01ms !important; transition-duration:.2s !important; }
+      html { scroll-behavior:auto; }
     }
-    .reveal-scale.visible { opacity: 1; transform: scale(1); }
-
-    /* ── Text clip reveal ── */
-    .text-reveal-wrap { overflow: hidden; }
-    .text-reveal { transform: translateY(105%); transition: transform 900ms cubic-bezier(0.16,1,0.3,1); }
-    .text-reveal.visible { transform: translateY(0); }
-
-    /* ── Stat value ── */
-    .stat-value { font-family: 'Cormorant Garamond', Georgia, serif; font-size: clamp(2.4rem,4.5vw,3.2rem); font-weight: 300; color: #c09334; line-height: 1; }
   </style>
 </head>
 
 <body class="bg-dark text-cream font-sans antialiased overflow-x-hidden">
 
-  <!-- Custom cursor -->
+  <!-- Cursor -->
   <div id="cursor-ring" aria-hidden="true"></div>
   <div id="cursor-dot"  aria-hidden="true"></div>
-
   <!-- Scroll progress -->
   <div id="scroll-progress" aria-hidden="true"></div>
 
 
-  <!-- ══════════════════════════════════
-       NAVBAR
-  ══════════════════════════════════ -->
+  <!-- ══════════ NAVBAR ══════════ -->
   <nav id="navbar" class="fixed top-0 left-0 right-0 z-50" role="navigation" aria-label="Menu principal">
-    <div class="max-w-7xl mx-auto px-6 md:px-10 py-5 flex items-center justify-between">
-
-      <a href="#" class="group flex items-center gap-3" aria-label="Barbearia do Miguel — voltar ao início">
-        <span class="w-[2px] h-7 bg-gold opacity-60 group-hover:opacity-100 transition-all duration-300 group-hover:h-9" aria-hidden="true"></span>
-        <span class="font-serif text-lg font-light leading-none">
-          Barbearia<br>
-          <em class="text-gold not-italic" style="font-size:1.12em">do Miguel</em>
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 py-5 flex items-center justify-between">
+      <a href="#" class="group flex items-center gap-3" aria-label="Barbearia do Miguel — início">
+        <span class="w-[1.5px] h-6 bg-gold opacity-55 transition-all duration-300 group-hover:opacity-100 group-hover:h-8" aria-hidden="true"></span>
+        <span class="font-serif text-[1.05rem] font-light leading-[1.15]">
+          Barbearia<br><em class="text-gold not-italic" style="font-size:1.08em">do Miguel</em>
         </span>
       </a>
 
-      <div class="hidden md:flex items-center gap-10">
+      <div class="hidden md:flex items-center gap-9">
         <a href="#sobre"    class="nav-link">Sobre</a>
         <a href="#servicos" class="nav-link">Serviços</a>
         <a href="#galeria"  class="nav-link">Galeria</a>
         <a href="#contacto" class="nav-link">Contacto</a>
-        <a href="marcacoes.html" class="btn-primary ml-2" style="padding:.65rem 1.6rem">Marcar ✂</a>
+        <a href="marcacoes.html" class="btn-primary ml-2" style="padding:.6rem 1.5rem">Marcar ✂</a>
       </div>
 
-      <button id="hamburger" class="md:hidden flex flex-col gap-[6px] p-3 -mr-1" aria-label="Abrir menu de navegação" aria-expanded="false" aria-controls="mobile-menu">
+      <button id="hamburger" class="md:hidden flex flex-col gap-[6px] p-3 -mr-1"
+              aria-label="Abrir menu" aria-expanded="false" aria-controls="mobile-menu">
         <span class="hamburger-line" id="hl1"></span>
         <span class="hamburger-line" id="hl2"></span>
         <span class="hamburger-line" id="hl3"></span>
       </button>
     </div>
 
-    <div id="mobile-menu" class="mobile-menu md:hidden absolute top-full left-0 right-0 bg-[#09080400] backdrop-blur-xl border-t border-[rgba(192,147,52,.12)] px-6 pt-8 pb-10" style="background:rgba(10,9,5,.97)">
+    <div id="mobile-menu" class="mobile-menu md:hidden absolute top-full left-0 right-0 border-t border-[rgba(192,147,52,.12)] px-6 pt-8 pb-10" style="background:rgba(10,9,5,.97);backdrop-filter:blur(20px)">
       <div class="flex flex-col gap-7">
         <a href="#sobre"    class="nav-link text-base" onclick="closeMenu()">Sobre</a>
         <a href="#servicos" class="nav-link text-base" onclick="closeMenu()">Serviços</a>
         <a href="#galeria"  class="nav-link text-base" onclick="closeMenu()">Galeria</a>
         <a href="#contacto" class="nav-link text-base" onclick="closeMenu()">Contacto</a>
-        <a href="marcacoes.html" class="btn-primary text-center mt-4">Marcar agora ✂</a>
+        <a href="marcacoes.html" class="btn-primary text-center mt-2">Marcar agora ✂</a>
       </div>
     </div>
   </nav>
 
 
-  <!-- ══════════════════════════════════
-       HERO — vídeo de fundo
-  ══════════════════════════════════ -->
-  <section id="inicio" class="relative min-h-screen flex items-center overflow-hidden" aria-label="Secção principal">
+  <!-- ══════════ HERO ══════════ -->
+  <section id="inicio" class="relative min-h-screen flex items-end overflow-hidden" aria-label="Secção principal"
+           style="background:#0a0800">
 
-    <!-- Vídeo de fundo -->
-    <video class="absolute inset-0 w-full h-full object-cover" autoplay muted loop playsinline id="hero-video" aria-hidden="true" preload="auto">
+    <!-- Vídeo (com poster fallback) -->
+    <video class="absolute inset-0 w-full h-full object-cover z-0"
+           autoplay muted loop playsinline
+           poster="assets/gallery-2.jpg"
+           id="hero-video" aria-hidden="true" preload="auto">
       <source src="assets/hero-1.mp4" type="video/mp4">
       <source src="assets/hero-2.mp4" type="video/mp4">
-      <source src="assets/hero-3.mp4" type="video/mp4">
     </video>
 
-    <!-- Overlay multicamada -->
-    <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
-      <div class="absolute inset-0" style="background: linear-gradient(to right, rgba(13,11,7,.88) 0%, rgba(13,11,7,.65) 55%, rgba(13,11,7,.35) 100%)"></div>
-      <div class="absolute inset-0" style="background: linear-gradient(to bottom, rgba(13,11,7,.5) 0%, transparent 30%, transparent 70%, rgba(13,11,7,.55) 100%)"></div>
+    <!-- Fallback: se vídeo NÃO carrega -->
+    <div class="absolute inset-0 z-0"
+         style="background-image:url('assets/gallery-2.jpg');background-size:cover;background-position:center 30%"
+         id="hero-img-fallback" aria-hidden="true"></div>
+
+    <!-- Overlay: horizontal e vertical gradient -->
+    <div class="absolute inset-0 z-1 pointer-events-none" aria-hidden="true">
+      <div class="absolute inset-0" style="background:linear-gradient(to right,rgba(10,8,0,.92) 0%,rgba(10,8,0,.72) 45%,rgba(10,8,0,.35) 100%)"></div>
+      <div class="absolute inset-0" style="background:linear-gradient(to bottom,rgba(10,8,0,.65) 0%,rgba(10,8,0,.1) 40%,rgba(10,8,0,.05) 60%,rgba(10,8,0,.65) 100%)"></div>
     </div>
 
-    <!-- Grain texture -->
-    <div class="absolute inset-0 opacity-20 pointer-events-none" aria-hidden="true"
-         style="background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22256%22 height=%22256%22><filter id=%22n%22><feTurbulence type=%22fractalNoise%22 baseFrequency=%220.85%22 numOctaves=%224%22 stitchTiles=%22stitch%22/></filter><rect width=%22256%22 height=%22256%22 filter=%22url(%23n)%22 opacity=%220.08%22/></svg>');
-         background-size:200px 200px; mix-blend-mode:overlay;"></div>
+    <!-- Grain -->
+    <div class="absolute inset-0 z-2 opacity-[.18] pointer-events-none mix-blend-overlay" aria-hidden="true"
+         style="background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22256%22 height=%22256%22><filter id=%22n%22><feTurbulence type=%22fractalNoise%22 baseFrequency=%220.85%22 numOctaves=%224%22 stitchTiles=%22stitch%22/></filter><rect width=%22256%22 height=%22256%22 filter=%22url(%23n)%22 opacity=%220.1%22/></svg>');background-size:200px 200px"></div>
 
-    <!-- Linha vertical decorativa à esquerda -->
-    <div class="absolute left-6 md:left-10 top-0 bottom-0 flex flex-col items-center gap-0 z-20 pointer-events-none" aria-hidden="true">
-      <div class="flex-1" style="background: linear-gradient(to bottom, transparent, rgba(192,147,52,.4) 30%, rgba(192,147,52,.4) 70%, transparent); width:1px"></div>
+    <!-- Linha vertical esquerda -->
+    <div class="absolute top-0 bottom-0 left-8 z-3 flex flex-col pointer-events-none" aria-hidden="true">
+      <div class="flex-1" style="width:1px;background:linear-gradient(to bottom,transparent,rgba(192,147,52,.45) 20%,rgba(192,147,52,.45) 80%,transparent)"></div>
     </div>
 
-    <!-- Conteúdo -->
-    <div class="relative z-10 w-full max-w-7xl mx-auto px-10 md:px-16 py-32">
-      <div class="max-w-2xl">
+    <!-- Content -->
+    <div class="relative z-10 w-full max-w-7xl mx-auto px-10 lg:px-16 pb-24 pt-36">
 
-        <!-- Badge reviews -->
-        <div class="inline-flex items-center gap-3 mb-10 fade-up" role="status" aria-label="4,9 estrelas com 447 avaliações no Google">
-          <div class="border border-[rgba(192,147,52,.32)] bg-[rgba(192,147,52,.07)] backdrop-blur-sm px-4 py-2.5 flex items-center gap-3">
-            <span class="stars text-xs" aria-hidden="true">★★★★★</span>
-            <span class="text-gold font-semibold text-sm">4,9</span>
-            <span class="text-[#e8dbc5]/30" aria-hidden="true">·</span>
-            <span class="text-[#e8dbc5]/58 text-xs tracking-wide">447 avaliações Google</span>
-          </div>
-        </div>
-
-        <!-- Headline com text-reveal -->
-        <div class="mb-6">
-          <div class="text-reveal-wrap">
-            <h1 class="font-serif font-light text-cream text-reveal" style="font-size:clamp(3.4rem,7.5vw,7rem);line-height:1.02">
-              Arte.<br>Precisão.<br><em class="text-gold" style="font-style:italic">Tradição.</em>
-            </h1>
-          </div>
-        </div>
-
-        <!-- Subtítulo -->
-        <p class="text-[#e8dbc5]/60 font-light leading-[1.9] max-w-md fade-up delay-3"
-           style="font-size:clamp(.9rem,1.5vw,1rem)">
-          Fundada em 2016 por Miguel Caetano em Paredes — onde cada corte é uma afirmação de identidade.
-        </p>
-
-        <!-- CTAs -->
-        <div class="flex flex-col sm:flex-row items-start gap-4 mt-10 fade-up delay-4">
-          <a href="marcacoes.html" class="btn-primary magnetic">Marcar agora ✂</a>
-          <a href="#galeria"       class="btn-outline magnetic">Ver o espaço</a>
-        </div>
-
-        <!-- Horários inline -->
-        <div class="flex items-center gap-5 mt-12 fade-up delay-5">
-          <div class="flex items-center gap-1.5">
-            <div class="w-1.5 h-1.5 rounded-full bg-gold animate-pulse" aria-hidden="true"></div>
-            <span class="text-[#e8dbc5]/45 text-xs">Seg–Sex: <strong class="text-[#e8dbc5]/70 font-medium">9h–21h</strong></span>
-          </div>
-          <div class="w-px h-4 bg-[rgba(232,219,197,.12)]" aria-hidden="true"></div>
-          <span class="text-[#e8dbc5]/45 text-xs">Sáb: <strong class="text-[#e8dbc5]/70 font-medium">9h–20h</strong></span>
+      <!-- Badge -->
+      <div class="h-badge inline-flex items-center gap-3 mb-10" role="status">
+        <div class="border border-[rgba(192,147,52,.3)] bg-[rgba(192,147,52,.06)] backdrop-blur-sm px-4 py-2 flex items-center gap-3">
+          <span class="stars text-[.7rem]" aria-hidden="true">★★★★★</span>
+          <span class="text-gold font-semibold text-sm">4,9</span>
+          <span class="text-[#e8dbc5]/25 text-xs" aria-hidden="true">·</span>
+          <span class="text-[#e8dbc5]/50 text-xs">447 avaliações Google</span>
         </div>
       </div>
-    </div>
 
-    <!-- Scroll indicator -->
-    <div class="absolute bottom-8 right-10 flex flex-col items-center gap-2 fade-up delay-5 hidden md:flex" style="z-index:20" aria-hidden="true">
-      <div class="w-px h-14 bg-gradient-to-b from-[rgba(192,147,52,.5)] to-transparent"></div>
-      <span class="text-[#e8dbc5]/22 text-[8px] tracking-[.4em] uppercase" style="writing-mode:vertical-rl">scroll</span>
+      <!-- HEADLINE — CSS animation, sem IntersectionObserver -->
+      <div class="overflow-hidden mb-5">
+        <h1 class="h-title font-serif font-light leading-[.97]" aria-label="Arte. Precisão. Tradição."
+            style="font-size:clamp(3.8rem,10vw,9.5rem);letter-spacing:-.02em">
+          Arte.<br>
+          Precisão.<br>
+          <em class="text-gold" style="font-style:italic;letter-spacing:-.01em">Tradição.</em>
+        </h1>
+      </div>
+
+      <p class="h-sub text-[#e8dbc5]/52 font-light leading-[1.88] max-w-sm mb-9"
+         style="font-size:clamp(.87rem,1.4vw,.97rem)">
+        Fundada em 2016 por Miguel Caetano em Paredes — onde cada corte é uma afirmação de identidade.
+      </p>
+
+      <div class="h-ctas flex flex-col sm:flex-row items-start gap-4 mb-12">
+        <a href="marcacoes.html" class="btn-primary magnetic">Marcar agora ✂</a>
+        <a href="#galeria"       class="btn-outline magnetic">Ver o espaço</a>
+      </div>
+
+      <div class="h-hours flex items-center gap-6">
+        <div class="flex items-center gap-2">
+          <div class="w-1.5 h-1.5 rounded-full bg-gold animate-pulse" aria-hidden="true"></div>
+          <span class="text-[#e8dbc5]/40 text-xs">Seg–Sex: <strong class="text-[#e8dbc5]/65 font-medium">9h–21h</strong></span>
+        </div>
+        <div class="w-px h-3.5 bg-[rgba(232,219,197,.1)]" aria-hidden="true"></div>
+        <span class="text-[#e8dbc5]/40 text-xs">Sáb: <strong class="text-[#e8dbc5]/65 font-medium">9h–20h</strong></span>
+      </div>
+    </div><!-- /content -->
+
+    <!-- ── Marquee ticker ── -->
+    <div class="absolute bottom-0 left-0 right-0 z-10 border-t border-[rgba(192,147,52,.14)] py-3 overflow-hidden"
+         style="background:rgba(10,8,0,.72);backdrop-filter:blur(8px)" aria-hidden="true">
+      <div class="marquee-wrap">
+        <div class="marquee-track">
+          <!-- duplicated for seamless loop -->
+          <span class="ticker-item">Arte</span><span class="ticker-dot">·</span>
+          <span class="ticker-item">Precisão</span><span class="ticker-dot">·</span>
+          <span class="ticker-item">Tradição</span><span class="ticker-dot">·</span>
+          <span class="ticker-item">Paredes</span><span class="ticker-dot">·</span>
+          <span class="ticker-item">Desde 2016</span><span class="ticker-dot">·</span>
+          <span class="ticker-item">4,9 Estrelas</span><span class="ticker-dot">·</span>
+          <span class="ticker-item">447 Avaliações</span><span class="ticker-dot">·</span>
+          <span class="ticker-item">Miguel Caetano</span><span class="ticker-dot">·</span>
+          <span class="ticker-item">Arte</span><span class="ticker-dot">·</span>
+          <span class="ticker-item">Precisão</span><span class="ticker-dot">·</span>
+          <span class="ticker-item">Tradição</span><span class="ticker-dot">·</span>
+          <span class="ticker-item">Paredes</span><span class="ticker-dot">·</span>
+          <span class="ticker-item">Desde 2016</span><span class="ticker-dot">·</span>
+          <span class="ticker-item">4,9 Estrelas</span><span class="ticker-dot">·</span>
+          <span class="ticker-item">447 Avaliações</span><span class="ticker-dot">·</span>
+          <span class="ticker-item">Miguel Caetano</span><span class="ticker-dot">·</span>
+        </div>
+      </div>
     </div>
   </section>
 
+  <style>
+    .ticker-item { font-family:'Cormorant Garamond',serif; font-size:.9rem; font-style:italic; color:rgba(192,147,52,.55); white-space:nowrap; padding:0 .8rem; letter-spacing:.04em; }
+    .ticker-dot  { color:rgba(192,147,52,.22); font-size:.55rem; }
+  </style>
 
-  <!-- ══════════════════════════════════
-       STATS
-  ══════════════════════════════════ -->
-  <div class="py-14 px-6" style="background:linear-gradient(to right, #0a0900, #0f0d08, #0a0900); border-top:1px solid rgba(192,147,52,.07); border-bottom:1px solid rgba(192,147,52,.07)">
-    <div class="max-w-4xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-10 text-center">
+
+  <!-- ══════════ STATS ══════════ -->
+  <div class="py-12 px-6" style="background:rgba(8,7,3,1);border-top:1px solid rgba(192,147,52,.07);border-bottom:1px solid rgba(192,147,52,.07)" aria-label="Estatísticas">
+    <div class="max-w-4xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
       <div class="reveal">
         <p class="stat-value" data-target="447" data-decimal="false">0</p>
-        <div class="w-8 h-px bg-gold mx-auto mt-3 mb-2 opacity-40" aria-hidden="true"></div>
-        <p class="text-[#e8dbc5]/30 text-[9px] tracking-[.25em] uppercase">Avaliações Google</p>
+        <div class="w-8 h-px bg-gold mx-auto mt-3 mb-2 opacity-35" aria-hidden="true"></div>
+        <p class="text-[#e8dbc5]/30 text-[8px] tracking-[.28em] uppercase">Avaliações Google</p>
       </div>
-      <div class="reveal" style="transition-delay:80ms">
+      <div class="reveal" style="transition-delay:70ms">
         <p class="stat-value" data-target="4.9" data-decimal="true">0.0</p>
-        <div class="w-8 h-px bg-gold mx-auto mt-3 mb-2 opacity-40" aria-hidden="true"></div>
-        <p class="text-[#e8dbc5]/30 text-[9px] tracking-[.25em] uppercase">Estrelas ★</p>
+        <div class="w-8 h-px bg-gold mx-auto mt-3 mb-2 opacity-35" aria-hidden="true"></div>
+        <p class="text-[#e8dbc5]/30 text-[8px] tracking-[.28em] uppercase">Estrelas ★</p>
       </div>
-      <div class="reveal" style="transition-delay:160ms">
+      <div class="reveal" style="transition-delay:140ms">
         <p class="stat-value" data-target="2016" data-decimal="false">—</p>
-        <div class="w-8 h-px bg-gold mx-auto mt-3 mb-2 opacity-40" aria-hidden="true"></div>
-        <p class="text-[#e8dbc5]/30 text-[9px] tracking-[.25em] uppercase">Ano de fundação</p>
+        <div class="w-8 h-px bg-gold mx-auto mt-3 mb-2 opacity-35" aria-hidden="true"></div>
+        <p class="text-[#e8dbc5]/30 text-[8px] tracking-[.28em] uppercase">Fundação</p>
       </div>
-      <div class="reveal" style="transition-delay:240ms">
-        <p class="stat-value" data-target="12" data-decimal="false" data-suffix="+">0+</p>
-        <div class="w-8 h-px bg-gold mx-auto mt-3 mb-2 opacity-40" aria-hidden="true"></div>
-        <p class="text-[#e8dbc5]/30 text-[9px] tracking-[.25em] uppercase">Anos de ofício</p>
+      <div class="reveal" style="transition-delay:210ms">
+        <p class="stat-value" data-target="12" data-decimal="false" data-suffix="+">0</p>
+        <div class="w-8 h-px bg-gold mx-auto mt-3 mb-2 opacity-35" aria-hidden="true"></div>
+        <p class="text-[#e8dbc5]/30 text-[8px] tracking-[.28em] uppercase">Anos de ofício</p>
       </div>
     </div>
   </div>
 
 
-  <!-- ══════════════════════════════════
-       SOBRE
-  ══════════════════════════════════ -->
-  <section id="sobre" class="py-32 px-6" aria-labelledby="sobre-heading">
+  <!-- ══════════ SOBRE ══════════ -->
+  <section id="sobre" class="py-28 md:py-36 px-6" aria-labelledby="sobre-h">
     <div class="max-w-6xl mx-auto">
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-14 lg:gap-24 items-center">
 
-        <!-- Foto com parallax -->
-        <div class="relative reveal-left order-2 lg:order-1 parallax-container">
-          <div style="aspect-ratio:4/5; overflow:hidden">
+        <!-- Foto -->
+        <div class="order-2 lg:order-1 reveal-left parallax-container relative">
+          <div style="aspect-ratio:3/4;overflow:hidden">
             <img src="assets/gallery-1.jpg"
                  alt="Interior da Barbearia do Miguel — decoração vintage única em Paredes"
-                 class="parallax-img w-full h-full object-cover"
-                 style="transform:scale(1.1)"
+                 class="parallax-img w-full h-full object-cover" style="transform:scale(1.12)"
                  loading="eager">
+            <!-- dark overlay -->
+            <div class="absolute inset-0" style="background:linear-gradient(to top,rgba(10,8,0,.55) 0%,rgba(10,8,0,.1) 50%,rgba(10,8,0,.2) 100%)"></div>
           </div>
-          <!-- Moldura gold deslocada -->
-          <div class="absolute -top-4 -left-4 w-full h-full border border-[rgba(192,147,52,.1)] pointer-events-none" aria-hidden="true" style="z-index:-1"></div>
-          <div class="absolute -top-1 -left-1 w-8 h-8 border-t border-l border-gold pointer-events-none" aria-hidden="true"></div>
-          <div class="absolute -bottom-1 -right-1 w-8 h-8 border-b border-r border-gold pointer-events-none" aria-hidden="true"></div>
-          <!-- Badge -->
-          <div class="absolute bottom-6 right-6 bg-[rgba(13,11,7,.95)] border border-[rgba(192,147,52,.28)] px-4 py-3 backdrop-blur-md">
+          <!-- Corner accents -->
+          <div class="absolute -top-3 -left-3 w-9 h-9 border-t-2 border-l-2 border-gold opacity-60 pointer-events-none" aria-hidden="true"></div>
+          <div class="absolute -bottom-3 -right-3 w-9 h-9 border-b-2 border-r-2 border-gold opacity-60 pointer-events-none" aria-hidden="true"></div>
+          <!-- Floating badge -->
+          <div class="absolute bottom-7 right-7 border border-[rgba(192,147,52,.3)] bg-[rgba(10,8,0,.9)] backdrop-blur-md px-4 py-3">
             <p class="stars text-xs mb-1">★★★★★</p>
-            <p class="text-gold text-sm font-medium">4,9 · 447 avaliações</p>
-            <p class="text-[#e8dbc5]/40 text-xs mt-0.5">Google Maps · Paredes</p>
+            <p class="text-gold text-sm font-semibold">4,9 / 5</p>
+            <p class="text-[#e8dbc5]/35 text-[9px] mt-0.5">447 avaliações · Google</p>
           </div>
         </div>
 
@@ -326,42 +354,43 @@
         <div class="order-1 lg:order-2">
           <p class="section-label mb-5 reveal">Miguel Caetano · Fundador · Paredes</p>
 
-          <div class="text-reveal-wrap mb-6 reveal">
-            <h2 id="sobre-heading" class="font-serif font-light leading-[1.05] text-reveal" style="font-size:clamp(2.6rem,5.5vw,4rem)">
+          <!-- Oversized deco year behind heading -->
+          <div class="relative mb-3">
+            <div class="deco-num absolute -top-6 -left-4 select-none" style="font-size:clamp(6rem,14vw,12rem);opacity:.04" aria-hidden="true">2016</div>
+            <h2 id="sobre-h" class="reveal font-serif font-light leading-[1.04]" style="font-size:clamp(2.8rem,5.5vw,4.2rem);position:relative">
               O ofício de<br><em class="text-gold">uma vida inteira.</em>
             </h2>
           </div>
 
-          <div class="w-10 h-px bg-gold mb-8 reveal" aria-hidden="true"></div>
+          <div class="w-10 h-px bg-gold mb-8 reveal" style="transition-delay:80ms" aria-hidden="true"></div>
 
-          <p class="text-[#e8dbc5]/60 font-light leading-[1.92] text-[.91rem] reveal">
-            Iniciou-se na arte da barbearia ainda adolescente. Com mais de 12 anos de ofício apurado, Miguel Caetano abriu portas em 2016 com uma visão clara: criar mais do que uma barbearia — criar um <em style="color:var(--gold-light)">destino</em>.
+          <p class="text-[#e8dbc5]/55 font-light leading-[1.95] text-[.9rem] reveal" style="transition-delay:80ms">
+            Iniciou-se na arte da barbearia ainda adolescente. Com mais de 12 anos de ofício apurado, Miguel Caetano abriu portas em 2016 com uma visão clara: criar mais do que uma barbearia — criar um <em class="text-gold-light" style="font-style:italic">destino</em>.
           </p>
-          <p class="text-[#e8dbc5]/60 font-light leading-[1.92] text-[.91rem] mt-4 reveal" style="transition-delay:80ms">
-            O espaço reflecte esta personalidade singular: cadeiras de época ao lado de uma máquina de arcade retro com Metal Slug e Pac-Man, uma cabine telefónica londrina, um bar de troncos de madeira com fine&shy;s, e prateleiras apoiadas em antigos mostruários de avionetas. Um espaço para <em style="color:var(--gold-light)">todas as idades</em>.
+          <p class="text-[#e8dbc5]/55 font-light leading-[1.95] text-[.9rem] mt-4 reveal" style="transition-delay:130ms">
+            Cadeiras de época ao lado de uma máquina de arcade retro com Metal Slug e Pac-Man, uma cabine telefónica londrina, um bar em troncos de madeira com finos, e prateleiras em antigos mostruários de avionetas. Um espaço para <em class="text-gold-light" style="font-style:italic">todas as idades</em>.
           </p>
 
-          <!-- Features grid -->
-          <div class="mt-10 grid grid-cols-2 gap-2.5 reveal" style="transition-delay:120ms">
-            <div class="flex items-center gap-3 bg-surface border border-[rgba(192,147,52,.09)] px-4 py-3 group hover:border-[rgba(192,147,52,.3)] transition-colors duration-250">
-              <span class="text-gold text-xs" aria-hidden="true">✦</span>
-              <span class="text-[#e8dbc5]/52 text-xs font-light group-hover:text-[#e8dbc5]/80 transition-colors">Decoração vintage</span>
+          <div class="mt-9 grid grid-cols-2 gap-2 reveal" style="transition-delay:170ms">
+            <div class="flex items-center gap-2.5 bg-surface border border-[rgba(192,147,52,.08)] px-4 py-3 group hover:border-[rgba(192,147,52,.28)] transition-colors">
+              <span class="text-gold text-[.65rem]" aria-hidden="true">✦</span>
+              <span class="text-[#e8dbc5]/48 text-xs group-hover:text-[#e8dbc5]/75 transition-colors">Decoração vintage</span>
             </div>
-            <div class="flex items-center gap-3 bg-surface border border-[rgba(192,147,52,.09)] px-4 py-3 group hover:border-[rgba(192,147,52,.3)] transition-colors duration-250">
-              <span class="text-gold text-xs" aria-hidden="true">✦</span>
-              <span class="text-[#e8dbc5]/52 text-xs font-light group-hover:text-[#e8dbc5]/80 transition-colors">Arcade retro</span>
+            <div class="flex items-center gap-2.5 bg-surface border border-[rgba(192,147,52,.08)] px-4 py-3 group hover:border-[rgba(192,147,52,.28)] transition-colors">
+              <span class="text-gold text-[.65rem]" aria-hidden="true">✦</span>
+              <span class="text-[#e8dbc5]/48 text-xs group-hover:text-[#e8dbc5]/75 transition-colors">Arcade retro</span>
             </div>
-            <div class="flex items-center gap-3 bg-surface border border-[rgba(192,147,52,.09)] px-4 py-3 group hover:border-[rgba(192,147,52,.3)] transition-colors duration-250">
-              <span class="text-gold text-xs" aria-hidden="true">✦</span>
-              <span class="text-[#e8dbc5]/52 text-xs font-light group-hover:text-[#e8dbc5]/80 transition-colors">Bar com finos</span>
+            <div class="flex items-center gap-2.5 bg-surface border border-[rgba(192,147,52,.08)] px-4 py-3 group hover:border-[rgba(192,147,52,.28)] transition-colors">
+              <span class="text-gold text-[.65rem]" aria-hidden="true">✦</span>
+              <span class="text-[#e8dbc5]/48 text-xs group-hover:text-[#e8dbc5]/75 transition-colors">Bar com finos</span>
             </div>
-            <div class="flex items-center gap-3 bg-surface border border-[rgba(192,147,52,.09)] px-4 py-3 group hover:border-[rgba(192,147,52,.3)] transition-colors duration-250">
-              <span class="text-gold text-xs" aria-hidden="true">✦</span>
-              <span class="text-[#e8dbc5]/52 text-xs font-light group-hover:text-[#e8dbc5]/80 transition-colors">Cabine londrina</span>
+            <div class="flex items-center gap-2.5 bg-surface border border-[rgba(192,147,52,.08)] px-4 py-3 group hover:border-[rgba(192,147,52,.28)] transition-colors">
+              <span class="text-gold text-[.65rem]" aria-hidden="true">✦</span>
+              <span class="text-[#e8dbc5]/48 text-xs group-hover:text-[#e8dbc5]/75 transition-colors">Cabine londrina</span>
             </div>
           </div>
 
-          <div class="mt-10 reveal" style="transition-delay:160ms">
+          <div class="mt-9 reveal" style="transition-delay:200ms">
             <a href="marcacoes.html" class="btn-primary magnetic">Reservar o meu lugar ✂</a>
           </div>
         </div>
@@ -371,214 +400,215 @@
   </section>
 
 
-  <!-- ══════════════════════════════════
-       SERVIÇOS
-  ══════════════════════════════════ -->
-  <section id="servicos" class="py-32 px-6" style="background:#0f0d08" aria-labelledby="servicos-heading">
-    <div class="max-w-6xl mx-auto">
+  <!-- ══════════ SERVIÇOS — editorial numbered ══════════ -->
+  <section id="servicos" class="py-28 md:py-36 px-6" style="background:#080700" aria-labelledby="servicos-h">
+    <div class="max-w-5xl mx-auto">
 
-      <div class="text-center mb-20">
-        <p class="section-label mb-4 reveal">Especialidades</p>
-        <div class="text-reveal-wrap reveal">
-          <h2 id="servicos-heading" class="font-serif text-4xl md:text-[3.2rem] font-light text-reveal">Serviços</h2>
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
+        <div>
+          <p class="section-label mb-4 reveal">Especialidades</p>
+          <h2 id="servicos-h" class="font-serif font-light leading-[1.02] reveal" style="font-size:clamp(2.6rem,6vw,5rem)">
+            Serviços
+          </h2>
         </div>
-        <div class="gold-divider mt-6 mx-auto reveal"></div>
-        <p class="mt-5 text-[#e8dbc5]/38 text-sm font-light max-w-xs mx-auto reveal" style="transition-delay:80ms">
-          Cada serviço executado com precisão, os melhores produtos e atenção ao detalhe.
+        <p class="text-[#e8dbc5]/32 text-sm font-light max-w-xs leading-[1.8] reveal" style="transition-delay:80ms">
+          Precisão em cada detalhe. Os melhores produtos. Sem pressa.
         </p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <!-- Editorial list -->
+      <div class="border-t border-[rgba(192,147,52,.14)]">
 
-        <article class="service-card reveal" style="border-color:rgba(192,147,52,.2)">
-          <div class="flex items-center gap-2 mb-5">
-            <span class="text-gold" aria-hidden="true">✂</span>
-            <span class="text-[9px] tracking-[.2em] uppercase text-gold">Mais pedido</span>
+        <div class="svc-row flex items-center gap-6 md:gap-10 py-7 px-2 reveal" tabindex="0">
+          <span class="svc-num shrink-0 w-16 md:w-20 text-right">01</span>
+          <div class="flex-1 min-w-0">
+            <p class="font-serif text-lg md:text-2xl font-light text-[#e8dbc5]/85">Corte de Cabelo</p>
+            <p class="text-[#e8dbc5]/35 text-xs font-light mt-1 hidden md:block">Tesoura, máquina ou combinação — adaptado ao seu rosto e estilo</p>
           </div>
-          <h3 class="font-serif text-xl font-light mb-3">Corte de Cabelo</h3>
-          <p class="text-[#e8dbc5]/50 text-sm font-light leading-relaxed">Tesoura, máquina ou combinação. Adaptado ao seu rosto, estilo e vontade — com acabamento impecável.</p>
-        </article>
+          <span class="text-gold/35 text-xs tracking-[.2em] uppercase hidden sm:block shrink-0">Mais pedido</span>
+          <span class="svc-arrow text-gold text-sm shrink-0" aria-hidden="true">→</span>
+        </div>
 
-        <article class="service-card reveal" style="transition-delay:70ms">
-          <div class="text-gold mb-5 text-lg" aria-hidden="true">◈</div>
-          <h3 class="font-serif text-xl font-light mb-3">Barba</h3>
-          <p class="text-[#e8dbc5]/50 text-sm font-light leading-relaxed">Aparar, delinear ou fazer barba com navalha tradicional e espuma quente. Um ritual clássico de barbearia.</p>
-        </article>
+        <div class="svc-row flex items-center gap-6 md:gap-10 py-7 px-2 reveal" style="transition-delay:50ms" tabindex="0">
+          <span class="svc-num shrink-0 w-16 md:w-20 text-right">02</span>
+          <div class="flex-1 min-w-0">
+            <p class="font-serif text-lg md:text-2xl font-light text-[#e8dbc5]/85">Barba</p>
+            <p class="text-[#e8dbc5]/35 text-xs font-light mt-1 hidden md:block">Aparar, delinear ou navalha clássica com espuma quente</p>
+          </div>
+          <span class="svc-arrow text-gold text-sm shrink-0" aria-hidden="true">→</span>
+        </div>
 
-        <article class="service-card reveal" style="transition-delay:140ms">
-          <div class="text-gold mb-5 text-lg" aria-hidden="true">◇</div>
-          <h3 class="font-serif text-xl font-light mb-3">Platinados</h3>
-          <p class="text-[#e8dbc5]/50 text-sm font-light leading-relaxed">Descoloração e platinados com técnica e produtos profissionais para resultados duradouros e cabelo saudável.</p>
-        </article>
+        <div class="svc-row flex items-center gap-6 md:gap-10 py-7 px-2 reveal" style="transition-delay:100ms" tabindex="0">
+          <span class="svc-num shrink-0 w-16 md:w-20 text-right">03</span>
+          <div class="flex-1 min-w-0">
+            <p class="font-serif text-lg md:text-2xl font-light text-[#e8dbc5]/85">Corte + Barba</p>
+            <p class="text-[#e8dbc5]/35 text-xs font-light mt-1 hidden md:block">Pacote completo — o mais procurado da casa</p>
+          </div>
+          <span class="svc-arrow text-gold text-sm shrink-0" aria-hidden="true">→</span>
+        </div>
 
-        <article class="service-card reveal" style="transition-delay:70ms">
-          <div class="text-gold mb-5 text-lg" aria-hidden="true">✦</div>
-          <h3 class="font-serif text-xl font-light mb-3">Madeixas</h3>
-          <p class="text-[#e8dbc5]/50 text-sm font-light leading-relaxed">Mechas e madeixas para dimensão e luminosidade. Serviço disponível também para coloração masculina.</p>
-        </article>
+        <div class="svc-row flex items-center gap-6 md:gap-10 py-7 px-2 reveal" style="transition-delay:150ms" tabindex="0">
+          <span class="svc-num shrink-0 w-16 md:w-20 text-right">04</span>
+          <div class="flex-1 min-w-0">
+            <p class="font-serif text-lg md:text-2xl font-light text-[#e8dbc5]/85">Platinados</p>
+            <p class="text-[#e8dbc5]/35 text-xs font-light mt-1 hidden md:block">Descoloração e platinados com produtos profissionais</p>
+          </div>
+          <span class="svc-arrow text-gold text-sm shrink-0" aria-hidden="true">→</span>
+        </div>
 
-        <article class="service-card reveal" style="transition-delay:140ms">
-          <div class="text-gold mb-5 text-lg" aria-hidden="true">◉</div>
-          <h3 class="font-serif text-xl font-light mb-3">Sobrancelhas</h3>
-          <p class="text-[#e8dbc5]/50 text-sm font-light leading-relaxed">Design masculino de sobrancelha para um acabamento limpo e natural. O detalhe que define o visual.</p>
-        </article>
+        <div class="svc-row flex items-center gap-6 md:gap-10 py-7 px-2 reveal" style="transition-delay:200ms" tabindex="0">
+          <span class="svc-num shrink-0 w-16 md:w-20 text-right">05</span>
+          <div class="flex-1 min-w-0">
+            <p class="font-serif text-lg md:text-2xl font-light text-[#e8dbc5]/85">Madeixas</p>
+            <p class="text-[#e8dbc5]/35 text-xs font-light mt-1 hidden md:block">Mechas e coloração masculina para dimensão e luminosidade</p>
+          </div>
+          <span class="svc-arrow text-gold text-sm shrink-0" aria-hidden="true">→</span>
+        </div>
 
-        <article class="service-card reveal" style="transition-delay:210ms">
-          <div class="text-gold mb-5 text-lg" aria-hidden="true">❧</div>
-          <h3 class="font-serif text-xl font-light mb-3">Produtos</h3>
-          <p class="text-[#e8dbc5]/50 text-sm font-light leading-relaxed">Venda de ceras, óleos e produtos profissionais para cabelo e barba — para manter o look entre visitas.</p>
-        </article>
+        <div class="svc-row flex items-center gap-6 md:gap-10 py-7 px-2 reveal" style="transition-delay:250ms" tabindex="0">
+          <span class="svc-num shrink-0 w-16 md:w-20 text-right">06</span>
+          <div class="flex-1 min-w-0">
+            <p class="font-serif text-lg md:text-2xl font-light text-[#e8dbc5]/85">Sobrancelhas</p>
+            <p class="text-[#e8dbc5]/35 text-xs font-light mt-1 hidden md:block">Design masculino — o detalhe que define o visual</p>
+          </div>
+          <span class="svc-arrow text-gold text-sm shrink-0" aria-hidden="true">→</span>
+        </div>
 
       </div>
 
-      <div class="text-center mt-14 reveal">
-        <a href="marcacoes.html" class="btn-primary magnetic">Agendar o meu serviço ✂</a>
-        <p class="text-[#e8dbc5]/25 text-xs mt-4 font-light">Para preços e disponibilidade: <a href="tel:910473484" class="text-gold/70 hover:text-gold transition-colors">910 473 484</a></p>
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mt-10 reveal">
+        <p class="text-[#e8dbc5]/25 text-xs font-light">Para preços e disponibilidade: <a href="tel:910473484" class="text-gold/65 hover:text-gold transition-colors">910 473 484</a></p>
+        <a href="marcacoes.html" class="btn-primary magnetic">Agendar agora ✂</a>
       </div>
+
     </div>
   </section>
 
 
-  <!-- ══════════════════════════════════
-       GALERIA — fotos reais
-  ══════════════════════════════════ -->
-  <section id="galeria" class="py-32 px-6" aria-labelledby="galeria-heading">
-    <div class="max-w-6xl mx-auto">
-
-      <div class="text-center mb-16">
-        <p class="section-label mb-4 reveal">O nosso espaço</p>
-        <div class="text-reveal-wrap reveal">
-          <h2 id="galeria-heading" class="font-serif text-4xl md:text-[3.2rem] font-light text-reveal">Galeria</h2>
+  <!-- ══════════ GALERIA — scroll horizontal ══════════ -->
+  <section id="galeria" class="py-28 md:py-36" aria-labelledby="galeria-h">
+    <div class="px-6 max-w-6xl mx-auto mb-12">
+      <div class="flex items-end justify-between gap-8">
+        <div>
+          <p class="section-label mb-4 reveal">O nosso espaço</p>
+          <h2 id="galeria-h" class="font-serif font-light leading-[1.02] reveal" style="font-size:clamp(2.6rem,6vw,5rem)">
+            Galeria
+          </h2>
         </div>
-        <div class="gold-divider mt-6 mx-auto reveal"></div>
-        <p class="mt-5 text-[#e8dbc5]/38 text-sm font-light max-w-xs mx-auto reveal" style="transition-delay:80ms">
-          Vintage, autêntico, sem igual. Um espaço que tem de se ver para se acreditar.
+        <p class="text-[#e8dbc5]/25 text-xs hidden md:block mb-2 reveal" style="transition-delay:80ms">
+          ← deslize para explorar →
         </p>
       </div>
+    </div>
 
-      <!-- Grid assimétrico -->
-      <div class="grid grid-cols-12 gap-2 md:gap-3" role="list" aria-label="Fotos do espaço">
-
-        <div class="gallery-item col-span-12 md:col-span-7 reveal" style="height:420px" role="listitem">
-          <img src="assets/gallery-1.jpg" alt="Interior vintage da Barbearia do Miguel" loading="lazy">
-          <div class="gallery-overlay"><p>O espaço</p></div>
-        </div>
-
-        <div class="gallery-item col-span-6 md:col-span-5 reveal" style="height:200px;transition-delay:60ms" role="listitem">
-          <img src="assets/gallery-2.jpg" alt="Detalhes do interior" loading="lazy">
-          <div class="gallery-overlay"><p>Detalhes</p></div>
-        </div>
-
-        <div class="gallery-item col-span-6 md:col-span-5 reveal" style="height:200px;transition-delay:100ms" role="listitem">
-          <img src="assets/gallery-3.jpg" alt="Ambiente da barbearia" loading="lazy">
-          <div class="gallery-overlay"><p>Ambiente</p></div>
-        </div>
-
-        <div class="gallery-item col-span-6 md:col-span-4 reveal" style="height:260px;transition-delay:80ms" role="listitem">
-          <img src="assets/gallery-4.jpg" alt="Cadeiras vintage da Barbearia do Miguel" loading="lazy">
-          <div class="gallery-overlay"><p>Cadeiras vintage</p></div>
-        </div>
-
-        <div class="gallery-item col-span-6 md:col-span-8 reveal" style="height:260px;transition-delay:120ms" role="listitem">
-          <img src="assets/gallery-5.jpg" alt="Espaço de convívio" loading="lazy">
-          <div class="gallery-overlay"><p>Espaço de convívio</p></div>
-        </div>
-
+    <!-- Scroll horizontal -->
+    <div class="h-gallery px-6" id="gallery-scroll" role="list" aria-label="Fotos do espaço">
+      <div class="h-gallery-item reveal" style="width:360px;height:500px;transition-delay:0ms" role="listitem">
+        <img src="assets/gallery-1.jpg" alt="Interior da Barbearia do Miguel" loading="lazy">
+        <div class="gal-overlay"><p class="text-[#e8dbc5]/65 text-[9px] tracking-[.2em] uppercase">O espaço</p></div>
       </div>
-
-      <div class="text-center mt-10 reveal">
-        <a href="https://www.facebook.com/barbeariadomiguel2016" target="_blank" rel="noopener noreferrer" class="btn-outline magnetic">
-          Ver mais no Facebook →
-        </a>
+      <div class="h-gallery-item reveal" style="width:280px;height:500px;transition-delay:60ms" role="listitem">
+        <img src="assets/gallery-2.jpg" alt="Detalhes do interior" loading="lazy">
+        <div class="gal-overlay"><p class="text-[#e8dbc5]/65 text-[9px] tracking-[.2em] uppercase">Detalhes</p></div>
       </div>
+      <div class="h-gallery-item reveal" style="width:420px;height:500px;transition-delay:120ms" role="listitem">
+        <img src="assets/gallery-3.jpg" alt="Ambiente" loading="lazy">
+        <div class="gal-overlay"><p class="text-[#e8dbc5]/65 text-[9px] tracking-[.2em] uppercase">Ambiente</p></div>
+      </div>
+      <div class="h-gallery-item reveal" style="width:300px;height:500px;transition-delay:180ms" role="listitem">
+        <img src="assets/gallery-4.jpg" alt="Cadeiras vintage" loading="lazy">
+        <div class="gal-overlay"><p class="text-[#e8dbc5]/65 text-[9px] tracking-[.2em] uppercase">Cadeiras vintage</p></div>
+      </div>
+      <div class="h-gallery-item reveal" style="width:380px;height:500px;transition-delay:240ms" role="listitem">
+        <img src="assets/gallery-5.jpg" alt="Espaço de convívio" loading="lazy">
+        <div class="gal-overlay"><p class="text-[#e8dbc5]/65 text-[9px] tracking-[.2em] uppercase">Convívio</p></div>
+      </div>
+    </div>
+
+    <div class="px-6 max-w-6xl mx-auto mt-8 reveal">
+      <a href="https://www.facebook.com/barbeariadomiguel2016" target="_blank" rel="noopener noreferrer"
+         class="inline-flex items-center gap-2 text-[#e8dbc5]/28 text-xs hover:text-gold transition-colors">
+        Ver mais no Facebook →
+      </a>
     </div>
   </section>
 
 
-  <!-- ══════════════════════════════════
-       VIDEO REEL — showcase do espaço
-  ══════════════════════════════════ -->
-  <div class="py-24 px-6" style="background:#0a0900" aria-label="Vídeos do espaço">
-    <div class="max-w-6xl mx-auto">
-
-      <div class="text-center mb-12 reveal">
-        <p class="section-label mb-3">Em movimento</p>
-        <p class="text-[#e8dbc5]/30 text-xs tracking-[.2em] uppercase">O ambiente que tem de se sentir</p>
+  <!-- ══════════ VÍDEO REEL ══════════ -->
+  <div style="background:#07060300" aria-label="Vídeos do espaço">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-[2px]">
+      <div class="relative overflow-hidden" style="height:300px">
+        <video autoplay muted loop playsinline aria-hidden="true" preload="none"
+               class="w-full h-full object-cover" style="transform:scale(1.05);transition:transform 600ms cubic-bezier(0.23,1,0.32,1)" id="rv1">
+          <source src="assets/hero-2.mp4" type="video/mp4">
+        </video>
+        <div class="absolute inset-0" style="background:linear-gradient(to top,rgba(10,8,0,.6) 0%,transparent 50%)"></div>
       </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-3">
-        <div class="video-reel-item reveal" style="height:280px;transition-delay:0ms">
-          <video autoplay muted loop playsinline aria-hidden="true" preload="none">
-            <source src="assets/hero-2.mp4" type="video/mp4">
-          </video>
-          <div class="video-reel-overlay"></div>
-        </div>
-        <div class="video-reel-item reveal" style="height:280px;transition-delay:80ms">
-          <video autoplay muted loop playsinline aria-hidden="true" preload="none">
-            <source src="assets/hero-3.mp4" type="video/mp4">
-          </video>
-          <div class="video-reel-overlay"></div>
-        </div>
-        <div class="video-reel-item reveal" style="height:280px;transition-delay:160ms">
-          <video autoplay muted loop playsinline aria-hidden="true" preload="none">
-            <source src="assets/hero-4.mp4" type="video/mp4">
-          </video>
-          <div class="video-reel-overlay"></div>
-        </div>
+      <div class="relative overflow-hidden" style="height:300px">
+        <video autoplay muted loop playsinline aria-hidden="true" preload="none"
+               class="w-full h-full object-cover" style="transform:scale(1.05)" id="rv2">
+          <source src="assets/hero-3.mp4" type="video/mp4">
+        </video>
+        <div class="absolute inset-0" style="background:linear-gradient(to top,rgba(10,8,0,.6) 0%,transparent 50%)"></div>
+      </div>
+      <div class="relative overflow-hidden" style="height:300px">
+        <video autoplay muted loop playsinline aria-hidden="true" preload="none"
+               class="w-full h-full object-cover" style="transform:scale(1.05)" id="rv3">
+          <source src="assets/hero-4.mp4" type="video/mp4">
+        </video>
+        <div class="absolute inset-0" style="background:linear-gradient(to top,rgba(10,8,0,.6) 0%,transparent 50%)"></div>
       </div>
     </div>
   </div>
 
 
-  <!-- ══════════════════════════════════
-       TESTEMUNHOS
-  ══════════════════════════════════ -->
-  <section class="py-32 px-6" style="background:#0f0d08" aria-labelledby="testemunhos-heading">
+  <!-- ══════════ TESTEMUNHOS — pull-quote ══════════ -->
+  <section class="py-28 md:py-36 px-6" aria-labelledby="testi-h">
     <div class="max-w-5xl mx-auto">
 
       <div class="text-center mb-20">
         <p class="section-label mb-4 reveal">O que dizem</p>
-        <div class="text-reveal-wrap reveal">
-          <h2 id="testemunhos-heading" class="font-serif text-4xl md:text-[3.2rem] font-light text-reveal">447 Vozes</h2>
-        </div>
+        <h2 id="testi-h" class="font-serif font-light leading-[1.02] reveal" style="font-size:clamp(2.6rem,6vw,5rem)">
+          447 Vozes
+        </h2>
         <div class="gold-divider mt-6 mx-auto reveal"></div>
-        <p class="mt-4 text-[#e8dbc5]/35 text-sm font-light reveal" style="transition-delay:80ms">
+        <p class="mt-4 text-[#e8dbc5]/30 text-sm font-light reveal" style="transition-delay:80ms">
           4,9 estrelas no Google · A barbearia mais avaliada de Paredes
         </p>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
 
-        <article class="testimonial-card reveal">
-          <div class="stars text-xs mb-5">★★★★★</div>
-          <blockquote class="text-[#e8dbc5]/62 text-sm font-light leading-[1.92] italic">
-            "O Miguel é um profissional de excelência. Faz exatamente o que pedimos, o espaço é fantástico e nunca saí desiludido. A minha barbearia de sempre."
+        <article class="testi-card reveal">
+          <div class="font-serif text-gold/25 leading-none mb-4" style="font-size:3.5rem" aria-hidden="true">"</div>
+          <blockquote class="pull-quote" style="font-size:clamp(1.05rem,1.9vw,1.35rem)">
+            "O Miguel é um profissional de excelência. Faz exatamente o que pedimos. A minha barbearia de sempre."
           </blockquote>
-          <footer class="mt-6 pt-5 border-t border-[rgba(232,219,197,.06)]">
-            <p class="text-[#e8dbc5]/75 text-sm font-medium">João Ferreira</p>
-            <p class="text-[#e8dbc5]/28 text-xs mt-0.5">Google · Corte + Barba</p>
+          <footer class="mt-6 pt-4 border-t border-[rgba(232,219,197,.06)]">
+            <p class="text-[#e8dbc5]/65 text-sm font-medium">João Ferreira</p>
+            <p class="text-[#e8dbc5]/25 text-xs mt-0.5">Google · Corte + Barba</p>
           </footer>
         </article>
 
-        <article class="testimonial-card reveal" style="transition-delay:80ms">
-          <div class="stars text-xs mb-5">★★★★★</div>
-          <blockquote class="text-[#e8dbc5]/62 text-sm font-light leading-[1.92] italic">
-            "Um ambiente incrível — nunca vi uma barbearia assim. Vou com o meu filho desde que era pequeno. Atendimento fantástico, recomendo a toda a gente de Paredes."
+        <article class="testi-card reveal" style="transition-delay:80ms">
+          <div class="font-serif text-gold/25 leading-none mb-4" style="font-size:3.5rem" aria-hidden="true">"</div>
+          <blockquote class="pull-quote" style="font-size:clamp(1.05rem,1.9vw,1.35rem)">
+            "Um ambiente incrível — nunca vi uma barbearia assim. Vou com o meu filho desde que era pequeno."
           </blockquote>
-          <footer class="mt-6 pt-5 border-t border-[rgba(232,219,197,.06)]">
-            <p class="text-[#e8dbc5]/75 text-sm font-medium">Carlos Mendes</p>
-            <p class="text-[#e8dbc5]/28 text-xs mt-0.5">Google · Cliente fiel</p>
+          <footer class="mt-6 pt-4 border-t border-[rgba(232,219,197,.06)]">
+            <p class="text-[#e8dbc5]/65 text-sm font-medium">Carlos Mendes</p>
+            <p class="text-[#e8dbc5]/25 text-xs mt-0.5">Google · Cliente fiel</p>
           </footer>
         </article>
 
-        <article class="testimonial-card reveal" style="transition-delay:160ms">
-          <div class="stars text-xs mb-5">★★★★★</div>
-          <blockquote class="text-[#e8dbc5]/62 text-sm font-light leading-[1.92] italic">
-            "Melhor barbearia de Paredes, sem dúvida. O horário até às 21h é perfeito para quem trabalha. Qualidade, simpatia e um espaço que tem de se ver para acreditar."
+        <article class="testi-card reveal" style="transition-delay:160ms">
+          <div class="font-serif text-gold/25 leading-none mb-4" style="font-size:3.5rem" aria-hidden="true">"</div>
+          <blockquote class="pull-quote" style="font-size:clamp(1.05rem,1.9vw,1.35rem)">
+            "Melhor de Paredes, sem dúvida. O horário até às 21h é perfeito para quem trabalha."
           </blockquote>
-          <footer class="mt-6 pt-5 border-t border-[rgba(232,219,197,.06)]">
-            <p class="text-[#e8dbc5]/75 text-sm font-medium">Rui Santos</p>
-            <p class="text-[#e8dbc5]/28 text-xs mt-0.5">Google · Fade + Barba</p>
+          <footer class="mt-6 pt-4 border-t border-[rgba(232,219,197,.06)]">
+            <p class="text-[#e8dbc5]/65 text-sm font-medium">Rui Santos</p>
+            <p class="text-[#e8dbc5]/25 text-xs mt-0.5">Google · Fade + Barba</p>
           </footer>
         </article>
 
@@ -587,84 +617,74 @@
       <div class="flex justify-center mt-12 reveal">
         <a href="https://www.google.com/maps/place/?q=place_id:ChIJ3dPmRG2OJA0RqzB4_5sr31g"
            target="_blank" rel="noopener noreferrer"
-           class="group flex items-center gap-5 border border-[rgba(192,147,52,.15)] px-8 py-5 hover:border-[rgba(192,147,52,.4)] transition-all duration-250 hover:bg-[rgba(192,147,52,.04)]"
-           aria-label="Ver 447 avaliações no Google Maps">
-          <span class="stars text-base" aria-hidden="true">★★★★★</span>
+           class="group flex items-center gap-5 border border-[rgba(192,147,52,.14)] px-8 py-5 hover:border-[rgba(192,147,52,.4)] hover:bg-[rgba(192,147,52,.04)] transition-all duration-250">
+          <span class="stars text-sm">★★★★★</span>
           <div>
             <p class="text-gold font-semibold text-sm">4,9 / 5</p>
-            <p class="text-[#e8dbc5]/35 text-xs mt-0.5">447 avaliações · Google Maps</p>
+            <p class="text-[#e8dbc5]/30 text-xs mt-0.5">447 avaliações · Google Maps</p>
           </div>
-          <span class="text-[#e8dbc5]/25 text-xs ml-2 group-hover:translate-x-1 transition-transform" aria-hidden="true">→</span>
+          <span class="text-[#e8dbc5]/20 text-xs group-hover:translate-x-1 transition-transform" aria-hidden="true">→</span>
         </a>
       </div>
     </div>
   </section>
 
 
-  <!-- ══════════════════════════════════
-       CONTACTO
-  ══════════════════════════════════ -->
-  <section id="contacto" class="py-32 px-6" style="border-top:1px solid rgba(192,147,52,.07)" aria-labelledby="contacto-heading">
+  <!-- ══════════ CONTACTO ══════════ -->
+  <section id="contacto" class="py-28 md:py-36 px-6" style="background:#080700;border-top:1px solid rgba(192,147,52,.07)" aria-labelledby="contacto-h">
     <div class="max-w-6xl mx-auto">
 
-      <div class="text-center mb-20">
+      <div class="mb-20">
         <p class="section-label mb-4 reveal">Encontre-nos</p>
-        <div class="text-reveal-wrap reveal">
-          <h2 id="contacto-heading" class="font-serif text-4xl md:text-[3.2rem] font-light text-reveal">Contacto</h2>
-        </div>
-        <div class="gold-divider mt-6 mx-auto reveal"></div>
+        <h2 id="contacto-h" class="font-serif font-light leading-[1.02] reveal" style="font-size:clamp(2.6rem,6vw,5rem)">
+          Contacto
+        </h2>
+        <div class="gold-divider mt-6 reveal"></div>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
 
-        <div class="text-center reveal">
-          <p class="text-gold text-xl mb-4" aria-hidden="true">◈</p>
-          <p class="section-label mb-4">Morada</p>
-          <address class="text-[#e8dbc5]/55 text-sm font-light leading-[1.9] not-italic">
-            Av. Amália Rodrigues 54<br>
-            4580-014 Paredes, Portugal
+        <div class="reveal">
+          <p class="section-label mb-5">Morada</p>
+          <address class="text-[#e8dbc5]/50 text-sm font-light leading-[1.92] not-italic">
+            Av. Amália Rodrigues 54<br>4580-014 Paredes, Portugal
           </address>
           <a href="https://www.google.com/maps/place/?q=place_id:ChIJ3dPmRG2OJA0RqzB4_5sr31g"
              target="_blank" rel="noopener noreferrer"
-             class="inline-block mt-5 text-gold text-[10px] tracking-[.2em] uppercase hover:text-gold-light transition-colors">
+             class="inline-block mt-4 text-gold text-[9px] tracking-[.22em] uppercase hover:text-gold-light transition-colors">
             Ver no mapa →
           </a>
         </div>
 
-        <div class="text-center reveal" style="transition-delay:80ms">
-          <p class="text-gold text-xl mb-4" aria-hidden="true">✦</p>
-          <p class="section-label mb-4">Horário</p>
-          <div class="text-[#e8dbc5]/55 text-sm font-light space-y-2">
-            <div class="flex justify-center gap-4">
-              <span class="text-[#e8dbc5]/30 w-28 text-right">Seg – Sex</span>
-              <span class="text-[#d4ad52] font-medium">9h – 21h</span>
+        <div class="reveal" style="transition-delay:80ms">
+          <p class="section-label mb-5">Horário</p>
+          <div class="space-y-2.5 text-sm font-light">
+            <div class="flex items-center gap-3">
+              <div class="w-1.5 h-1.5 rounded-full bg-gold animate-pulse shrink-0" aria-hidden="true"></div>
+              <span class="text-[#e8dbc5]/35">Seg – Sex</span>
+              <span class="ml-auto text-[#d4ad52] font-medium">9h – 21h</span>
             </div>
-            <div class="flex justify-center gap-4">
-              <span class="text-[#e8dbc5]/30 w-28 text-right">Sábado</span>
-              <span>9h – 20h</span>
+            <div class="flex items-center gap-3">
+              <div class="w-1.5 h-1.5 rounded-full bg-gold/40 shrink-0" aria-hidden="true"></div>
+              <span class="text-[#e8dbc5]/35">Sábado</span>
+              <span class="ml-auto text-[#e8dbc5]/65">9h – 20h</span>
             </div>
-            <div class="flex justify-center gap-4">
-              <span class="text-[#e8dbc5]/30 w-28 text-right">Domingo</span>
-              <span class="text-[#e8dbc5]/35">Fechado</span>
+            <div class="flex items-center gap-3">
+              <div class="w-1.5 h-1.5 rounded-full bg-[rgba(232,219,197,.1)] shrink-0" aria-hidden="true"></div>
+              <span class="text-[#e8dbc5]/35">Domingo</span>
+              <span class="ml-auto text-[#e8dbc5]/25">Fechado</span>
             </div>
-          </div>
-          <div class="mt-5 inline-flex items-center gap-2 bg-[rgba(192,147,52,.07)] border border-[rgba(192,147,52,.18)] px-3 py-1.5">
-            <div class="w-1.5 h-1.5 rounded-full bg-gold animate-pulse" aria-hidden="true"></div>
-            <span class="text-gold text-[10px] tracking-[.15em] uppercase font-medium">Horário alargado</span>
           </div>
         </div>
 
-        <div class="text-center reveal" style="transition-delay:160ms">
-          <p class="text-gold text-xl mb-4" aria-hidden="true">◇</p>
-          <p class="section-label mb-4">Telefone</p>
-          <a href="tel:910473484" class="text-[#e8dbc5]/55 text-sm font-light hover:text-gold transition-colors block mb-6">
-            910 473 484
-          </a>
-          <div class="space-y-3">
-            <a href="tel:910473484" class="btn-primary magnetic w-full justify-center">Ligar agora</a>
+        <div class="reveal" style="transition-delay:160ms">
+          <p class="section-label mb-5">Contacto</p>
+          <a href="tel:910473484" class="block text-[#e8dbc5]/55 text-sm font-light hover:text-gold transition-colors mb-6">910 473 484</a>
+          <div class="space-y-2.5">
+            <a href="tel:910473484"  class="btn-primary w-full justify-center">Ligar agora</a>
             <a href="https://wa.me/351910473484?text=Ol%C3%A1%21%20Gostaria%20de%20marcar%20um%20corte%20na%20Barbearia%20do%20Miguel."
                target="_blank" rel="noopener noreferrer"
-               class="btn-outline w-full justify-center" style="border-color:rgba(37,211,102,.3);color:rgba(37,211,102,.75)">
+               class="btn-outline w-full justify-center" style="border-color:rgba(37,211,102,.28);color:rgba(37,211,102,.7)">
               WhatsApp →
             </a>
           </div>
@@ -672,44 +692,29 @@
 
       </div>
 
-      <!-- Booking CTA -->
-      <div class="reveal bg-[rgba(192,147,52,.05)] border border-[rgba(192,147,52,.18)] p-10 text-center mb-5">
+      <!-- CTA banner -->
+      <div class="reveal border border-[rgba(192,147,52,.18)] bg-[rgba(192,147,52,.04)] p-10 md:p-14 text-center mb-5">
         <p class="section-label mb-3">Pronto para o novo visual?</p>
-        <h3 class="font-serif text-2xl md:text-3xl font-light mb-6">Reserve o seu horário <em class="text-gold">online</em></h3>
+        <h3 class="font-serif text-2xl md:text-4xl font-light mb-6">
+          Reserve o seu horário <em class="text-gold">online</em>
+        </h3>
         <a href="marcacoes.html" class="btn-primary magnetic">Agendar agora ✂</a>
-        <p class="text-[#e8dbc5]/25 text-xs mt-4 font-light">Sem taxa de reserva · Confirmação em minutos</p>
+        <p class="text-[#e8dbc5]/20 text-xs mt-4 font-light">Sem taxa de reserva · Confirmação em minutos</p>
       </div>
 
-      <!-- Social links -->
-      <div class="reveal flex flex-col sm:flex-row gap-4 mb-4">
+      <!-- Social -->
+      <div class="reveal grid grid-cols-1 sm:grid-cols-2 gap-3">
         <a href="https://www.facebook.com/barbeariadomiguel2016" target="_blank" rel="noopener noreferrer"
-           class="flex-1 flex items-center gap-4 bg-surface border border-[rgba(232,219,197,.06)] px-6 py-4 hover:border-[rgba(192,147,52,.28)] transition-colors duration-200 group">
-          <span class="text-gold text-lg" aria-hidden="true">◈</span>
-          <div>
-            <p class="text-[#e8dbc5]/70 text-sm font-medium">Facebook</p>
-            <p class="text-[#e8dbc5]/32 text-xs mt-0.5">@barbeariadomiguel2016</p>
-          </div>
-          <span class="ml-auto text-[#e8dbc5]/22 text-xs group-hover:translate-x-1 transition-transform" aria-hidden="true">→</span>
+           class="flex items-center gap-4 bg-surface border border-[rgba(232,219,197,.05)] px-5 py-4 hover:border-[rgba(192,147,52,.28)] transition-colors group">
+          <span class="text-gold text-base" aria-hidden="true">◈</span>
+          <div><p class="text-[#e8dbc5]/65 text-sm font-medium">Facebook</p><p class="text-[#e8dbc5]/28 text-xs mt-0.5">@barbeariadomiguel2016</p></div>
+          <span class="ml-auto text-[#e8dbc5]/18 text-xs group-hover:translate-x-1 transition-transform" aria-hidden="true">→</span>
         </a>
         <a href="https://www.google.com/maps/place/?q=place_id:ChIJ3dPmRG2OJA0RqzB4_5sr31g" target="_blank" rel="noopener noreferrer"
-           class="flex-1 flex items-center gap-4 bg-surface border border-[rgba(232,219,197,.06)] px-6 py-4 hover:border-[rgba(192,147,52,.28)] transition-colors duration-200 group">
-          <span class="text-gold text-lg" aria-hidden="true">◇</span>
-          <div>
-            <p class="text-[#e8dbc5]/70 text-sm font-medium">Google Maps</p>
-            <p class="text-[#e8dbc5]/32 text-xs mt-0.5">4,9★ · 447 avaliações</p>
-          </div>
-          <span class="ml-auto text-[#e8dbc5]/22 text-xs group-hover:translate-x-1 transition-transform" aria-hidden="true">→</span>
-        </a>
-      </div>
-
-      <div class="reveal">
-        <a href="https://www.google.com/maps/place/?q=place_id:ChIJ3dPmRG2OJA0RqzB4_5sr31g" target="_blank" rel="noopener noreferrer"
-           class="block h-48 bg-surface border border-[rgba(192,147,52,.07)] flex items-center justify-center hover:border-[rgba(192,147,52,.28)] transition-colors duration-200">
-          <div class="text-center pointer-events-none">
-            <p class="text-gold text-2xl mb-3" aria-hidden="true">◈</p>
-            <p class="text-[#e8dbc5]/36 text-[10px] tracking-[.28em] uppercase">Ver no Google Maps</p>
-            <p class="text-[#e8dbc5]/20 text-xs mt-1.5">Av. Amália Rodrigues 54 · 4580-014 Paredes</p>
-          </div>
+           class="flex items-center gap-4 bg-surface border border-[rgba(232,219,197,.05)] px-5 py-4 hover:border-[rgba(192,147,52,.28)] transition-colors group">
+          <span class="text-gold text-base" aria-hidden="true">◇</span>
+          <div><p class="text-[#e8dbc5]/65 text-sm font-medium">Google Maps</p><p class="text-[#e8dbc5]/28 text-xs mt-0.5">4,9★ · 447 avaliações</p></div>
+          <span class="ml-auto text-[#e8dbc5]/18 text-xs group-hover:translate-x-1 transition-transform" aria-hidden="true">→</span>
         </a>
       </div>
 
@@ -718,207 +723,177 @@
 
 
   <!-- FOOTER -->
-  <footer class="py-8 px-6" style="border-top:1px solid rgba(192,147,52,.07); background:#09080500;" role="contentinfo">
-    <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-5 text-center md:text-left">
-      <div class="font-serif text-base font-light text-[#e8dbc5]/42">
+  <footer class="py-8 px-6 border-t border-[rgba(192,147,52,.07)]" role="contentinfo">
+    <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
+      <div class="font-serif text-base font-light text-[#e8dbc5]/38">
         Barbearia <em class="text-gold not-italic">do Miguel</em>
-        <p class="text-[#e8dbc5]/22 text-[9px] tracking-[.25em] uppercase mt-1 font-sans not-italic">Paredes · Desde 2016 · Miguel Caetano</p>
+        <p class="text-[#e8dbc5]/18 text-[8px] tracking-[.25em] uppercase mt-1 font-sans not-italic">Paredes · Desde 2016</p>
       </div>
       <p class="text-[#e8dbc5]/18 text-xs">
-        © 2026 Barbearia do Miguel · Paredes ·
+        © 2026 Barbearia do Miguel ·
         <a href="privacidade.html" class="hover:text-gold transition-colors">Privacidade</a>
       </p>
-      <a href="tel:910473484" class="text-[#e8dbc5]/32 text-sm hover:text-gold transition-colors">910 473 484</a>
+      <a href="tel:910473484" class="text-[#e8dbc5]/28 text-sm hover:text-gold transition-colors">910 473 484</a>
     </div>
   </footer>
 
 
-  <!-- WhatsApp -->
+  <!-- WhatsApp float -->
   <a href="https://wa.me/351910473484?text=Ol%C3%A1%21%20Gostaria%20de%20marcar%20um%20corte%20na%20Barbearia%20do%20Miguel."
      target="_blank" rel="noopener noreferrer"
-     class="whatsapp-btn" aria-label="Abrir conversa no WhatsApp com Barbearia do Miguel">
+     class="whatsapp-btn" aria-label="WhatsApp Barbearia do Miguel">
     <svg width="26" height="26" fill="white" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
       <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
     </svg>
   </a>
 
 
-  <!-- ══════════════════════════════════
-       JAVASCRIPT — Pro Max
-  ══════════════════════════════════ -->
+  <!-- ══════════ JAVASCRIPT ══════════ -->
   <script>
   'use strict';
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  const isTouch = !window.matchMedia('(hover:hover) and (pointer:fine)').matches;
 
-  // ─── Reduced motion check
-  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const isTouch = !window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-
-  // ─── Reduced motion: pause autoplay media
+  // Reduced motion: pause videos
   if (prefersReduced) {
     document.querySelectorAll('video[autoplay]').forEach(v => { v.pause(); v.removeAttribute('autoplay'); });
-    document.documentElement.style.scrollBehavior = 'auto';
+  }
+
+  // ─── Hide img fallback once video plays
+  const heroVid = document.getElementById('hero-video');
+  const heroFb  = document.getElementById('hero-img-fallback');
+  if (heroVid) {
+    heroVid.addEventListener('playing', () => { if (heroFb) heroFb.style.opacity = '0'; }, { once: true });
   }
 
   // ─── Scroll progress bar
   const progressBar = document.getElementById('scroll-progress');
+  let ticking = false;
   function updateProgress() {
-    const scrollTop = window.scrollY;
-    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-    const pct = docHeight > 0 ? Math.min((scrollTop / docHeight) * 100, 100) : 0;
-    progressBar.style.width = pct + '%';
+    const s = window.scrollY, h = document.documentElement.scrollHeight - window.innerHeight;
+    progressBar.style.width = (h > 0 ? Math.min(s / h * 100, 100) : 0) + '%';
+    ticking = false;
   }
-  window.addEventListener('scroll', updateProgress, { passive: true });
+  window.addEventListener('scroll', () => { if (!ticking) { requestAnimationFrame(updateProgress); ticking = true; } }, { passive: true });
 
-  // ─── Custom cursor (desktop only)
-  if (!isTouch && !prefersReduced) {
+  // ─── Navbar scroll
+  const navbar = document.getElementById('navbar');
+  function updateNav() {
+    if (window.scrollY > 60) {
+      navbar.style.cssText = 'background:rgba(10,8,0,.97);backdrop-filter:blur(20px);border-bottom:1px solid rgba(192,147,52,.15)';
+    } else {
+      navbar.style.cssText = 'background:transparent';
+    }
+  }
+  window.addEventListener('scroll', updateNav, { passive: true });
+  updateNav();
+
+  // ─── Custom cursor
+  if (!isTouch) {
     const ring = document.getElementById('cursor-ring');
     const dot  = document.getElementById('cursor-dot');
     let rx = -200, ry = -200, mx = -200, my = -200;
-    let rafRunning = false;
-
-    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; dot.style.transform = `translate(${mx}px, ${my}px)`; });
-    document.addEventListener('mouseleave', () => { ring.style.opacity = '0'; dot.style.opacity = '0'; });
-    document.addEventListener('mouseenter', () => { ring.style.opacity = '1'; dot.style.opacity = '1'; });
-
-    function animateCursor() {
-      rx += (mx - rx) * 0.11;
-      ry += (my - ry) * 0.11;
-      ring.style.transform = `translate(${rx}px, ${ry}px)`;
-      requestAnimationFrame(animateCursor);
-    }
-    animateCursor();
-
-    document.querySelectorAll('a, button, [role="button"]').forEach(el => {
-      el.addEventListener('mouseenter', () => { ring.style.width = '44px'; ring.style.height = '44px'; ring.style.borderColor = 'rgba(192,147,52,.75)'; });
-      el.addEventListener('mouseleave', () => { ring.style.width = '32px'; ring.style.height = '32px'; ring.style.borderColor = 'rgba(192,147,52,.45)'; });
+    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; dot.style.transform = `translate(${mx}px,${my}px)`; });
+    (function loop() { rx += (mx-rx)*.11; ry += (my-ry)*.11; ring.style.transform = `translate(${rx}px,${ry}px)`; requestAnimationFrame(loop); })();
+    document.querySelectorAll('a,button').forEach(el => {
+      el.addEventListener('mouseenter', () => { ring.style.width='44px'; ring.style.height='44px'; ring.style.borderColor='rgba(192,147,52,.75)'; });
+      el.addEventListener('mouseleave', () => { ring.style.width='32px'; ring.style.height='32px'; ring.style.borderColor='rgba(192,147,52,.45)'; });
     });
   }
-
-  // ─── Navbar scroll behaviour
-  const navbar = document.getElementById('navbar');
-  let lastScrollY = 0;
-  window.addEventListener('scroll', () => {
-    const sy = window.scrollY;
-    if (sy > 60) {
-      navbar.style.cssText = 'background:rgba(13,11,7,.97);backdrop-filter:blur(20px);border-bottom:1px solid rgba(192,147,52,.16)';
-    } else {
-      navbar.style.cssText = 'background:rgba(13,11,7,.5);backdrop-filter:blur(12px);border-bottom:1px solid transparent';
-    }
-    lastScrollY = sy;
-  }, { passive: true });
 
   // ─── Hamburger
   const burger = document.getElementById('hamburger');
-  const mobileMenu = document.getElementById('mobile-menu');
-  const hl1 = document.getElementById('hl1'), hl2 = document.getElementById('hl2'), hl3 = document.getElementById('hl3');
+  const mMenu  = document.getElementById('mobile-menu');
+  const [hl1,hl2,hl3] = ['hl1','hl2','hl3'].map(id => document.getElementById(id));
   let menuOpen = false;
-
   function closeMenu() {
-    menuOpen = false;
-    mobileMenu.classList.remove('open');
-    burger.setAttribute('aria-expanded','false');
-    hl1.style.transform = hl3.style.transform = '';
-    hl2.style.opacity = '1';
+    menuOpen = false; mMenu.classList.remove('open'); burger.setAttribute('aria-expanded','false');
+    [hl1,hl3].forEach(l => l.style.transform = ''); hl2.style.opacity = '1';
   }
-
   burger.addEventListener('click', () => {
-    menuOpen = !menuOpen;
-    burger.setAttribute('aria-expanded', menuOpen.toString());
+    menuOpen = !menuOpen; burger.setAttribute('aria-expanded', menuOpen);
     if (menuOpen) {
-      mobileMenu.classList.add('open');
+      mMenu.classList.add('open');
       hl1.style.transform = 'translateY(7.5px) rotate(45deg)';
-      hl2.style.opacity = '0';
+      hl2.style.opacity   = '0';
       hl3.style.transform = 'translateY(-7.5px) rotate(-45deg)';
-    } else { closeMenu(); }
+    } else closeMenu();
   });
 
-  // ─── Scroll reveal (IntersectionObserver)
-  const revealObs = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('visible');
-        revealObs.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.06, rootMargin: '-10px 0px' });
+  // ─── IntersectionObserver — reveal elements BELOW fold
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } });
+  }, { threshold: 0.04, rootMargin: '0px 0px' });
 
-  document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale, .text-reveal').forEach(el => revealObs.observe(el));
+  document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(el => obs.observe(el));
 
-  // ─── Animated stat counters
+  // ─── Counter animation
   function animateCounter(el) {
-    const target   = parseFloat(el.dataset.target);
-    const isDecim  = el.dataset.decimal === 'true';
-    const suffix   = el.dataset.suffix || '';
-    const duration = 2000;
-    const startTime = performance.now();
-
-    function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
-
-    function tick(now) {
-      const elapsed  = now - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      const eased    = easeOutCubic(progress);
-      const current  = target * eased;
-      el.textContent = (isDecim ? current.toFixed(1) : Math.round(current)) + suffix;
-      if (progress < 1) requestAnimationFrame(tick);
-    }
-    requestAnimationFrame(tick);
+    const target  = parseFloat(el.dataset.target);
+    const isDecim = el.dataset.decimal === 'true';
+    const suffix  = el.dataset.suffix || '';
+    const dur     = 1800;
+    const start   = performance.now();
+    function ease(t) { return 1 - Math.pow(1-t, 3); }
+    (function tick(now) {
+      const p = Math.min((now - start) / dur, 1);
+      const v = target * ease(p);
+      el.textContent = (isDecim ? v.toFixed(1) : Math.round(v)) + suffix;
+      if (p < 1) requestAnimationFrame(tick);
+    })(start);
   }
-
-  const counterObs = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) { animateCounter(e.target); counterObs.unobserve(e.target); }
-    });
+  const counterObs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { animateCounter(e.target); counterObs.unobserve(e.target); } });
   }, { threshold: 0.5 });
-
   document.querySelectorAll('[data-target]').forEach(el => counterObs.observe(el));
 
-  // ─── Parallax on scroll (desktop)
+  // ─── Parallax (desktop)
   if (!prefersReduced && !isTouch) {
-    const parallaxImgs = document.querySelectorAll('.parallax-img');
-    function updateParallax() {
-      parallaxImgs.forEach(img => {
-        const rect  = img.closest('.parallax-container').getBoundingClientRect();
-        const vH    = window.innerHeight;
-        const ratio = (rect.top + rect.height / 2 - vH / 2) / vH;
-        const y     = ratio * 40;
-        img.style.transform = `scale(1.12) translateY(${y}px)`;
+    const pimgs = document.querySelectorAll('.parallax-img');
+    function doParallax() {
+      pimgs.forEach(img => {
+        const rect = img.closest('.parallax-container')?.getBoundingClientRect();
+        if (!rect) return;
+        const ratio = (rect.top + rect.height / 2 - window.innerHeight / 2) / window.innerHeight;
+        img.style.transform = `scale(1.12) translateY(${ratio * 38}px)`;
       });
     }
-    window.addEventListener('scroll', updateParallax, { passive: true });
-    updateParallax();
+    window.addEventListener('scroll', doParallax, { passive: true });
+    doParallax();
   }
 
-  // ─── Magnetic buttons (desktop only)
+  // ─── Magnetic buttons
   if (!isTouch && !prefersReduced) {
     document.querySelectorAll('.magnetic').forEach(btn => {
       btn.addEventListener('mousemove', e => {
-        const rect = btn.getBoundingClientRect();
-        const x = (e.clientX - rect.left - rect.width  / 2) * 0.18;
-        const y = (e.clientY - rect.top  - rect.height / 2) * 0.28;
-        btn.style.transform = `translate(${x}px, ${y}px)`;
+        const r = btn.getBoundingClientRect();
+        btn.style.transform = `translate(${(e.clientX-r.left-r.width/2)*.18}px,${(e.clientY-r.top-r.height/2)*.28}px)`;
       });
-      btn.addEventListener('mouseleave', () => {
-        btn.style.transform = '';
-      });
+      btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
     });
   }
 
-  // ─── Lazy load reel videos on scroll
-  const reelObs = new IntersectionObserver((entries) => {
+  // ─── Gallery drag scroll
+  const gal = document.getElementById('gallery-scroll');
+  if (gal) {
+    let isDown = false, startX, scrollLeft;
+    gal.addEventListener('mousedown', e => { isDown = true; gal.style.cursor='grabbing'; startX = e.pageX - gal.offsetLeft; scrollLeft = gal.scrollLeft; });
+    gal.addEventListener('mouseleave', () => { isDown = false; gal.style.cursor='grab'; });
+    gal.addEventListener('mouseup',   () => { isDown = false; gal.style.cursor='grab'; });
+    gal.addEventListener('mousemove', e => { if (!isDown) return; e.preventDefault(); gal.scrollLeft = scrollLeft - (e.pageX - gal.offsetLeft - startX); });
+  }
+
+  // ─── Lazy load reel videos
+  const reelObs = new IntersectionObserver(entries => {
     entries.forEach(e => {
       if (e.isIntersecting) {
         const v = e.target.querySelector('video');
-        if (v && v.readyState === 0) {
-          v.load();
-          if (!prefersReduced) v.play().catch(() => {});
-        }
+        if (v && v.readyState === 0) { v.load(); if (!prefersReduced) v.play().catch(()=>{}); }
         reelObs.unobserve(e.target);
       }
     });
   }, { rootMargin: '200px 0px' });
-
-  document.querySelectorAll('.video-reel-item').forEach(el => reelObs.observe(el));
+  document.querySelectorAll('#rv1,#rv2,#rv3').forEach(v => { if (v.parentElement) reelObs.observe(v.parentElement); });
 
   </script>
 
