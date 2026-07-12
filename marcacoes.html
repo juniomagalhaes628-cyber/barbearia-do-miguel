@@ -3,7 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; form-action https://formsubmit.co; frame-src 'none'; object-src 'none';">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=()">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'none'; frame-src 'none'; object-src 'none'; form-action https://formsubmit.co; upgrade-insecure-requests;">
   <meta name="robots" content="noindex, nofollow">
   <meta name="description" content="Marcar um corte ou serviço na Barbearia do Miguel — Paredes. Simples, rápido, confirmação em minutos.">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✂</text></svg>">
@@ -249,6 +251,8 @@
           <input type="hidden" name="_captcha"       value="false">
           <!-- Honeypot anti-bot (FormSubmit rejeita se preenchido) -->
           <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <!-- Spam filter keywords -->
+          <input type="hidden" name="_blacklist" value="viagra,casino,loan,crypto,bitcoin,win prize,click here,free money,http://,https://www.bit.ly">
           <!-- Timestamp anti-bot -->
           <input type="hidden" name="_form_loaded" id="form-timestamp" value="">
           <!-- Campos compilados -->
@@ -571,7 +575,9 @@
     if (!date) { showErr('err-date', 'Por favor indique uma data'); ok = false; }
     else {
       const d = new Date(date + 'T12:00:00');
-      if (d.getDay() === 0) { showErr('err-date', 'Domingo fechado — escolha outro dia'); ok = false; }
+      const today = new Date(); today.setHours(0,0,0,0);
+      if (d < today)         { showErr('err-date', 'A data não pode ser no passado'); ok = false; }
+      else if (d.getDay() === 0) { showErr('err-date', 'Domingo fechado — escolha outro dia'); ok = false; }
       else { hideErr('err-date'); }
     }
 
@@ -597,7 +603,7 @@
     const ok3   = document.getElementById('consent').checked;
     let ok = true;
 
-    if (name.length < 2)                               { showErr('err-name');    ok = false; } else { hideErr('err-name'); }
+    if (name.length < 2 || /[<>{}]/.test(name))        { showErr('err-name');    ok = false; } else { hideErr('err-name'); }
     if (!/^[0-9\s\+\-\(\)]{7,20}$/.test(phone))       { showErr('err-phone');   ok = false; } else { hideErr('err-phone'); }
     if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showErr('err-email'); ok = false; } else { hideErr('err-email'); }
     if (!ok3)                                          { showErr('err-consent'); ok = false; } else { hideErr('err-consent'); }
