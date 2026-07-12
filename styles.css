@@ -18,10 +18,10 @@
   --gold-light: #d4ad52;
   --gold-dim:   rgba(192,147,52,.08);
 
-  --cream:      #f0e6d3;
-  --text:       #e8dbc5;
-  --text-muted: rgba(232,219,197,.6);
-  --text-faint: rgba(232,219,197,.28);
+  --cream:      #f5eed8;
+  --text:       #efe3c8;
+  --text-muted: rgba(239,227,200,.72);
+  --text-faint: rgba(239,227,200,.32);
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
