@@ -821,8 +821,26 @@
   });
 
   // ─── IntersectionObserver — reveal elements BELOW fold
+  // CSS Transitions have higher cascade priority than WAAPI animations —
+  // cancel running transitions first so WAAPI fill:'forwards' can win.
   const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } });
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      const el = e.target;
+      const delay = parseFloat(el.style.transitionDelay) || 0;
+      el.getAnimations().forEach(a => a.cancel());
+      el.style.transition = 'none';
+      const isLeft  = el.classList.contains('reveal-left');
+      const isRight = el.classList.contains('reveal-right');
+      const from = isLeft  ? { opacity: 0, transform: 'translateX(-24px)' }
+                 : isRight ? { opacity: 0, transform: 'translateX(24px)'  }
+                 :            { opacity: 0, transform: 'translateY(24px)'  };
+      el.animate([from, { opacity: 1, transform: 'none' }], {
+        duration: 700, easing: 'cubic-bezier(0.23,1,0.32,1)', fill: 'forwards', delay
+      });
+      el.classList.add('in');
+      obs.unobserve(el);
+    });
   }, { threshold: 0.04, rootMargin: '0px 0px' });
 
   document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(el => obs.observe(el));
