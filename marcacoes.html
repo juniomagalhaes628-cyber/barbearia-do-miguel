@@ -242,7 +242,7 @@
         </div>
 
         <!-- Form -->
-        <form id="booking-form" action="https://formsubmit.co/juniomagalhaes628@gmail.com" method="POST" novalidate>
+        <form id="booking-form" action="#" method="POST" novalidate>
           <!-- FormSubmit config -->
           <input type="hidden" name="_subject"      value="Nova marcação — Barbearia do Miguel">
           <input type="hidden" name="_next"          value="https://juniomagalhaes628-cyber.github.io/barbearia-do-miguel/obrigado.html">
@@ -461,6 +461,16 @@
                   </label>
                 </div>
                 <p class="field-err" id="err-consent">É necessário aceitar para enviar o pedido</p>
+
+                <div>
+                  <label for="cap-input" class="block text-[9px] tracking-[.2em] uppercase text-[#e8dbc5]/40 mb-2">
+                    Verificação: quanto é <span id="cap-question" class="text-gold">…</span> *
+                  </label>
+                  <input type="number" id="cap-input" class="form-field" placeholder="Resposta"
+                         autocomplete="off" inputmode="numeric" min="0" max="99"
+                         aria-required="true" aria-describedby="err-captcha">
+                  <p class="field-err" id="err-captcha">Resposta incorreta — tente novamente</p>
+                </div>
               </div>
 
               <div id="rate-limit-warning" class="hidden mt-4 border border-[rgba(200,80,80,.25)] bg-[rgba(200,80,80,.07)] p-4 text-xs text-[#e8dbc5]/55 font-light">
@@ -524,6 +534,27 @@
       el.addEventListener('mouseleave', () => { ring.style.width='28px'; ring.style.height='28px'; ring.style.borderColor='rgba(192,147,52,.4)'; });
     });
   }
+
+  // ─── Email masking: never expose plaintext email in HTML source
+  (function() {
+    const parts = ['juniomagalhaes628', 'gmail', 'com'];
+    document.getElementById('booking-form').action =
+      'https://formsubmit.co/' + parts[0] + '@' + parts[1] + '.' + parts[2];
+  })();
+
+  // ─── Math CAPTCHA
+  let _capExpected = 0;
+  function refreshCaptcha() {
+    const ops = [
+      () => { const a=Math.ceil(Math.random()*9), b=Math.ceil(Math.random()*9); _capExpected=a+b; return `${a} + ${b}`; },
+      () => { const a=Math.ceil(Math.random()*5)+5, b=Math.ceil(Math.random()*5); _capExpected=a-b; return `${a} − ${b}`; },
+      () => { const a=Math.ceil(Math.random()*5), b=Math.ceil(Math.random()*4)+2; _capExpected=a*b; return `${a} × ${b}`; }
+    ];
+    const chosen = ops[Math.floor(Math.random()*ops.length)]();
+    document.getElementById('cap-question').textContent = chosen + ' ?';
+    document.getElementById('cap-input').value = '';
+  }
+  refreshCaptcha();
 
   // ─── Anti-bot: timestamp
   document.getElementById('form-timestamp').value = Date.now().toString();
@@ -603,10 +634,12 @@
     const ok3   = document.getElementById('consent').checked;
     let ok = true;
 
+    const capVal = parseInt(document.getElementById('cap-input').value, 10);
     if (name.length < 2 || /[<>{}]/.test(name))        { showErr('err-name');    ok = false; } else { hideErr('err-name'); }
     if (!/^[0-9\s\+\-\(\)]{7,20}$/.test(phone))       { showErr('err-phone');   ok = false; } else { hideErr('err-phone'); }
     if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showErr('err-email'); ok = false; } else { hideErr('err-email'); }
     if (!ok3)                                          { showErr('err-consent'); ok = false; } else { hideErr('err-consent'); }
+    if (isNaN(capVal) || capVal !== _capExpected)      { showErr('err-captcha'); refreshCaptcha(); ok = false; } else { hideErr('err-captcha'); }
     return ok;
   }
 
